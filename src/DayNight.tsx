@@ -2,7 +2,7 @@ import React from 'react';
 import {AbsoluteFill, Easing, Img, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {cameraTransform, ORIGIN} from './camera';
 import {Moon, Sparkle, Sun} from './Icons';
-import {C, roundFont, SAFE, serifFont} from './theme';
+import {C, FPS, roundFont, SAFE, sec, serifFont, srcTime} from './theme';
 
 /*
  * Morning / night scene (21.45s – 27.3s).
@@ -345,8 +345,9 @@ const TimeCard: React.FC<{when: string; what: string; icon: React.ReactNode; bg:
 export const DayNight: React.FC<{start: number}> = ({start}) => {
   const f = useCurrentFrame();
   const {fps, durationInFrames} = useVideoConfig();
-  const absFrame = f + Math.round(start * fps);
-  const t = absFrame / fps;
+  const absFrame = f + sec(start); // composition frame (drives cartoon animation)
+  const t = start + srcTime(f); // source time (drives story timing)
+  const srcFrame = Math.round(t * FPS); // source video frame for the cut-out
 
   // fade the cartoon world in/out around the scene (subject stays perfectly still underneath)
   const world = interpolate(f, [0, 12, durationInFrames - 12, durationInFrames], [0, 1, 1, 0], {
@@ -359,7 +360,7 @@ export const DayNight: React.FC<{start: number}> = ({start}) => {
   const moonRise = interpolate(t, [NIGHT_AT, NIGHT_AT + 0.9], [520, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.back(1.2))});
   // cards swap one after the other (never overlapping): morning card leaves, then night card pops in
   const cardOut = interpolate(t, [NIGHT_AT - 0.05, NIGHT_AT + 0.2], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: ease});
-  const nightFrame = absFrame - Math.round((NIGHT_AT + 0.3) * fps);
+  const nightFrame = absFrame - sec(NIGHT_AT + 0.3);
 
   // subject colour-matching to the scene lighting
   const subjectFilter = [
@@ -370,7 +371,7 @@ export const DayNight: React.FC<{start: number}> = ({start}) => {
     `drop-shadow(0 0 14px rgba(255,236,170,${(0.55 * (1 - night)).toFixed(3)}))`,
     `drop-shadow(0 0 18px rgba(140,170,255,${(0.6 * night).toFixed(3)}))`,
   ].join(' ');
-  const frameNo = String(absFrame).padStart(4, '0');
+  const frameNo = String(Math.min(820, srcFrame)).padStart(4, '0');
 
   return (
     <AbsoluteFill style={{opacity: world}}>

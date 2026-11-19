@@ -1,7 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import captions from './captions.json';
-import {C, captionFont, SAFE, SAFE_CENTER_X} from './theme';
+import {C, captionFont, SAFE, SAFE_CENTER_X, sec, srcTime} from './theme';
 
 type Word = {text: string; start: number; end: number};
 type Chunk = {start: number; end: number; words: Word[]};
@@ -14,13 +14,13 @@ const CAPTION_WIDTH = 820;
 export const Captions: React.FC = () => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
-  const t = frame / fps;
+  const t = srcTime(frame);
   const chunk = CHUNKS.find((c) => t >= c.start - 0.05 && t < c.end);
   if (!chunk) return null;
 
-  const local = frame - Math.round((chunk.start - 0.05) * fps);
+  const local = frame - sec(chunk.start - 0.05);
   const enter = spring({frame: local, fps, config: {damping: 14, stiffness: 180, mass: 0.6}});
-  const outFrames = Math.round((chunk.end - t) * fps);
+  const outFrames = sec(chunk.end - t);
   const exit = interpolate(outFrames, [0, 3], [0, 1], {extrapolateRight: 'clamp'});
 
   return (
@@ -60,7 +60,7 @@ export const Captions: React.FC = () => {
         {chunk.words.map((w, i) => {
           const active = t >= w.start - 0.04 && t < w.end + 0.06;
           const said = t >= w.start - 0.04;
-          const wf = frame - Math.round((w.start - 0.04) * fps);
+          const wf = frame - sec(w.start - 0.04);
           const bump = active ? spring({frame: wf, fps, config: {damping: 10, stiffness: 260, mass: 0.4}}) : 0;
           return (
             <span

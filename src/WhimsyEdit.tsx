@@ -4,20 +4,21 @@ import {cameraTransform, CUT_FRAMES, DISSOLVE_FRAMES, dissolveOpacity, ORIGIN} f
 import captions from './captions.json';
 import {Captions} from './Captions';
 import {Overlays, SECTION_CUTS} from './Overlays';
-import {DURATION_IN_FRAMES, FPS, sec} from './theme';
+import {DURATION_IN_FRAMES, FPS, sec, SPEED, srcTime} from './theme';
 
 /* ------------ camera: graded footage, smooth zooms, soft dissolves over jump cuts ------------ */
 const Footage: React.FC<{t: number}> = ({t}) => (
   <AbsoluteFill style={{transform: cameraTransform(t), transformOrigin: ORIGIN}}>
     {/* original footage colours (no grade); scripts/grade.py can produce a graded version if wanted */}
-    <OffthreadVideo src={staticFile('main.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+    <OffthreadVideo src={staticFile('main.mp4')} playbackRate={SPEED} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
   </AbsoluteFill>
 );
 
 const Camera: React.FC = () => {
   const frame = useCurrentFrame();
-  const t = frame / FPS;
-  const cut = CUT_FRAMES.find((c) => frame >= c && frame < c + DISSOLVE_FRAMES);
+  const t = srcTime(frame);
+  // jump cuts mapped to composition frames
+  const cut = CUT_FRAMES.map((c) => Math.round(c / SPEED)).find((c) => frame >= c && frame < c + DISSOLVE_FRAMES);
   return (
     <AbsoluteFill style={{overflow: 'hidden', backgroundColor: '#000'}}>
       <Footage t={t} />
@@ -25,7 +26,7 @@ const Camera: React.FC = () => {
         // hold the last frame of the outgoing shot and dissolve it away -> no hard jump
         <AbsoluteFill style={{opacity: dissolveOpacity(frame - cut)}}>
           <Freeze frame={cut - 1}>
-            <Footage t={(cut - 1) / FPS} />
+            <Footage t={srcTime(cut - 1)} />
           </Freeze>
         </AbsoluteFill>
       )}
@@ -41,7 +42,7 @@ const useMusicVolume = () =>
     const speaking = new Array(n).fill(0);
     (captions as Chunk[]).forEach((c) =>
       c.words.forEach((w) => {
-        for (let f = Math.floor((w.start - 0.15) * FPS); f <= Math.ceil((w.end + 0.25) * FPS); f++) {
+        for (let f = sec(w.start - 0.15); f <= sec(w.end + 0.25); f++) {
           if (f >= 0 && f < n) speaking[f] = 1;
         }
       }),
@@ -109,10 +110,10 @@ const AudioMix: React.FC = () => {
   const vol = useMusicVolume();
   return (
     <>
-      <Audio src={staticFile('audio/voice.wav')} volume={1} />
-      <Audio src={staticFile('audio/music.wav')} volume={(f) => vol[Math.min(f, vol.length - 1)]} />
+      <Audio src={staticFile('audio/voice.wav')} volume={1} playbackRate={SPEED} />
+      <Audio src={staticFile('audio/music.wav')} volume={(f) => vol[Math.min(f, vol.length - 1)] * interpolate(f, [DURATION_IN_FRAMES - 45, DURATION_IN_FRAMES], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})} />
       {SFX.map(([at, name, v], i) => (
-        <Sequence key={i} from={Math.max(0, sec(at))} durationInFrames={sec(1.6)} layout="none">
+        <Sequence key={i} from={Math.max(0, sec(at))} durationInFrames={48} layout="none">
           <Audio src={staticFile(`audio/${name}.wav`)} volume={v} />
         </Sequence>
       ))}

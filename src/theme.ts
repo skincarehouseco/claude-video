@@ -23,7 +23,12 @@ if (typeof window !== 'undefined' && 'FontFace' in window) {
 }
 
 export const FPS = 30;
-export const DURATION_IN_FRAMES = Math.round(76.8 * FPS);
+// Whole edit plays 1.3x faster (77 s source -> ~59 s) so it stays under one minute.
+// All timings in the code are written in SOURCE seconds and mapped through these helpers.
+export const SPEED = 1.3;
+export const DURATION_IN_FRAMES = Math.round((76.8 * FPS) / SPEED);
+/** composition frame -> source time (s) */
+export const srcTime = (frame: number) => (frame / FPS) * SPEED;
 
 // Clean, light handwritten font for captions (regular weight only — no bold)
 export const captionFont = 'WhimsyCaption';
@@ -55,4 +60,5 @@ export const C = {
 export const SAFE = {top: 160, bottom: 1920 - 430, left: 80, right: 1080 - 170};
 export const SAFE_CENTER_X = (SAFE.left + SAFE.right) / 2; // 495
 
-export const sec = (s: number) => Math.round(s * FPS);
+/** source time (s) -> composition frame */
+export const sec = (s: number) => Math.round((s * FPS) / SPEED);

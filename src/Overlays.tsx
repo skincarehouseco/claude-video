@@ -1,7 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, Easing, interpolate, Sequence, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {Check, Cross, Droplet, Heart, Moon, Plus, Shield, Sparkle, Warn} from './Icons';
-import {C, pixelFont, roundFont, SAFE, SAFE_CENTER_X, sec, serifFont} from './theme';
+import {C, pixelFont, roundFont, SAFE, SAFE_CENTER_X, sec, serifFont, srcTime} from './theme';
 import {DayNight} from './DayNight';
 
 /* ---------- animation helpers ---------- */
@@ -108,14 +108,14 @@ type Note = {at: number; text: string; color: string; icon?: React.ReactNode};
 const NoteSlot: React.FC<{notes: Note[]; sectionStart: number}> = ({notes, sectionStart}) => {
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
-  const t = f / fps + sectionStart;
+  const t = srcTime(f) + sectionStart;
   let idx = -1;
   notes.forEach((n, i) => {
     if (t >= n.at) idx = i;
   });
   if (idx < 0) return <div style={{height: 104}} />;
   const n = notes[idx];
-  const local = f - Math.round((n.at - sectionStart) * fps);
+  const local = f - sec(n.at - sectionStart);
   const p = spring({frame: local, fps, config: {damping: 14, stiffness: 170, mass: 0.7}});
   // the previous note slides out as the new one comes in
   const prev = idx > 0 ? notes[idx - 1] : null;
@@ -282,10 +282,10 @@ const HookTitle: React.FC = () => {
 const Outro: React.FC<{start: number}> = ({start}) => {
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
-  const t = f / fps + start;
+  const t = srcTime(f) + start;
   const line1 = usePop(2);
-  const line2 = usePop(Math.round((70.2 - start) * fps));
-  const line3 = usePop(Math.round((73.95 - start) * fps));
+  const line2 = usePop(sec(70.2 - start));
+  const line3 = usePop(sec(73.95 - start));
   const fade12 = interpolate(t, [73.5, 73.95], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   return (
     <TopZone>
