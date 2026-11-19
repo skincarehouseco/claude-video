@@ -5,12 +5,13 @@ const FONTS: [string, string, string][] = [
   ['WhimsyCaption', 'fonts/PatrickHand-Regular.ttf', 'normal'],
   ['WhimsyPixel', 'fonts/PixelifySans.ttf', 'normal'],
   ['WhimsySerif', 'fonts/PlayfairDisplay-Italic.ttf', 'italic'],
+  ['WhimsyRound', 'fonts/Fredoka.ttf', 'normal'],
 ];
 if (typeof window !== 'undefined' && 'FontFace' in window) {
   const handle = delayRender('Loading fonts', {timeoutInMilliseconds: 120000, retries: 2});
   Promise.all(
     FONTS.map(([family, file, style]) => {
-      const face = new FontFace(family, `url(${staticFile(file)})`, {weight: '400', style});
+      const face = new FontFace(family, `url(${staticFile(file)})`, {weight: family === 'WhimsyRound' ? '300 700' : '400', style});
       return face.load().then((f) => document.fonts.add(f));
     }),
   )
@@ -30,6 +31,8 @@ export const captionFont = 'WhimsyCaption';
 export const pixelFont = 'WhimsyPixel';
 // Elegant italic serif accents (like the Scholar / Sylvan reference)
 export const serifFont = 'WhimsySerif';
+// Clean, modern rounded sans for ingredient names + info notes
+export const roundFont = 'WhimsyRound';
 
 export const C = {
   butter: '#FFF0A6', // soft butter yellow (captions)
@@ -43,7 +46,8 @@ export const C = {
   peach: '#FFD8BE',
   ink: '#4A3A4E',
   cocoa: '#5B4636',
-  okGreen: '#7CCB98',
+  okGreen: '#6CC48C',
+  plum: '#3E2C4A',
   softRed: '#F08A9B',
 };
 

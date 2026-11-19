@@ -1,57 +1,68 @@
 import React from 'react';
-import {AbsoluteFill, interpolate, Sequence, spring, useCurrentFrame, useVideoConfig} from 'remotion';
-import {Check, Cross, Droplet, Heart, Moon, Plus, Shield, Sparkle, Sun, Warn} from './Icons';
-import {C, pixelFont, SAFE, SAFE_CENTER_X, sec, serifFont, captionFont} from './theme';
+import {AbsoluteFill, Easing, interpolate, Sequence, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {Check, Cross, Droplet, Heart, Moon, Plus, Shield, Sparkle, Warn} from './Icons';
+import {C, pixelFont, roundFont, SAFE, SAFE_CENTER_X, sec, serifFont} from './theme';
+import {DayNight} from './DayNight';
 
 /* ---------- animation helpers ---------- */
-const usePop = (delay = 0, cfg = {damping: 11, stiffness: 170, mass: 0.7}) => {
+// softer springs than before: no jitter, just a smooth, slightly bouncy settle
+const SOFT = {damping: 16, stiffness: 140, mass: 0.8};
+const usePop = (delay = 0, cfg = SOFT) => {
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
   return spring({frame: f - delay, fps, config: cfg});
 };
-// fades/shrinks everything out over the last `len` frames of the parent Sequence
-const useExit = (len = 9) => {
+// fades/lifts everything out over the last `len` frames of the parent Sequence
+const useExit = (len = 10) => {
   const f = useCurrentFrame();
   const {durationInFrames} = useVideoConfig();
   return interpolate(f, [durationInFrames - len, durationInFrames], [1, 0], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
+    easing: Easing.inOut(Easing.cubic),
   });
 };
-const useFloat = (amp = 6, period = 50, phase = 0) => {
+const useFloat = (amp = 5, period = 70, phase = 0) => {
   const f = useCurrentFrame();
   return Math.sin((f + phase) / (period / (2 * Math.PI))) * amp;
 };
 
-const TOP_ZONE_Y = SAFE.top + 20; // titles live in the empty wall area above the head
+const TOP_ZONE_Y = SAFE.top + 6; // titles live in the empty wall area above the head
+const ZONE_W = SAFE.right - SAFE.left; // 830
+
+const headingShadow = '0 3px 0 rgba(91,70,54,0.75), 0 6px 22px rgba(40,25,30,0.5)';
 
 /* ---------- building blocks ---------- */
-const Pill: React.FC<{text: string; bg: string; delay: number; icon?: React.ReactNode; tilt?: number}> = ({
-  text,
-  bg,
-  delay,
-  icon,
-  tilt = 0,
-}) => {
+const Pill: React.FC<{
+  text: string;
+  bg: string;
+  delay: number;
+  size: number;
+  icon?: React.ReactNode;
+  tilt?: number;
+}> = ({text, bg, delay, size, icon, tilt = 0}) => {
   const p = usePop(delay);
-  const fl = useFloat(5, 60, delay * 7);
+  const fl = useFloat(4, 80, delay * 9);
   return (
     <div
       style={{
         display: 'flex',
         alignItems: 'center',
-        gap: 12,
-        padding: '14px 28px 16px',
+        gap: 14,
+        padding: `${size * 0.2}px ${size * 0.5}px ${size * 0.24}px`,
         borderRadius: 999,
-        background: bg,
-        border: '5px solid #fff',
-        boxShadow: '0 8px 0 rgba(74,58,78,0.18), 0 10px 26px rgba(40,20,40,0.25)',
-        fontFamily: pixelFont,
-        fontSize: 50,
-        color: C.ink,
+        background: `linear-gradient(180deg, #ffffff 0%, ${bg} 55%)`,
+        border: '6px solid #fff',
+        boxShadow: `0 9px 0 ${bg}, 0 9px 0 6px rgba(255,255,255,0.0), 0 14px 30px rgba(40,20,40,0.28)`,
+        fontFamily: roundFont,
+        fontWeight: 600,
+        fontSize: size,
+        lineHeight: 1.05,
+        letterSpacing: 0.5,
+        color: C.plum,
         whiteSpace: 'nowrap',
-        transform: `translateY(${(1 - p) * 40 + fl}px) scale(${p}) rotate(${tilt * p}deg)`,
-        opacity: Math.min(1, p * 1.5),
+        transform: `translateY(${(1 - p) * 36 + fl}px) scale(${0.6 + 0.4 * p}) rotate(${tilt * p}deg)`,
+        opacity: Math.min(1, p * 1.4),
       }}
     >
       {icon}
@@ -60,13 +71,11 @@ const Pill: React.FC<{text: string; bg: string; delay: number; icon?: React.Reac
   );
 };
 
-const Operator: React.FC<{kind: 'bad' | 'good'; delay: number}> = ({kind, delay}) => {
-  const p = usePop(delay, {damping: 8, stiffness: 200, mass: 0.6});
-  const f = useCurrentFrame();
-  const wob = kind === 'bad' ? Math.sin(f / 4) * 6 * Math.max(0, 1 - (f - delay) / 40) : 0;
+const Operator: React.FC<{kind: 'bad' | 'good'; delay: number; size?: number}> = ({kind, delay, size = 84}) => {
+  const p = usePop(delay, {damping: 12, stiffness: 160, mass: 0.7});
   return (
-    <div style={{transform: `scale(${p}) rotate(${(1 - p) * -90 + wob}deg)`, margin: '0 -6px', zIndex: 2}}>
-      {kind === 'bad' ? <Cross size={74} /> : <Plus size={74} />}
+    <div style={{transform: `scale(${p}) rotate(${(1 - p) * -120}deg)`, zIndex: 2, flexShrink: 0}}>
+      {kind === 'bad' ? <Cross size={size} /> : <Plus size={size} />}
     </div>
   );
 };
@@ -74,20 +83,22 @@ const Operator: React.FC<{kind: 'bad' | 'good'; delay: number}> = ({kind, delay}
 const Label: React.FC<{text: string; delay?: number}> = ({text, delay = 0}) => {
   const p = usePop(delay);
   return (
-    <div
-      style={{
-        fontFamily: serifFont,
-        fontStyle: 'italic',
-        fontWeight: 400,
-        fontSize: 52,
-        color: C.butter,
-        textShadow: '0 2px 0 rgba(91,70,54,0.7), 0 4px 16px rgba(40,25,30,0.45)',
-        transform: `translateY(${(1 - p) * -24}px) rotate(-4deg)`,
-        opacity: p,
-        marginBottom: 6,
-      }}
-    >
-      {text}
+    <div style={{display: 'flex', alignItems: 'center', gap: 14, opacity: p, transform: `translateY(${(1 - p) * -20}px)`}}>
+      <Sparkle size={36} delay={delay} />
+      <div
+        style={{
+          fontFamily: serifFont,
+          fontStyle: 'italic',
+          fontSize: 70,
+          lineHeight: 1.1,
+          color: C.butter,
+          textShadow: headingShadow,
+          transform: 'rotate(-3deg)',
+        }}
+      >
+        {text}
+      </div>
+      <Sparkle size={28} delay={delay + 13} speed={1.3} />
     </div>
   );
 };
@@ -102,34 +113,45 @@ const NoteSlot: React.FC<{notes: Note[]; sectionStart: number}> = ({notes, secti
   notes.forEach((n, i) => {
     if (t >= n.at) idx = i;
   });
-  if (idx < 0) return <div style={{height: 86}} />;
+  if (idx < 0) return <div style={{height: 104}} />;
   const n = notes[idx];
   const local = f - Math.round((n.at - sectionStart) * fps);
-  const p = spring({frame: local, fps, config: {damping: 9, stiffness: 220, mass: 0.6}});
-  const fl = Math.sin(f / 9) * 2;
+  const p = spring({frame: local, fps, config: {damping: 14, stiffness: 170, mass: 0.7}});
+  // the previous note slides out as the new one comes in
+  const prev = idx > 0 ? notes[idx - 1] : null;
+  const prevOut = interpolate(local, [0, 7], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const sticker = (nn: Note, scale: number, opacity: number, rot: number, key: string) => (
+    <div
+      key={key}
+      style={{
+        position: 'absolute',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 12,
+        padding: '10px 30px 13px',
+        borderRadius: 26,
+        background: nn.color,
+        border: '5px solid #fff',
+        boxShadow: '0 10px 26px rgba(40,20,40,0.28)',
+        fontFamily: roundFont,
+        fontWeight: 500,
+        fontSize: 54,
+        lineHeight: 1.1,
+        color: C.plum,
+        transform: `scale(${scale}) rotate(${rot}deg)`,
+        opacity,
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {nn.icon}
+      {nn.text}
+    </div>
+  );
+  const rot = idx % 2 ? 2.5 : -2.5;
   return (
-    <div style={{height: 86, display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 18}}>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 10,
-          padding: '8px 26px 10px',
-          borderRadius: 20,
-          background: n.color,
-          border: '4px dashed rgba(255,255,255,0.95)',
-          boxShadow: '0 8px 22px rgba(40,20,40,0.25)',
-          fontFamily: captionFont,
-          fontSize: 46,
-          color: C.ink,
-          transform: `scale(${p}) rotate(${(idx % 2 ? 3 : -3) + fl}deg)`,
-          opacity: Math.min(1, p * 1.6),
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {n.icon}
-        {n.text}
-      </div>
+    <div style={{height: 104, width: '100%', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 16}}>
+      {prev && prevOut > 0 && sticker(prev, 0.85 + 0.15 * prevOut, prevOut, -rot, 'prev')}
+      {sticker(n, 0.5 + 0.5 * p, Math.min(1, p * 1.5), rot * p, 'cur')}
     </div>
   );
 };
@@ -143,12 +165,12 @@ const TopZone: React.FC<{children: React.ReactNode}> = ({children}) => {
           position: 'absolute',
           top: TOP_ZONE_Y,
           left: SAFE.left,
-          width: SAFE.right - SAFE.left,
+          width: ZONE_W,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           opacity: ex,
-          transform: `scale(${0.85 + 0.15 * ex}) translateY(${(1 - ex) * -30}px)`,
+          transform: `scale(${0.9 + 0.1 * ex}) translateY(${(1 - ex) * -24}px)`,
         }}
       >
         {children}
@@ -166,107 +188,92 @@ const ComboCard: React.FC<{
   notes: Note[];
   sectionStart: number;
   soloIcon?: React.ReactNode;
-}> = ({label, a, b, kind, notes, sectionStart, soloIcon}) => (
-  <TopZone>
-    <Label text={label} />
-    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'nowrap', gap: 0}}>
-      <Pill text={a[0]} bg={a[1]} delay={4} tilt={-3} icon={soloIcon} />
-      {kind !== 'solo' && b && (
-        <>
-          <Operator kind={kind === 'bad' ? 'bad' : 'good'} delay={10} />
-          <Pill text={b[0]} bg={b[1]} delay={14} tilt={3} />
-        </>
+}> = ({label, a, b, kind, notes, sectionStart, soloIcon}) => {
+  const chars = a[0].length + (b ? b[0].length : 0);
+  const singleRow = kind === 'solo' || chars <= 12;
+  return (
+    <TopZone>
+      <Label text={label} />
+      {singleRow ? (
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, marginTop: 8}}>
+          <Pill text={a[0]} bg={a[1]} delay={4} size={74} tilt={-2} icon={soloIcon} />
+          {kind !== 'solo' && b && (
+            <>
+              <Operator kind={kind === 'bad' ? 'bad' : 'good'} delay={10} />
+              <Pill text={b[0]} bg={b[1]} delay={14} size={74} tilt={2} />
+            </>
+          )}
+        </div>
+      ) : (
+        // staggered two-row layout keeps long ingredient names big & readable
+        <div style={{width: '100%', display: 'flex', flexDirection: 'column', marginTop: 8}}>
+          <div style={{display: 'flex', justifyContent: 'flex-start', paddingLeft: 40}}>
+            <Pill text={a[0]} bg={a[1]} delay={4} size={70} tilt={-2} />
+          </div>
+          <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 10, paddingRight: 20, marginTop: 6}}>
+            <Operator kind={kind === 'bad' ? 'bad' : 'good'} delay={10} size={80} />
+            {b && <Pill text={b[0]} bg={b[1]} delay={14} size={70} tilt={2} />}
+          </div>
+        </div>
       )}
-    </div>
-    <NoteSlot notes={notes} sectionStart={sectionStart} />
-    <Sparkle size={44} style={{position: 'absolute', left: 30, top: 6}} delay={3} />
-    <Sparkle size={30} style={{position: 'absolute', right: 40, top: 30}} delay={17} speed={1.4} />
-  </TopZone>
-);
+      <NoteSlot notes={notes} sectionStart={sectionStart} />
+    </TopZone>
+  );
+};
 
 const HookTitle: React.FC = () => {
   const f = useCurrentFrame();
-  const word = "don't mix these!";
-  const sub = usePop(16);
+  const sub = usePop(18);
+  const line = (word: string, offset: number, size: number) => (
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+      {word.split('').map((ch, i) => {
+        const p = spring({frame: f - 2 - (offset + i) * 1.5, fps: 30, config: {damping: 13, stiffness: 160, mass: 0.6}});
+        const bob = Math.sin((f + (offset + i) * 6) / 14) * 3;
+        return (
+          <span
+            key={i}
+            style={{
+              fontFamily: pixelFont,
+              fontSize: size,
+              lineHeight: 1,
+              color: '#fff',
+              display: 'inline-block',
+              whiteSpace: 'pre',
+              textShadow: `0 7px 0 ${C.rose}, 0 12px 28px rgba(60,20,50,0.45)`,
+              transform: `translateY(${(1 - p) * -50 + bob}px) scale(${0.5 + 0.5 * p})`,
+              opacity: Math.min(1, p * 1.5),
+            }}
+          >
+            {ch}
+          </span>
+        );
+      })}
+    </div>
+  );
   return (
     <TopZone>
-      <div style={{display: 'flex', position: 'relative'}}>
-        {word.split('').map((ch, i) => {
-          const p = spring({frame: f - 2 - i * 1.4, fps: 30, config: {damping: 9, stiffness: 200, mass: 0.5}});
-          const bob = Math.sin((f + i * 5) / 8) * 4;
-          return (
-            <span
-              key={i}
-              style={{
-                fontFamily: pixelFont,
-                fontSize: 92,
-                color: '#fff',
-                display: 'inline-block',
-                whiteSpace: 'pre',
-                textShadow: `0 6px 0 ${C.rose}, 0 10px 24px rgba(60,20,50,0.4)`,
-                transform: `translateY(${(1 - p) * -60 + bob}px) scale(${p})`,
-                opacity: Math.min(1, p * 1.6),
-              }}
-            >
-              {ch}
-            </span>
-          );
-        })}
+      <div style={{position: 'relative'}}>
+        {line("don't mix", 0, 132)}
+        {line('these!', 9, 132)}
+        <Sparkle size={58} style={{position: 'absolute', left: -50, top: -10}} delay={0} />
+        <Sparkle size={40} style={{position: 'absolute', right: -40, top: 150}} delay={14} speed={1.3} />
       </div>
       <div
         style={{
           fontFamily: serifFont,
           fontStyle: 'italic',
-          fontSize: 56,
+          fontSize: 68,
           color: C.butter,
-          marginTop: 6,
+          marginTop: 14,
           opacity: sub,
           transform: `translateY(${(1 - sub) * 20}px) rotate(-3deg)`,
-          textShadow: '0 2px 0 rgba(91,70,54,0.7), 0 4px 16px rgba(40,25,30,0.45)',
+          textShadow: headingShadow,
           display: 'flex',
           alignItems: 'center',
-          gap: 14,
+          gap: 16,
         }}
       >
-        <Heart size={36} /> skincare edition <Heart size={36} color={C.lavender} />
-      </div>
-      <Sparkle size={50} style={{position: 'absolute', left: 10, top: -16}} delay={0} />
-      <Sparkle size={34} style={{position: 'absolute', right: 20, top: 4}} delay={11} speed={1.3} />
-      <Sparkle size={26} style={{position: 'absolute', right: 70, top: 120}} delay={23} speed={0.8} />
-    </TopZone>
-  );
-};
-
-const AmPm: React.FC = () => {
-  const a = usePop(2);
-  const b = usePop(9);
-  const card = (p: number, icon: React.ReactNode, when: string, what: string, bg: string, tilt: number) => (
-    <div
-      style={{
-        width: 330,
-        padding: '16px 10px 20px',
-        borderRadius: 34,
-        background: bg,
-        border: '5px solid #fff',
-        boxShadow: '0 8px 0 rgba(74,58,78,0.18), 0 10px 26px rgba(40,20,40,0.25)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        transform: `scale(${p}) rotate(${tilt}deg)`,
-        opacity: Math.min(1, p * 1.5),
-      }}
-    >
-      {icon}
-      <div style={{fontFamily: pixelFont, fontSize: 46, color: C.ink, marginTop: 4}}>{when}</div>
-      <div style={{fontFamily: captionFont, fontSize: 44, color: C.ink}}>{what}</div>
-    </div>
-  );
-  return (
-    <TopZone>
-      <Label text="the fix" />
-      <div style={{display: 'flex', gap: 40}}>
-        {card(a, <Sun size={64} />, 'AM', 'vitamin C', C.peach, -3)}
-        {card(b, <Moon size={64} />, 'PM', 'retinol', C.lavender, 3)}
+        <Heart size={42} /> skincare edition <Heart size={42} color={C.lavender} />
       </div>
     </TopZone>
   );
@@ -278,64 +285,67 @@ const Outro: React.FC<{start: number}> = ({start}) => {
   const t = f / fps + start;
   const line1 = usePop(2);
   const line2 = usePop(Math.round((70.2 - start) * fps));
-  const line3 = usePop(Math.round((74.0 - start) * fps), {damping: 8, stiffness: 160, mass: 0.7});
-  const fade12 = interpolate(t, [73.6, 74.0], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const txt: React.CSSProperties = {
-    fontFamily: serifFont,
-    fontStyle: 'italic',
-    fontSize: 54,
-    color: C.butter,
-    textShadow: '0 2px 0 rgba(91,70,54,0.7), 0 4px 16px rgba(40,25,30,0.45)',
-    textAlign: 'center',
-  };
+  const line3 = usePop(Math.round((73.95 - start) * fps));
+  const fade12 = interpolate(t, [73.5, 73.95], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   return (
     <TopZone>
-      <div style={{position: 'relative', width: '100%', height: 300, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <div style={{...txt, opacity: line1 * fade12, transform: `translateY(${(1 - line1) * 20}px)`}}>
+      <div style={{position: 'relative', width: '100%', height: 330, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <div
+          style={{
+            fontFamily: serifFont,
+            fontStyle: 'italic',
+            fontSize: 70,
+            color: C.butter,
+            textShadow: headingShadow,
+            opacity: line1 * fade12,
+            transform: `translateY(${(1 - line1) * 20}px) rotate(-2deg)`,
+          }}
+        >
           it's not your skincare...
         </div>
         <div
           style={{
-            ...txt,
-            fontFamily: pixelFont,
-            fontStyle: 'normal',
-            fontSize: 60,
+            fontFamily: roundFont,
+            fontWeight: 600,
+            fontSize: 74,
             color: '#fff',
-            textShadow: `0 5px 0 ${C.rose}, 0 8px 20px rgba(60,20,50,0.4)`,
-            marginTop: 10,
+            textShadow: `0 6px 0 ${C.rose}, 0 10px 24px rgba(60,20,50,0.45)`,
+            marginTop: 12,
             opacity: line2 * fade12,
-            transform: `scale(${line2})`,
+            transform: `scale(${0.6 + 0.4 * line2})`,
+            whiteSpace: 'nowrap',
           }}
         >
           it's how you mix it
         </div>
-        {t >= 73.8 && (
+        {t >= 73.9 && (
           <div
             style={{
               position: 'absolute',
-              top: 30,
+              top: 40,
               display: 'flex',
               alignItems: 'center',
-              gap: 16,
-              padding: '16px 34px 20px',
+              gap: 18,
+              padding: '18px 40px 22px',
               borderRadius: 999,
-              background: C.mint,
-              border: '5px solid #fff',
-              boxShadow: '0 8px 0 rgba(74,58,78,0.18), 0 10px 26px rgba(40,20,40,0.25)',
-              fontFamily: pixelFont,
-              fontSize: 54,
-              color: C.ink,
-              transform: `scale(${line3}) rotate(${-2 + Math.sin(f / 10) * 1.5}deg)`,
+              background: `linear-gradient(180deg, #ffffff 0%, ${C.mint} 55%)`,
+              border: '6px solid #fff',
+              boxShadow: `0 9px 0 ${C.mint}, 0 14px 30px rgba(40,20,40,0.28)`,
+              fontFamily: roundFont,
+              fontWeight: 600,
+              fontSize: 72,
+              color: C.plum,
+              transform: `scale(${0.5 + 0.5 * line3}) rotate(${-2 + Math.sin(f / 16) * 1.2}deg)`,
               opacity: Math.min(1, line3 * 1.5),
               whiteSpace: 'nowrap',
             }}
           >
-            <Check size={60} /> layer them right
+            <Check size={72} /> layer them right
           </div>
         )}
-        <Sparkle size={44} style={{position: 'absolute', left: 20, top: 0}} delay={5} />
-        <Sparkle size={30} style={{position: 'absolute', right: 30, top: 90}} delay={20} speed={1.3} />
-        {t >= 74 && <Sparkle size={56} style={{position: 'absolute', right: 60, top: -10}} delay={0} speed={1.6} />}
+        <Sparkle size={50} style={{position: 'absolute', left: 0, top: -6}} delay={5} />
+        <Sparkle size={34} style={{position: 'absolute', right: 10, top: 100}} delay={20} speed={1.3} />
+        {t >= 74 && <Sparkle size={60} style={{position: 'absolute', right: 30, top: -14}} delay={0} speed={1.4} />}
       </div>
     </TopZone>
   );
@@ -346,23 +356,23 @@ const FloatingHearts: React.FC = () => {
   const f = useCurrentFrame();
   const {durationInFrames} = useVideoConfig();
   const items = [
-    {x: 120, d: 0, s: 34, c: C.rose},
-    {x: 840, d: 8, s: 28, c: C.lavender},
-    {x: 200, d: 16, s: 24, c: C.pink},
-    {x: 780, d: 22, s: 36, c: C.rose},
+    {x: 110, d: 0, s: 38, c: C.rose},
+    {x: 820, d: 8, s: 30, c: C.lavender},
+    {x: 190, d: 16, s: 26, c: C.pink},
+    {x: 760, d: 22, s: 38, c: C.rose},
   ];
   return (
     <AbsoluteFill style={{pointerEvents: 'none'}}>
       {items.map((it, i) => {
         const lf = f - it.d;
         if (lf < 0) return null;
-        const y = interpolate(lf, [0, durationInFrames], [1150, 650]);
-        const o = interpolate(lf, [0, 8, durationInFrames - 30, durationInFrames - 10], [0, 0.9, 0.9, 0], {
+        const y = interpolate(lf, [0, durationInFrames], [1150, 700]);
+        const o = interpolate(lf, [0, 10, durationInFrames - 30, durationInFrames - 10], [0, 0.9, 0.9, 0], {
           extrapolateLeft: 'clamp',
           extrapolateRight: 'clamp',
         });
         return (
-          <div key={i} style={{position: 'absolute', left: it.x + Math.sin(lf / 10 + i) * 18, top: y, opacity: o}}>
+          <div key={i} style={{position: 'absolute', left: it.x + Math.sin(lf / 14 + i) * 16, top: y, opacity: o}}>
             <Heart size={it.s} color={it.c} />
           </div>
         );
@@ -371,16 +381,19 @@ const FloatingHearts: React.FC = () => {
   );
 };
 
-/* ---------- section transition: sparkle sweep + soft glow ---------- */
+/* ---------- section transition: soft sparkle sweep + glow, centred on the jump cut ---------- */
 export const SparkleSweep: React.FC = () => {
   const f = useCurrentFrame();
   const {durationInFrames} = useVideoConfig();
   const p = f / durationInFrames;
-  const glow = interpolate(f, [0, 4, durationInFrames], [0, 0.22, 0], {extrapolateRight: 'clamp'});
-  const stars = Array.from({length: 9}).map((_, i) => ({
-    y: 260 + ((i * 197) % 1100),
-    s: 22 + ((i * 13) % 26),
-    lag: (i % 4) * 0.08,
+  const glow = interpolate(f, [0, durationInFrames / 2, durationInFrames], [0, 0.2, 0], {
+    extrapolateRight: 'clamp',
+    easing: Easing.inOut(Easing.sin),
+  });
+  const stars = Array.from({length: 8}).map((_, i) => ({
+    y: 300 + ((i * 197) % 1000),
+    s: 24 + ((i * 13) % 24),
+    lag: (i % 4) * 0.07,
   }));
   return (
     <AbsoluteFill style={{pointerEvents: 'none'}}>
@@ -391,11 +404,11 @@ export const SparkleSweep: React.FC = () => {
         }}
       />
       {stars.map((st, i) => {
-        const pp = Math.min(1, Math.max(0, (p - st.lag) / (1 - 0.3)));
+        const pp = Easing.inOut(Easing.sin)(Math.min(1, Math.max(0, (p - st.lag) / 0.72)));
         const x = interpolate(pp, [0, 1], [-80, 1160]);
         const o = Math.sin(pp * Math.PI);
         return (
-          <div key={i} style={{position: 'absolute', left: x, top: st.y - pp * 120, opacity: o}}>
+          <div key={i} style={{position: 'absolute', left: x, top: st.y - pp * 100, opacity: o}}>
             <Sparkle size={st.s} delay={i * 7} color={i % 3 === 0 ? C.butter : C.cream} />
           </div>
         );
@@ -405,7 +418,9 @@ export const SparkleSweep: React.FC = () => {
 };
 
 /* ---------- timeline ---------- */
-export const SECTION_STARTS = [11.35, 27.15, 39.45, 47.75, 55.7, 65.95];
+// Jump cuts in the source footage (seconds). Section sweeps sit on the cuts so they hide the jump.
+export const CUTS = [6.2667, 10.9, 27.3333, 30.1, 39.3, 41.5, 47.3, 55.5, 66.0333];
+export const SECTION_CUTS = [10.9, 27.3333, 39.3, 47.3, 55.5, 66.0333];
 
 const S: React.FC<{from: number; to: number; children: React.ReactNode}> = ({from, to, children}) => (
   <Sequence from={sec(from)} durationInFrames={sec(to) - sec(from)} layout="none">
@@ -415,96 +430,96 @@ const S: React.FC<{from: number; to: number; children: React.ReactNode}> = ({fro
 
 export const Overlays: React.FC = () => (
   <>
-    <S from={0.15} to={6.5}>
+    <S from={0.15} to={6.3}>
       <HookTitle />
     </S>
 
-    <S from={11.4} to={21.55}>
+    <S from={11.4} to={21.45}>
       <ComboCard
         label="combo no.1"
         a={['vitamin C', C.peach]}
         b={['retinol', C.lavender]}
         kind="bad"
         sectionStart={11.4}
-        notes={[{at: 18.75, text: 'too harsh!', color: C.pink, icon: <Warn />}]}
+        notes={[{at: 18.75, text: 'too harsh!', color: C.pink, icon: <Warn size={46} />}]}
       />
     </S>
-    <S from={21.6} to={26.95}>
-      <AmPm />
+    <S from={21.45} to={27.3}>
+      <DayNight start={21.45} />
     </S>
 
-    <S from={27.2} to={39.3}>
+    <S from={27.4} to={39.25}>
       <ComboCard
         label="combo no.2"
         a={['vitamin C', C.peach]}
         b={['niacinamide', C.mint]}
         kind="good"
-        sectionStart={27.2}
+        sectionStart={27.4}
         notes={[
-          {at: 31.2, text: 'good combo', color: C.mint, icon: <Heart size={34} />},
-          {at: 32.9, text: 'brightens skin', color: C.butter, icon: <Sparkle size={34} color="#fff" />},
-          {at: 35.8, text: 'fades dark spots', color: C.pink, icon: <Sparkle size={34} color="#fff" />},
+          {at: 31.2, text: 'good combo', color: C.mint, icon: <Heart size={42} />},
+          {at: 32.9, text: 'brightens skin', color: C.butter, icon: <Sparkle size={42} color="#fff" />},
+          {at: 35.8, text: 'fades dark spots', color: C.pink, icon: <Sparkle size={42} color="#fff" />},
         ]}
       />
     </S>
-    <S from={31.2} to={33.2}>
+    <S from={31.2} to={33.4}>
       <FloatingHearts />
     </S>
 
-    <S from={39.5} to={47.55}>
+    <S from={39.45} to={47.25}>
       <ComboCard
         label="combo no.3"
         a={['retinol', C.lavender]}
         b={['BHA', C.sky]}
         kind="bad"
-        sectionStart={39.5}
+        sectionStart={39.45}
         notes={[
-          {at: 41.25, text: 'be careful!', color: C.pink, icon: <Warn />},
+          {at: 41.3, text: 'be careful!', color: C.pink, icon: <Warn size={46} />},
           {at: 44.2, text: 'dryness + irritation', color: C.peach},
-          {at: 45.85, text: 'alternate nights', color: C.lavender, icon: <Moon size={36} />},
+          {at: 45.85, text: 'alternate nights', color: C.lavender, icon: <Moon size={44} />},
         ]}
       />
     </S>
 
-    <S from={47.8} to={55.5}>
+    <S from={47.45} to={55.45}>
       <ComboCard
         label="combo no.4"
         a={['retinol', C.lavender]}
         b={['niacinamide', C.mint]}
         kind="good"
-        sectionStart={47.8}
+        sectionStart={47.45}
         notes={[
-          {at: 50.2, text: 'great combo', color: C.mint, icon: <Heart size={34} />},
-          {at: 52.35, text: 'calms skin', color: C.sky, icon: <Sparkle size={34} color="#fff" />},
-          {at: 53.6, text: 'supports skin barrier', color: C.butter, icon: <Shield size={36} />},
+          {at: 50.2, text: 'great combo', color: C.mint, icon: <Heart size={42} />},
+          {at: 52.35, text: 'calms skin', color: C.sky, icon: <Sparkle size={42} color="#fff" />},
+          {at: 53.6, text: 'skin barrier', color: C.butter, icon: <Shield size={44} />},
         ]}
       />
     </S>
-    <S from={50.2} to={52.2}>
+    <S from={50.2} to={52.4}>
       <FloatingHearts />
     </S>
 
-    <S from={55.8} to={65.6}>
+    <S from={55.65} to={65.95}>
       <ComboCard
         label="the bestie"
         a={['hyaluronic acid', C.sky]}
         kind="solo"
-        soloIcon={<Droplet size={40} />}
-        sectionStart={55.8}
+        soloIcon={<Droplet size={50} />}
+        sectionStart={55.65}
         notes={[
-          {at: 58.0, text: 'super flexible', color: C.butter, icon: <Sparkle size={34} color="#fff" />},
+          {at: 58.0, text: 'super flexible', color: C.butter, icon: <Sparkle size={42} color="#fff" />},
           {at: 60.3, text: 'pairs with almost anything', color: C.mint},
-          {at: 64.1, text: 'hydrated skin', color: C.sky, icon: <Droplet size={28} />},
+          {at: 64.1, text: 'hydrated skin', color: C.sky, icon: <Droplet size={34} />},
         ]}
       />
     </S>
 
-    <S from={66.05} to={76.8}>
-      <Outro start={66.05} />
+    <S from={66.15} to={76.8}>
+      <Outro start={66.15} />
     </S>
 
-    {SECTION_STARTS.map((s) => (
-      <S key={s} from={s - 0.3} to={s + 0.6}>
+    {SECTION_CUTS.map((s) => (
+      <S key={s} from={s - 0.4} to={s + 0.45}>
         <SparkleSweep />
       </S>
     ))}

@@ -68,7 +68,7 @@ export const Captions: React.FC = () => {
               style={{
                 fontFamily: captionFont,
                 fontWeight: 400,
-                fontSize: 64,
+                fontSize: 70,
                 lineHeight: 1.15,
                 letterSpacing: 0.5,
                 color: active ? C.cream : C.butter,

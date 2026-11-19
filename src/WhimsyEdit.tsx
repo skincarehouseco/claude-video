@@ -1,95 +1,43 @@
 import React, {useMemo} from 'react';
-import {AbsoluteFill, Audio, Easing, interpolate, OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Audio, Freeze, interpolate, OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
+import {cameraTransform, CUT_FRAMES, DISSOLVE_FRAMES, dissolveOpacity, ORIGIN} from './camera';
 import captions from './captions.json';
 import {Captions} from './Captions';
-import {Overlays, SECTION_STARTS} from './Overlays';
+import {Overlays, SECTION_CUTS} from './Overlays';
 import {DURATION_IN_FRAMES, FPS, sec} from './theme';
 
-/* ------------ camera: smooth zoom keyframes [seconds, scale] ------------ */
-// Gentle push-ins on key lines and settles back out; punches use a soft overshoot.
-type Key = [number, number, ('soft' | 'punch')?];
-const ZOOM: Key[] = [
-  [0, 1.1],
-  [1.3, 1.0, 'soft'], // intro settle (zoom out)
-  [6.7, 1.0],
-  [7.6, 1.06, 'soft'], // "not every skincare ingredient..."
-  [10.6, 1.06],
-  [11.5, 1.0, 'soft'],
-  [18.5, 1.02],
-  [19.0, 1.12, 'punch'], // "too harsh"
-  [21.2, 1.12],
-  [22.2, 1.02, 'soft'],
-  [27.0, 1.0, 'soft'],
-  [31.0, 1.0],
-  [31.6, 1.07, 'punch'], // "good combo"
-  [33.4, 1.07],
-  [34.4, 1.0, 'soft'],
-  [41.0, 1.0],
-  [41.5, 1.12, 'punch'], // "be careful"
-  [43.2, 1.12],
-  [44.2, 1.02, 'soft'],
-  [47.6, 1.0, 'soft'],
-  [50.0, 1.0],
-  [50.6, 1.07, 'punch'], // "great combo"
-  [52.2, 1.07],
-  [53.2, 1.0, 'soft'],
-  [57.9, 1.0],
-  [58.4, 1.08, 'punch'], // "super flexible"
-  [60.0, 1.08],
-  [61.0, 1.0, 'soft'],
-  [66.0, 1.0],
-  [73.6, 1.06, 'soft'], // slow push through the takeaway
-  [74.2, 1.11, 'punch'], // "make sure you layer them correctly"
-  [76.0, 1.11],
-  [76.8, 1.04, 'soft'],
-];
-const zoomAt = (t: number) => {
-  for (let i = 0; i < ZOOM.length - 1; i++) {
-    const [t0, z0] = ZOOM[i];
-    const [t1, z1, kind] = ZOOM[i + 1];
-    if (t >= t0 && t <= t1) {
-      const ease = kind === 'punch' ? Easing.out(Easing.back(1.6)) : Easing.inOut(Easing.cubic);
-      return interpolate(t, [t0, t1], [z0, z1], {easing: ease});
-    }
-  }
-  return ZOOM[ZOOM.length - 1][1];
-};
+/* ------------ camera: graded footage, smooth zooms, soft dissolves over jump cuts ------------ */
+const Footage: React.FC<{t: number}> = ({t}) => (
+  <AbsoluteFill style={{transform: cameraTransform(t), transformOrigin: ORIGIN}}>
+    {/* main_graded.mp4 = per-shot exposure-matched + colour graded source (scripts/grade.py) */}
+    <OffthreadVideo src={staticFile('main_graded.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+  </AbsoluteFill>
+);
 
 const Camera: React.FC = () => {
   const frame = useCurrentFrame();
   const t = frame / FPS;
-  const z = zoomAt(t);
-  // tiny handheld-style drift so held zooms feel alive (sub-pixel, not distracting)
-  const dx = Math.sin(t * 0.7) * 3 * (z - 1) * 10;
-  const dy = Math.cos(t * 0.5) * 2 * (z - 1) * 10;
-  // brief soft-focus "breath" on each section change
-  const blur = SECTION_STARTS.reduce((b, s) => {
-    const d = Math.abs(t - s);
-    return Math.max(b, d < 0.25 ? (0.25 - d) * 10 : 0);
-  }, 0);
+  const cut = CUT_FRAMES.find((c) => frame >= c && frame < c + DISSOLVE_FRAMES);
   return (
     <AbsoluteFill style={{overflow: 'hidden', backgroundColor: '#000'}}>
+      <Footage t={t} />
+      {cut !== undefined && (
+        // hold the last frame of the outgoing shot and dissolve it away -> no hard jump
+        <AbsoluteFill style={{opacity: dissolveOpacity(frame - cut)}}>
+          <Freeze frame={cut - 1}>
+            <Footage t={(cut - 1) / FPS} />
+          </Freeze>
+        </AbsoluteFill>
+      )}
+      {/* very light warm finish + soft vignette (main grade is baked into the footage) */}
       <AbsoluteFill
         style={{
-          transform: `translate(${dx}px, ${dy}px) scale(${z})`,
-          transformOrigin: '50% 34%', // face height
-          // colour grade: a touch brighter, cleaner contrast, warmer & slightly richer
-          filter: `brightness(1.05) contrast(1.07) saturate(1.1) sepia(0.06) blur(${blur.toFixed(2)}px)`,
-        }}
-      >
-        <OffthreadVideo src={staticFile('main.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-      </AbsoluteFill>
-      {/* warm, rosy soft-light wash + lifted shadows */}
-      <AbsoluteFill
-        style={{
-          background: 'linear-gradient(180deg, rgba(255,214,190,0.16) 0%, rgba(255,236,214,0.08) 50%, rgba(250,200,215,0.14) 100%)',
+          background: 'linear-gradient(180deg, rgba(255,214,190,0.08) 0%, rgba(255,236,214,0.03) 50%, rgba(250,200,215,0.08) 100%)',
           mixBlendMode: 'soft-light',
         }}
       />
-      <AbsoluteFill style={{background: 'rgba(255,244,236,0.035)', mixBlendMode: 'screen'}} />
-      {/* soft vignette */}
       <AbsoluteFill
-        style={{background: 'radial-gradient(ellipse 75% 65% at 50% 42%, rgba(0,0,0,0) 55%, rgba(35,20,30,0.32) 100%)'}}
+        style={{background: 'radial-gradient(ellipse 80% 70% at 50% 42%, rgba(0,0,0,0) 60%, rgba(35,20,30,0.22) 100%)'}}
       />
     </AbsoluteFill>
   );
@@ -131,14 +79,18 @@ const SFX: Sfx[] = [
   [0.15, 'sparkle', 0.22],
   [0.35, 'pop', 0.18],
   [6.35, 'whoosh', 0.14],
-  ...SECTION_STARTS.map((s) => [s - 0.3, 'whoosh', 0.16] as Sfx),
+  ...SECTION_CUTS.map((s) => [s - 0.35, 'whoosh', 0.15] as Sfx),
   [11.55, 'pop', 0.2],
   [11.85, 'pop', 0.16],
   [18.75, 'oops', 0.2],
-  [21.65, 'pop', 0.2],
-  [21.9, 'pop', 0.16],
-  [27.35, 'pop', 0.2],
-  [27.65, 'pop', 0.16],
+  [21.45, 'sparkle', 0.18],
+  [21.7, 'pop', 0.18],
+  [24.1, 'whoosh', 0.14],
+  [24.25, 'sparkle', 0.16],
+  [24.45, 'pop', 0.16],
+  [25.3, 'sparkle', 0.1],
+  [27.55, 'pop', 0.2],
+  [27.85, 'pop', 0.16],
   [31.2, 'ding', 0.2],
   [32.9, 'sparkle', 0.14],
   [35.8, 'pop', 0.14],
@@ -147,16 +99,16 @@ const SFX: Sfx[] = [
   [41.25, 'oops', 0.2],
   [44.2, 'pop', 0.13],
   [45.85, 'pop', 0.13],
-  [47.95, 'pop', 0.2],
-  [48.25, 'pop', 0.16],
+  [47.6, 'pop', 0.2],
+  [47.9, 'pop', 0.16],
   [50.2, 'ding', 0.2],
   [52.35, 'pop', 0.13],
   [53.6, 'pop', 0.13],
-  [55.95, 'pop', 0.2],
+  [55.8, 'pop', 0.2],
   [58.0, 'boing', 0.17],
   [60.3, 'pop', 0.13],
   [64.1, 'sparkle', 0.13],
-  [66.1, 'pop', 0.14],
+  [66.2, 'pop', 0.14],
   [70.25, 'pop', 0.16],
   [73.85, 'whoosh', 0.14],
   [74.0, 'sparkle', 0.22],
