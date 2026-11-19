@@ -357,7 +357,9 @@ export const DayNight: React.FC<{start: number}> = ({start}) => {
   const night = interpolate(t, [NIGHT_AT, NIGHT_AT + 0.6], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: ease});
   const sunDrop = interpolate(t, [NIGHT_AT - 0.1, NIGHT_AT + 0.6], [0, 700], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.in(Easing.cubic)});
   const moonRise = interpolate(t, [NIGHT_AT, NIGHT_AT + 0.9], [520, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.back(1.2))});
-  const nightFrame = absFrame - Math.round(NIGHT_AT * fps);
+  // cards swap one after the other (never overlapping): morning card leaves, then night card pops in
+  const cardOut = interpolate(t, [NIGHT_AT - 0.05, NIGHT_AT + 0.2], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: ease});
+  const nightFrame = absFrame - Math.round((NIGHT_AT + 0.3) * fps);
 
   // subject colour-matching to the scene lighting
   const subjectFilter = [
@@ -399,13 +401,13 @@ export const DayNight: React.FC<{start: number}> = ({start}) => {
         }}
       />
       {/* info cards */}
-      {night < 1 && (
-        <div style={{opacity: 1 - night}}>
+      {cardOut < 1 && (
+        <div style={{opacity: 1 - cardOut}}>
           <TimeCard when="morning" what="vitamin C" icon={<Sun size={70} />} bg={C.peach} local={f - 6} night={false} />
         </div>
       )}
-      {night > 0 && (
-        <div style={{opacity: night}}>
+      {nightFrame >= 0 && (
+        <div>
           <TimeCard when="night" what="retinol" icon={<Moon size={70} />} bg={C.lavender} local={nightFrame} night />
         </div>
       )}
