@@ -7,7 +7,7 @@ const FONTS: [string, string, string][] = [
   ['WhimsySerif', 'fonts/PlayfairDisplay-Italic.ttf', 'italic'],
 ];
 if (typeof window !== 'undefined' && 'FontFace' in window) {
-  const handle = delayRender('Loading fonts');
+  const handle = delayRender('Loading fonts', {timeoutInMilliseconds: 120000, retries: 2});
   Promise.all(
     FONTS.map(([family, file, style]) => {
       const face = new FontFace(family, `url(${staticFile(file)})`, {weight: '400', style});
