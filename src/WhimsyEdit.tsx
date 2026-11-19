@@ -9,8 +9,8 @@ import {DURATION_IN_FRAMES, FPS, sec} from './theme';
 /* ------------ camera: graded footage, smooth zooms, soft dissolves over jump cuts ------------ */
 const Footage: React.FC<{t: number}> = ({t}) => (
   <AbsoluteFill style={{transform: cameraTransform(t), transformOrigin: ORIGIN}}>
-    {/* main_graded.mp4 = per-shot exposure-matched + colour graded source (scripts/grade.py) */}
-    <OffthreadVideo src={staticFile('main_graded.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+    {/* original footage colours (no grade); scripts/grade.py can produce a graded version if wanted */}
+    <OffthreadVideo src={staticFile('main.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
   </AbsoluteFill>
 );
 
@@ -29,16 +29,6 @@ const Camera: React.FC = () => {
           </Freeze>
         </AbsoluteFill>
       )}
-      {/* very light warm finish + soft vignette (main grade is baked into the footage) */}
-      <AbsoluteFill
-        style={{
-          background: 'linear-gradient(180deg, rgba(255,214,190,0.08) 0%, rgba(255,236,214,0.03) 50%, rgba(250,200,215,0.08) 100%)',
-          mixBlendMode: 'soft-light',
-        }}
-      />
-      <AbsoluteFill
-        style={{background: 'radial-gradient(ellipse 80% 70% at 50% 42%, rgba(0,0,0,0) 60%, rgba(35,20,30,0.22) 100%)'}}
-      />
     </AbsoluteFill>
   );
 };

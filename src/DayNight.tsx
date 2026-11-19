@@ -363,9 +363,9 @@ export const DayNight: React.FC<{start: number}> = ({start}) => {
 
   // subject colour-matching to the scene lighting
   const subjectFilter = [
-    `brightness(${(1.03 - 0.22 * night).toFixed(3)})`,
-    `saturate(${(1.06 - 0.16 * night).toFixed(3)})`,
-    `contrast(${(1.02 + 0.03 * night).toFixed(3)})`,
+    `brightness(${(1 - 0.2 * night).toFixed(3)})`,
+    `saturate(${(1 - 0.12 * night).toFixed(3)})`,
+    `contrast(${(1 + 0.03 * night).toFixed(3)})`,
     // soft light-wrap / rim light: warm sun by day, cool moonlight by night
     `drop-shadow(0 0 14px rgba(255,236,170,${(0.55 * (1 - night)).toFixed(3)}))`,
     `drop-shadow(0 0 18px rgba(140,170,255,${(0.6 * night).toFixed(3)}))`,
