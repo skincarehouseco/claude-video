@@ -1,0 +1,783 @@
+[
+ {
+  "start": 0.32,
+  "end": 1.38,
+  "words": [
+   {
+    "text": "Yang",
+    "start": 0.32,
+    "end": 0.6
+   },
+   {
+    "text": "ni",
+    "start": 0.6,
+    "end": 0.74
+   },
+   {
+    "text": "pakai",
+    "start": 0.74,
+    "end": 0.92
+   },
+   {
+    "text": "skincare",
+    "start": 0.92,
+    "end": 1.22
+   }
+  ]
+ },
+ {
+  "start": 1.38,
+  "end": 2.74,
+  "words": [
+   {
+    "text": "yang",
+    "start": 1.38,
+    "end": 1.56
+   },
+   {
+    "text": "ni",
+    "start": 1.56,
+    "end": 1.74
+   },
+   {
+    "text": "pula",
+    "start": 1.74,
+    "end": 1.94
+   },
+   {
+    "text": "faham",
+    "start": 1.94,
+    "end": 2.16
+   },
+   {
+    "text": "skincare",
+    "start": 2.16,
+    "end": 2.42
+   }
+  ]
+ },
+ {
+  "start": 2.74,
+  "end": 3.82,
+  "words": [
+   {
+    "text": "Dua-dua",
+    "start": 2.74,
+    "end": 3.28
+   },
+   {
+    "text": "pakai",
+    "start": 3.28,
+    "end": 3.5
+   },
+   {
+    "text": "skincare",
+    "start": 3.5,
+    "end": 3.82
+   }
+  ]
+ },
+ {
+  "start": 3.82,
+  "end": 4.56,
+  "words": [
+   {
+    "text": "but",
+    "start": 3.82,
+    "end": 4.06
+   },
+   {
+    "text": "why",
+    "start": 4.06,
+    "end": 4.38
+   },
+   {
+    "text": "are",
+    "start": 4.38,
+    "end": 4.56
+   }
+  ]
+ },
+ {
+  "start": 4.56,
+  "end": 6.0,
+  "words": [
+   {
+    "text": "the",
+    "start": 4.56,
+    "end": 4.74
+   },
+   {
+    "text": "results",
+    "start": 4.74,
+    "end": 4.98
+   },
+   {
+    "text": "so",
+    "start": 4.98,
+    "end": 5.3
+   },
+   {
+    "text": "different?",
+    "start": 5.3,
+    "end": 5.7
+   }
+  ]
+ },
+ {
+  "start": 6.0,
+  "end": 7.64,
+  "words": [
+   {
+    "text": "actually",
+    "start": 6.0,
+    "end": 6.4
+   },
+   {
+    "text": "ada",
+    "start": 6.4,
+    "end": 6.76
+   },
+   {
+    "text": "empat",
+    "start": 6.76,
+    "end": 7.34
+   },
+   {
+    "text": "perkara",
+    "start": 7.34,
+    "end": 7.64
+   }
+  ]
+ },
+ {
+  "start": 7.64,
+  "end": 9.0,
+  "words": [
+   {
+    "text": "yang",
+    "start": 7.64,
+    "end": 7.94
+   },
+   {
+    "text": "korang",
+    "start": 7.94,
+    "end": 8.4
+   },
+   {
+    "text": "kena",
+    "start": 8.4,
+    "end": 8.56
+   },
+   {
+    "text": "tahu",
+    "start": 8.56,
+    "end": 8.8
+   }
+  ]
+ },
+ {
+  "start": 9.0,
+  "end": 9.7,
+  "words": [
+   {
+    "text": "Yang",
+    "start": 9.0,
+    "end": 9.38
+   },
+   {
+    "text": "pertama",
+    "start": 9.38,
+    "end": 9.66
+   }
+  ]
+ },
+ {
+  "start": 9.7,
+  "end": 10.72,
+  "words": [
+   {
+    "text": "kulit",
+    "start": 9.7,
+    "end": 10.3
+   },
+   {
+    "text": "berjerawat",
+    "start": 10.3,
+    "end": 10.72
+   }
+  ]
+ },
+ {
+  "start": 10.72,
+  "end": 11.92,
+  "words": [
+   {
+    "text": "Kalau",
+    "start": 10.72,
+    "end": 10.92
+   },
+   {
+    "text": "kulit",
+    "start": 10.92,
+    "end": 11.26
+   },
+   {
+    "text": "korang",
+    "start": 11.26,
+    "end": 11.54
+   },
+   {
+    "text": "mudah",
+    "start": 11.54,
+    "end": 11.92
+   }
+  ]
+ },
+ {
+  "start": 11.92,
+  "end": 12.42,
+  "words": [
+   {
+    "text": "berjerawat",
+    "start": 11.92,
+    "end": 12.42
+   }
+  ]
+ },
+ {
+  "start": 12.42,
+  "end": 13.4,
+  "words": [
+   {
+    "text": "jangan",
+    "start": 12.42,
+    "end": 12.64
+   },
+   {
+    "text": "exfoliate",
+    "start": 12.8,
+    "end": 13.4
+   }
+  ]
+ },
+ {
+  "start": 13.4,
+  "end": 14.22,
+  "words": [
+   {
+    "text": "setiap",
+    "start": 13.4,
+    "end": 13.82
+   },
+   {
+    "text": "hari",
+    "start": 13.82,
+    "end": 14.0
+   }
+  ]
+ },
+ {
+  "start": 14.22,
+  "end": 16.36,
+  "words": [
+   {
+    "text": "Cukup",
+    "start": 14.22,
+    "end": 14.82
+   },
+   {
+    "text": "dua",
+    "start": 14.82,
+    "end": 15.24
+   },
+   {
+    "text": "kali",
+    "start": 15.24,
+    "end": 15.52
+   },
+   {
+    "text": "seminggu",
+    "start": 15.76,
+    "end": 16.36
+   }
+  ]
+ },
+ {
+  "start": 16.36,
+  "end": 17.34,
+  "words": [
+   {
+    "text": "Yang",
+    "start": 16.36,
+    "end": 16.66
+   },
+   {
+    "text": "kedua",
+    "start": 16.66,
+    "end": 17.06
+   },
+   {
+    "text": "pula",
+    "start": 17.06,
+    "end": 17.34
+   }
+  ]
+ },
+ {
+  "start": 17.34,
+  "end": 18.4,
+  "words": [
+   {
+    "text": "kulit",
+    "start": 17.34,
+    "end": 17.92
+   },
+   {
+    "text": "kering",
+    "start": 17.92,
+    "end": 18.38
+   }
+  ]
+ },
+ {
+  "start": 18.4,
+  "end": 19.88,
+  "words": [
+   {
+    "text": "Kalau",
+    "start": 18.4,
+    "end": 18.86
+   },
+   {
+    "text": "kulit",
+    "start": 18.86,
+    "end": 19.34
+   },
+   {
+    "text": "korang",
+    "start": 19.34,
+    "end": 19.58
+   },
+   {
+    "text": "jenis",
+    "start": 19.58,
+    "end": 19.88
+   }
+  ]
+ },
+ {
+  "start": 19.88,
+  "end": 20.34,
+  "words": [
+   {
+    "text": "yang",
+    "start": 19.88,
+    "end": 20.0
+   },
+   {
+    "text": "kering",
+    "start": 20.0,
+    "end": 20.34
+   }
+  ]
+ },
+ {
+  "start": 20.34,
+  "end": 21.56,
+  "words": [
+   {
+    "text": "jangan",
+    "start": 20.34,
+    "end": 20.6
+   },
+   {
+    "text": "terlalu",
+    "start": 20.6,
+    "end": 21.16
+   },
+   {
+    "text": "kerap",
+    "start": 21.16,
+    "end": 21.56
+   }
+  ]
+ },
+ {
+  "start": 21.56,
+  "end": 22.56,
+  "words": [
+   {
+    "text": "cuci",
+    "start": 21.56,
+    "end": 22.02
+   },
+   {
+    "text": "muka",
+    "start": 22.02,
+    "end": 22.36
+   }
+  ]
+ },
+ {
+  "start": 22.56,
+  "end": 24.84,
+  "words": [
+   {
+    "text": "Dua",
+    "start": 22.56,
+    "end": 23.12
+   },
+   {
+    "text": "kali",
+    "start": 23.12,
+    "end": 23.34
+   },
+   {
+    "text": "sehari",
+    "start": 23.34,
+    "end": 23.74
+   },
+   {
+    "text": "pun",
+    "start": 23.74,
+    "end": 23.9
+   },
+   {
+    "text": "dah",
+    "start": 23.9,
+    "end": 24.28
+   },
+   {
+    "text": "cukup",
+    "start": 24.28,
+    "end": 24.74
+   }
+  ]
+ },
+ {
+  "start": 24.84,
+  "end": 25.72,
+  "words": [
+   {
+    "text": "Yang",
+    "start": 24.84,
+    "end": 25.28
+   },
+   {
+    "text": "ketiga",
+    "start": 25.28,
+    "end": 25.72
+   }
+  ]
+ },
+ {
+  "start": 25.72,
+  "end": 26.92,
+  "words": [
+   {
+    "text": "kulit",
+    "start": 25.72,
+    "end": 26.32
+   },
+   {
+    "text": "berminyak",
+    "start": 26.32,
+    "end": 26.86
+   }
+  ]
+ },
+ {
+  "start": 26.92,
+  "end": 28.76,
+  "words": [
+   {
+    "text": "Kalau",
+    "start": 26.92,
+    "end": 27.42
+   },
+   {
+    "text": "kulit",
+    "start": 27.42,
+    "end": 27.86
+   },
+   {
+    "text": "jenis",
+    "start": 27.86,
+    "end": 28.2
+   },
+   {
+    "text": "yang",
+    "start": 28.2,
+    "end": 28.3
+   },
+   {
+    "text": "berminyak",
+    "start": 28.3,
+    "end": 28.76
+   }
+  ]
+ },
+ {
+  "start": 28.76,
+  "end": 29.72,
+  "words": [
+   {
+    "text": "boleh",
+    "start": 28.76,
+    "end": 29.06
+   },
+   {
+    "text": "try",
+    "start": 29.06,
+    "end": 29.26
+   },
+   {
+    "text": "guna",
+    "start": 29.26,
+    "end": 29.72
+   }
+  ]
+ },
+ {
+  "start": 29.72,
+  "end": 30.56,
+  "words": [
+   {
+    "text": "gel",
+    "start": 29.72,
+    "end": 29.96
+   },
+   {
+    "text": "moisturizer",
+    "start": 29.96,
+    "end": 30.26
+   }
+  ]
+ },
+ {
+  "start": 30.56,
+  "end": 32.0,
+  "words": [
+   {
+    "text": "sebab",
+    "start": 30.56,
+    "end": 31.16
+   },
+   {
+    "text": "tekstur",
+    "start": 31.28,
+    "end": 31.88
+   },
+   {
+    "text": "dia",
+    "start": 31.88,
+    "end": 32.0
+   }
+  ]
+ },
+ {
+  "start": 32.0,
+  "end": 33.16,
+  "words": [
+   {
+    "text": "lebih",
+    "start": 32.0,
+    "end": 32.46
+   },
+   {
+    "text": "ringan",
+    "start": 32.46,
+    "end": 33.02
+   }
+  ]
+ },
+ {
+  "start": 33.16,
+  "end": 34.44,
+  "words": [
+   {
+    "text": "Yang",
+    "start": 33.16,
+    "end": 33.44
+   },
+   {
+    "text": "keempat",
+    "start": 33.44,
+    "end": 33.96
+   },
+   {
+    "text": "pula",
+    "start": 33.96,
+    "end": 34.24
+   },
+   {
+    "text": "adalah",
+    "start": 34.24,
+    "end": 34.44
+   }
+  ]
+ },
+ {
+  "start": 34.44,
+  "end": 35.34,
+  "words": [
+   {
+    "text": "kulit",
+    "start": 34.44,
+    "end": 34.94
+   },
+   {
+    "text": "kusam",
+    "start": 34.94,
+    "end": 35.32
+   }
+  ]
+ },
+ {
+  "start": 35.34,
+  "end": 36.62,
+  "words": [
+   {
+    "text": "Kalau",
+    "start": 35.34,
+    "end": 35.7
+   },
+   {
+    "text": "kulit",
+    "start": 35.7,
+    "end": 36.04
+   },
+   {
+    "text": "nampak",
+    "start": 36.04,
+    "end": 36.3
+   },
+   {
+    "text": "kusam",
+    "start": 36.3,
+    "end": 36.62
+   }
+  ]
+ },
+ {
+  "start": 36.62,
+  "end": 37.72,
+  "words": [
+   {
+    "text": "jangan",
+    "start": 36.62,
+    "end": 36.78
+   },
+   {
+    "text": "skip",
+    "start": 36.78,
+    "end": 37.1
+   },
+   {
+    "text": "sunscreen",
+    "start": 37.1,
+    "end": 37.42
+   }
+  ]
+ },
+ {
+  "start": 37.72,
+  "end": 38.28,
+  "words": [
+   {
+    "text": "Make",
+    "start": 37.72,
+    "end": 37.86
+   },
+   {
+    "text": "sure",
+    "start": 37.86,
+    "end": 38.04
+   },
+   {
+    "text": "pakai",
+    "start": 38.04,
+    "end": 38.28
+   }
+  ]
+ },
+ {
+  "start": 38.28,
+  "end": 39.84,
+  "words": [
+   {
+    "text": "dalam",
+    "start": 38.28,
+    "end": 38.5
+   },
+   {
+    "text": "kuantiti",
+    "start": 38.5,
+    "end": 38.98
+   },
+   {
+    "text": "yang",
+    "start": 38.98,
+    "end": 39.26
+   },
+   {
+    "text": "cukup",
+    "start": 39.26,
+    "end": 39.76
+   }
+  ]
+ },
+ {
+  "start": 39.84,
+  "end": 41.3,
+  "words": [
+   {
+    "text": "Kalau",
+    "start": 39.84,
+    "end": 40.28
+   },
+   {
+    "text": "nak",
+    "start": 40.28,
+    "end": 40.46
+   },
+   {
+    "text": "more",
+    "start": 40.46,
+    "end": 40.7
+   },
+   {
+    "text": "skincare",
+    "start": 40.7,
+    "end": 40.9
+   },
+   {
+    "text": "tips",
+    "start": 40.9,
+    "end": 41.18
+   }
+  ]
+ },
+ {
+  "start": 41.3,
+  "end": 42.58,
+  "words": [
+   {
+    "text": "jangan",
+    "start": 41.3,
+    "end": 41.48
+   },
+   {
+    "text": "lupa",
+    "start": 41.48,
+    "end": 41.78
+   },
+   {
+    "text": "follow",
+    "start": 41.78,
+    "end": 41.98
+   }
+  ]
+ }
+]

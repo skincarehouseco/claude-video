@@ -1,4 +1,27 @@
-# Whimsy skincare edit (Remotion)
+# Skincare edits (Remotion)
+
+## SkinTypesEdit – "4 perkara yang korang kena tahu" (default `npm run render` -> `out/skin-types.mp4`)
+9:16 TikTok edit (42.9 s) following the reference layout: hook cards, "why so different?", "4 perkara" title, then for each point a typed
+`#. Kulit ...` header, coral tag, and ❌ / ✅ illustrated cards split by a dashed divider, ending with a follow CTA.
+
+- `src/skin/SkinEdit.tsx` – camera (original footage, smooth zooms), audio mix (cleaned voice, music ducked ~-24 dB under speech, light SFX), fades
+- `src/skin/camera.ts` – per-shot drift, emphasis push-ins, "settle" zoom + light flash on each new point
+- `src/skin/Captions.tsx` – word-synced captions, DM Sans Regular 54px (non-bold), soft butter yellow `#FFF1A8`
+- `src/skin/Overlays.tsx` / `src/skin/Art.tsx` – titles (DM Serif Display + Playfair Italic), cards, SVG illustrations, emoji stickers, sparkle transitions
+- `src/skin/captions.json` – built by `scripts/skin_captions.py` from Whisper large-v3 word timings (`scripts/skin_transcript_raw.json`), with spelling fixes (pakai, faham, berjerawat)
+- All text/graphics stay inside the TikTok safe zone (top 160px, bottom 430px, left 80px, right 170px clear). Emoji use the system colour-emoji font.
+
+Rebuild:
+```bash
+npm install
+ffmpeg -i source.mov -map 0:v -c:v libx264 -crf 15 -pix_fmt yuv420p -r 30 -an public/skin/main.mp4
+ffmpeg -i source.mov -vn -af "highpass=f=80,afftdn=nf=-30,acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120:makeup=2,loudnorm=I=-15:TP=-1.5:LRA=9" -ar 48000 -ac 2 public/skin/voice.wav
+python3 scripts/make_audio.py public/audio
+python3 scripts/skin_captions.py
+npm run render
+```
+
+## WhimsyEdit – earlier "don't mix these ingredients" edit (`npm run render:whimsy`)
 
 9:16 TikTok edit of the "don't mix these skincare ingredients" talking-head video.
 
@@ -25,5 +48,5 @@ python3 scripts/grade.py public/main.mp4 public/main_graded.mp4
 python3 scripts/make_subject.py <frames_dir> <masks_dir> public/subject
 python3 scripts/make_audio.py public/audio
 python3 scripts/build_captions.py
-npm run render   # -> out/final.mp4
+npm run render:whimsy   # -> out/final.mp4
 ```

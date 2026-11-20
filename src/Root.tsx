@@ -2,14 +2,12 @@ import React from 'react';
 import {Composition} from 'remotion';
 import {WhimsyEdit} from './WhimsyEdit';
 import {DURATION_IN_FRAMES, FPS} from './theme';
+import {SkinEdit} from './skin/SkinEdit';
+import {DURATION_IN_FRAMES as SKIN_FRAMES} from './skin/theme';
 
 export const RemotionRoot: React.FC = () => (
-  <Composition
-    id="WhimsyEdit"
-    component={WhimsyEdit}
-    durationInFrames={DURATION_IN_FRAMES}
-    fps={FPS}
-    width={1080}
-    height={1920}
-  />
+  <>
+    <Composition id="SkinTypesEdit" component={SkinEdit} durationInFrames={SKIN_FRAMES} fps={30} width={1080} height={1920} />
+    <Composition id="WhimsyEdit" component={WhimsyEdit} durationInFrames={DURATION_IN_FRAMES} fps={FPS} width={1080} height={1920} />
+  </>
 );
