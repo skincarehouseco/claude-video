@@ -22,16 +22,16 @@ python3 scripts/skin_captions.py
 npm run render
 ```
 
-## FoamEdit – booih Fun Foam Cleanser "mainan ke sabun?!" (20 s, `npm run render:foam` -> `out/foam.mp4`)
+## FoamEdit – booih Fun Foam Cleanser "mainan ke sabun?!" (24 s, `npm run render:foam` -> `out/foam.mp4`)
 No speech in the source clips, so captions are short playful lines timed to the action (Malay–English mix).
 Face-first: opens on the girl holding the cans (hook), her spray/squish shots carry the edit, foam-ball shots are short cutaways, and it ends back on the cans (answer: sabun).
 - The camera watermark (x 60-490, y 200-250) in three girl shots is cropped out by zooming those shots from the bottom edge (origin 50% 100%, scale >= 1.18).
 - `src/foam/FoamEdit.tsx` – shot list (speed, zoom per shot, 3-frame dissolves), bubbly onomatopoeia stickers, toss arcs, floating bubbles, bubble wipes, end card, captions, audio mix
-- `scripts/make_foam_music.py` – original 120 BPM cute music bed; `scripts/make_cute_sfx.py` – whimsy SFX pack (bubble pops, twinkle, slide whistle, squeak, poof, psst, tada…)
+- Sound effects only (no music, no original audio): `scripts/make_cute_sfx.py` – whimsy SFX pack (bubble pops, twinkle, slide whistle, squeak, poof, psst, tada…)
 - End card uses the real booih logo `public/brand/booih_logo.png` (pink background keyed out) + tagline "Booih dulu, baru mandi!"
-- No original audio is used; every cut is moving video (no freeze frames). Slow-mo shots `public/foam/{cans,face,squish}_slow.mp4` are made with ffmpeg `minterpolate` (mci) from the girl clip
+- No original audio is used; every cut is moving video (no freeze frames). Slow-mo shots `public/foam/{cans_slow6,face_slow,squish_slow}.mp4` are made with ffmpeg `minterpolate` (mci) from the girl clip
 - Media: cut segments from the foam clip into `public/foam/b1..b7.mp4` (+14 dB foam sounds) and the girl clip into `public/foam/girl.mp4` (see shot list for source times); shots avoid the camera watermark
-- Final loudness: `ffmpeg -i out/foam.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -c:a aac -b:a 192k out/foam-final.mp4`
+- Final loudness: `ffmpeg -i out/foam.mp4 -c:v copy -af loudnorm=I=-16:TP=-1.5:LRA=11 -c:a aac -b:a 192k out/foam-final.mp4`
 
 ## WhimsyEdit – earlier "don't mix these ingredients" edit (`npm run render:whimsy`)
 
