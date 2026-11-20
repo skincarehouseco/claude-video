@@ -19,7 +19,10 @@ const pairFocus = (t: number) => {
 
 /** camera scale stays within ~1.00–1.08, purposeful moves only */
 export const zoomAt = (t: number) => {
-  if (t < CUT_SHELF) return 1.0 + 0.06 * ease(c01(t / CUT_SHELF)); // slow push-in on the hook
+  if (t < CUT_SHELF) {
+    const punch = t > 1.2 && t < 2.0 ? 0.035 * Math.sin(Math.PI * c01((t - 1.2) / 0.8)) : 0; // little punch-in on "apa?"
+    return 1.0 + 0.04 * ease(c01(t / CUT_SHELF)) + punch; // slow push-in on the hook
+  }
   if (t < CUT_END) return 1.0 + 0.012 * Math.sin((t - CUT_SHELF) / 2.5) + 0.05 * pairFocus(t); // ease onto each pair
   return 1.08 - 0.08 * easeOut(c01((t - CUT_END) / 2.0)); // gentle zoom-out to close
 };
@@ -38,7 +41,7 @@ export const Camera: React.FC = () => {
   return (
     <AbsoluteFill style={{overflow: 'hidden', background: P.cream}}>
       <AbsoluteFill style={{transform: `scale(${(zoomAt(t) * settle).toFixed(5)})`, transformOrigin: originAt(t)}}>
-        <OffthreadVideo src={staticFile('otms/beige.mp4')} muted style={style} />
+        <OffthreadVideo src={staticFile('otms/beige.mp4')} muted style={{...style, filter: handShot ? 'brightness(0.9) contrast(1.05) saturate(1.04)' : undefined}} />
         {/* hand shots: lens-style focus falloff + warm beige wash on the busy stock shelves at the frame edges
             (no AI matting: tested masks were unstable on the hand, so a mask-free treatment keeps it realistic) */}
         {handShot && (
@@ -48,11 +51,11 @@ export const Camera: React.FC = () => {
               maskImage: 'radial-gradient(ellipse 58% 44% at 50% 50%, transparent 55%, black 100%)',
             }}
           >
-            <OffthreadVideo src={staticFile('otms/beige.mp4')} muted style={{...style, filter: 'blur(14px) saturate(0.9)'}} />
+            <OffthreadVideo src={staticFile('otms/beige.mp4')} muted style={{...style, filter: 'blur(14px) brightness(0.9) saturate(0.95)'}} />
           </AbsoluteFill>
         )}
       </AbsoluteFill>
-      {handShot && <AbsoluteFill style={{background: 'radial-gradient(ellipse 70% 55% at 50% 48%, rgba(255,249,241,0) 55%, rgba(236,224,208,0.22) 100%)'}} />}
+      {handShot && <AbsoluteFill style={{background: 'radial-gradient(ellipse 70% 55% at 50% 48%, rgba(255,249,241,0) 55%, rgba(236,224,208,0.1) 100%)'}} />}
     </AbsoluteFill>
   );
 };

@@ -5,7 +5,7 @@ import {FPS, P, Phrase, PHRASES, SAFE_CX, SANS, sec, Word} from './data';
 /* Word-synced captions: a word is drawn only from the frame it is spoken; phrases leave shortly after
    the speaker finishes. Layout is reserved for the whole phrase so nothing jumps as words arrive. */
 
-const POS = {low: 1255, shelf: 470}; // top of the caption block (px) — lower-middle on hand shots, clear wall on the shelf
+const POS = {title: 0, low: 1255, shelf: 470}; // top of the caption block (px) — lower-middle on hand shots, clear wall on the shelf
 const HL = {brand: P.blush, product: P.butter, benefit: P.sage};
 
 const Highlight: React.FC<{w: Word; k: number}> = ({w, k}) => {
@@ -108,7 +108,7 @@ const PhraseView: React.FC<{p: Phrase}> = ({p}) => {
 
 export const Captions: React.FC = () => (
   <AbsoluteFill style={{pointerEvents: 'none'}}>
-    {PHRASES.map((p) => (
+    {PHRASES.filter((p) => p.place !== 'title').map((p) => (
       <PhraseView key={p.id} p={p} />
     ))}
   </AbsoluteFill>

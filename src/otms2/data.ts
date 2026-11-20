@@ -64,11 +64,11 @@ export const PRODUCT = {x: 765, y: 1150, w: 220, h: 900}; // partner product (ce
    key: true = keyword highlight
    ------------------------------------------------------------------ */
 export type Word = {t: string; s: number; e: number; key?: 'product' | 'benefit' | 'brand'};
-export type Phrase = {id: string; start: number; end: number; place: 'low' | 'shelf'; lines: Word[][]};
+export type Phrase = {id: string; start: number; end: number; place: 'title' | 'low' | 'shelf'; lines: Word[][]};
 
 export const PHRASES: Phrase[] = [
   {
-    id: 'hook', start: 0.03, end: 1.75, place: 'low',
+    id: 'hook', start: 0.03, end: 3.3, place: 'title', // rendered as the big hook title (Hook.tsx)
     lines: [
       [{t: 'OTMS', s: 0.03, e: 0.42, key: 'brand'}, {t: 'ni', s: 0.42, e: 0.6}, {t: 'boleh', s: 0.62, e: 0.82}],
       [{t: 'mix', s: 0.82, e: 1.04}, {t: 'dengan', s: 1.04, e: 1.2}, {t: 'apa?', s: 1.2, e: 1.61}],

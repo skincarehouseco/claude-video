@@ -30,7 +30,10 @@ No clipping on the wall (measured 0% pixels ≥250); skin moved from magenta tow
   All captions/badges inside the working safe zone (top 12 %, bottom 22 %, left 8 %, right 17 %).
 
 ## Graphics (each tied to the words)
-- Hook: italic note naming what OTMS stands for (read off the jar label) + drawn arrow to the jar, sparkles.
+- Hook (0–3.5 s): the speaker's own question as a big word-synced title card ("mix" butter / "apa?" blush marker),
+  "Oatmeal Turmeric Mask & Scrub" serif subtitle (read off the jar), and a teaser row of the four partner products
+  (cropped from the shelf shots later in the video) each with a "?", plus a small punch-in and sparkle burst on "apa?".
+  Intro footage is kept at the original brightness (brightness 0.9 on the graded hand shots).
 - Each pairing: "MIX 0n / 04" badge; pen-drawn ring drawn around the partner product as it appears; line-art benefit icon with an arrow
   to the product — bouncing jelly (toink toink skin), face with plaster (kulit berjerawat), smiling sun (kulit kusam), leaf + droplet
   (soothe redness); a soft bloom + sparkles disguise the stop-motion jumps; a few tiny flowers drift on the wall.

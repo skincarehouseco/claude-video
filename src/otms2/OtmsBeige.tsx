@@ -3,7 +3,8 @@ import {AbsoluteFill, Audio, interpolate, Sequence, staticFile, useCurrentFrame}
 import {Camera, LightLeak, StudioLight, SwapBloom} from './Camera';
 import {Captions} from './Captions';
 import {APPEAR, CUT_END, CUT_SHELF, DURATION, P, PAIRS, PHRASES, REMOVE, sec} from './data';
-import {EndDoodles, HookNote, PairBadge, ShelfDoodles, SwapSparkles} from './Doodles';
+import {EndDoodles, PairBadge, ShelfDoodles, SwapSparkles} from './Doodles';
+import {HookSpark, HookTeaser, HookTitle} from './Hook';
 
 /* ------------------------------------------------------------------
    Sound design: the cleaned voice stays dominant (~-15 LUFS); every SFX is mixed
@@ -13,8 +14,12 @@ import {EndDoodles, HookNote, PairBadge, ShelfDoodles, SwapSparkles} from './Doo
 type Sx = [number, string, number];
 const SFX: Sx[] = [
   [0.03, 'sparkle', 0.06],
-  [0.9, 'plink', 0.055],
-  [1.2, 'bubble_pop', 0.07],
+  [0.82, 'bubble_pop', 0.045],
+  [0.94, 'bubble_pop', 0.045],
+  [1.06, 'bubble_pop', 0.045],
+  [1.18, 'bubble_pop', 0.045],
+  [1.22, 'plink', 0.06],
+  [1.45, 'twinkle', 0.04],
   [2.26, 'bubble_pop', 0.06],
   [3.25, 'whoosh', 0.07],
   [3.47, 'twinkle', 0.05],
@@ -60,7 +65,9 @@ export const OtmsBeige: React.FC = () => (
     ))}
     <ShelfDoodles />
     <SwapSparkles />
-    <HookNote />
+    <HookTeaser />
+    <HookTitle />
+    <HookSpark />
     <PairBadge />
     <EndDoodles />
     <LightLeak at={CUT_SHELF} />
