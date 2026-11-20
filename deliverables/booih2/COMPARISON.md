@@ -1,5 +1,8 @@
 # booih foam — Version A vs Version B
 
+**Chosen: Version A** (original background). Final A: original clip audio removed (soft SFX only), HD grade
+(lighter denoise + contrast-adaptive sharpening `cas=0.6`), rendered at CRF 14 / JPEG 95 (~37 Mbps).
+
 Both videos: 1080×1920, 30 fps, H.264 + AAC, full original length (36.17 s), the same Remotion timeline
 (`src/booih2/BooihWhimsy.tsx`, compositions `BooihWhimsyA` / `BooihWhimsyB`) — same text, graphics, zooms, sound.
 
@@ -21,4 +24,4 @@ Both videos: 1080×1920, 30 fps, H.264 + AAC, full original length (36.17 s), th
 - Background image generated locally with Realistic Vision 5.1 + LCM-LoRA (CreativeML OpenRAIL-M):
   `public/backgrounds/affiliate_room_gen.png` (seed 404). Script: `scripts/gen_background.py`, compositor:
   `scripts/bg_replace_hybrid.py` + `scripts/matte_huekey.py`.
-- Sound: original foam/handling sound cleaned and lifted, soft SFX under it; final −14 LUFS.
+- Sound: original clip audio removed at the creator's request; soft SFX only (−17 LUFS integrated, peak −4 dBFS).
