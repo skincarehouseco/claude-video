@@ -25,6 +25,10 @@ public/skintalks/hosts.png, public/skintalks/epNN/lines/*.wav, optional public/s
 4. **(Optional) lip-sync clips:** for each line, generate a talking clip of the speaking host from the approved image and
    that line's wav with an identity-preserving tool, save as `public/skintalks/epNN/clips/<line_id>.mp4` (9:16, 30 fps).
    Lines without a clip use the still-image virtual camera automatically.
+4b. **Kling (web app) route — 2 generations per episode:** upload `deliverables/skintalks/kling_upload/<host>_closeup_ref.png`
+   + `<host>_track_epNN.mp3` (full episode length, silent while the other host speaks) to Kling's avatar feature, download,
+   save as `public/skintalks/epNN/clips/maya_full.mp4` and `nadia_full.mp4`. build_episode.py detects them and cuts
+   between the hosts on the speaker; captions/infographics stay identical.
 5. **Build:** `python3 series/skintalks/tools/build_episode.py epNN`, register `SkinTalksEpNN` in `src/Root.tsx`.
 6. **Render:** `npx remotion render src/index.ts SkinTalksEpNN out/skintalks-epNN.mp4 --codec h264 --crf 18`, then
    loudness `ffmpeg -i in.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -c:a aac -b:a 192k out.mp4`.

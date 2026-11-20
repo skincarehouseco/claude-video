@@ -51,13 +51,22 @@ const StillTwoShot: React.FC<{k: number}> = ({k}) => {
   );
 };
 
-export const ShotView: React.FC<{shot: Shot; line?: Line}> = ({shot, line}) => {
+export const ShotView: React.FC<{shot: Shot; line?: Line; hostClips?: Partial<Record<HostId, string>>}> = ({shot, line, hostClips = {}}) => {
   const f = useCurrentFrame();
   const t = f / FPS;
   const k = c01((t - shot.start) / Math.max(0.5, shot.end - shot.start));
   const ke = Easing.inOut(Easing.sin)(k);
   // soft cut-in: tiny settle so every cut feels like a real camera switch
   const settle = interpolate(f - sec(shot.start), [0, 8], [1.025, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
+  // full-episode talking clip of this host (time-aligned with the episode timeline, so it can be cut in anywhere)
+  const full = shot.kind !== 'two' ? hostClips[shot.kind] : undefined;
+  if (full) {
+    return (
+      <AbsoluteFill style={{transform: `scale(${settle * (1 + 0.04 * ke)})`, transformOrigin: '50% 35%'}}>
+        <OffthreadVideo src={staticFile(full)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+      </AbsoluteFill>
+    );
+  }
   if (line?.clip) {
     return (
       <AbsoluteFill style={{transform: `scale(${settle})`}}>

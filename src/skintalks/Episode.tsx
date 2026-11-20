@@ -10,7 +10,7 @@ import {c01, FPS, HOSTS, HostId, P, ROUND, SAFE, SAFE_CX, SANS, SANS_MED, sec, S
 type W = {t: string; s: number; e: number};
 type EpLine = Line & {words: W[]};
 type Cue = {id: string; kind: string; start: number; end: number; title?: string; items?: string[]; label?: string};
-export type EpisodeData = {episode: number; title: string; duration: number; durationInFrames: number; intro: number; lines: EpLine[]; shots: Shot[]; infographics: Cue[]};
+export type EpisodeData = {hostClips?: Partial<Record<HostId, string>>; episode: number; title: string; duration: number; durationInFrames: number; intro: number; lines: EpLine[]; shots: Shot[]; infographics: Cue[]};
 
 const pop = (f: number, at: number, d = 12) => (f < sec(at) ? 0 : spring({frame: f - sec(at), fps: FPS, config: {damping: d, stiffness: 200, mass: 0.6}}));
 const KEYWORDS = /^(jerawat|overnight|90|hari\??|terbentuk|kulit|minyak|sel|mati|bakteria|meradang|ais|bengkak|doktor|sakit|tersumbat)/i;
@@ -215,7 +215,7 @@ export const Episode: React.FC<{ep: EpisodeData}> = ({ep}) => {
   const fadeOut = interpolate(f, [ep.durationInFrames - 12, ep.durationInFrames], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   return (
     <AbsoluteFill style={{background: P.cream}}>
-      <ShotView shot={shot} line={line} />
+      <ShotView shot={shot} line={line} hostClips={ep.hostClips} />
       <Doodles lines={ep.lines} />
       {tip && tipLine && <TipCard start={tip.start} end={tip.end} title="Tuam ais" items={[{text: 'Balut ais dengan kain', at: wordAt(tipLine.id, 'ais')}, {text: 'Tuam sekejap je', at: wordAt(tipLine.id, 'sekejap')}, {text: 'Bantu kurangkan bengkak', at: wordAt(tipLine.id, 'bengkak')}]} />}
       {timeline && <AcneTimeline start={timeline.start} end={timeline.end} energy={nadiaEnergy} />}

@@ -72,11 +72,18 @@ for i, line in enumerate(script['lines']):
     t += m['duration'] + GAP
 duration = t - GAP + OUTRO
 
+# full-length talking clips per host (e.g. from Kling: host image + that host's full-episode audio track, silent while the other speaks)
+host_clips = {h: f'skintalks/{ep}/clips/{h}_full.mp4' for h in ('maya', 'nadia') if os.path.exists(f'{ROOT}/public/skintalks/{ep}/clips/{h}_full.mp4')}
+
 # shot plan: speaker close-up by default, two-shot for the opening line, short reactions, and every ~3rd line
+# (with talking clips for both hosts: always show the speaking host; the still two-shot only for the intro title)
 shots = []
+if len(host_clips) == 2:
+    shots.append(dict(line=timeline[0]['id'], kind='two', start=0, end=timeline[0]['start'] - 0.05))
 for i, L in enumerate(timeline):
-    kind = 'two' if i == 0 or (i % 3 == 2 and L['speaker'] == 'maya') else L['speaker']
-    shots.append(dict(line=L['id'], kind=kind, start=L['start'] - (INTRO if i == 0 else GAP / 2), end=L['end'] + GAP / 2))
+    kind = L['speaker'] if len(host_clips) == 2 else ('two' if i == 0 or (i % 3 == 2 and L['speaker'] == 'maya') else L['speaker'])
+    start = (L['start'] - 0.05 if len(host_clips) == 2 else L['start'] - INTRO) if i == 0 else L['start'] - GAP / 2
+    shots.append(dict(line=L['id'], kind=kind, start=start, end=L['end'] + GAP / 2))
 shots[-1]['end'] = duration
 
 cues = []
@@ -84,10 +91,10 @@ for ig in script.get('infographics', []):
     L = next(x for x in timeline if x['id'] == ig['at_line'])
     cues.append(dict(ig, start=L['start'], end=L['end'] + 0.15))
 
-out = dict(episode=script['episode'], title=script['title'], fps=FPS, duration=round(duration, 3),
+out = dict(episode=script['episode'], title=script['title'], fps=FPS, hostClips=host_clips, duration=round(duration, 3),
            durationInFrames=int(round(duration * FPS)), intro=INTRO, lines=timeline, shots=shots, infographics=cues)
 os.makedirs(f'{ROOT}/src/skintalks/episodes', exist_ok=True)
 json.dump(out, open(f'{ROOT}/src/skintalks/episodes/{ep}.json', 'w'), ensure_ascii=False, indent=1)
-print(f'{ep}: {duration:.2f}s, {len(timeline)} lines, clips: {sum(1 for x in timeline if x["clip"])}/{len(timeline)}')
+print(f'{ep}: {duration:.2f}s, {len(timeline)} lines, per-line clips: {sum(1 for x in timeline if x["clip"])}/{len(timeline)}, full host clips: {sorted(host_clips)}')
 for L in timeline:
     print(f"  {L['start']:6.2f}-{L['end']:6.2f} {L['speaker']:5s} " + ' '.join(w['t'] for w in L['words']))
