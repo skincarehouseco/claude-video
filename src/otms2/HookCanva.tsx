@@ -38,24 +38,35 @@ const Selection: React.FC<{w: number; h: number; o: number}> = ({w, h, o}) => {
   );
 };
 
-/** one dragged-in tag line */
-const Tag: React.FC<{line: Line; w: number; h: number}> = ({line, w, h}) => {
+/** one dragged-in tag line (centred stack; offset = horizontal stagger) */
+const Tag: React.FC<{line: Line}> = ({line}) => {
   const f = useCurrentFrame();
   const at = line.words[0].s;
-  if (f < sec(at)) return null;
+  if (f < sec(at)) return <div style={{height: 0}} />;
   const k = f - sec(at);
   const drag = Easing.out(Easing.cubic)(Math.min(1, k / 9)); // dragged in over ~0.3 s
-  const offX = (1 - drag) * 300;
+  const offX = (1 - drag) * 320;
   const selO = interpolate(k, [0, 2, 16, 22], [0, 1, 1, 0], {extrapolateRight: 'clamp'});
   const curO = interpolate(k, [0, 2, 14, 20], [0, 1, 1, 0], {extrapolateRight: 'clamp'});
-  const curDrift = Easing.in(Easing.cubic)(Math.min(1, Math.max(0, (k - 12) / 10))) * 60;
+  const curDrift = Easing.in(Easing.cubic)(Math.min(1, Math.max(0, (k - 12) / 10))) * 70;
+  const hs = 16;
+  const handles = [
+    [0, 0], [50, 0], [100, 0], [0, 50], [100, 50], [0, 100], [50, 100], [100, 100],
+  ];
   return (
-    <div style={{position: 'absolute', left: line.x + offX, top: line.y, transform: `rotate(${line.rot}deg)`, transformOrigin: '0 50%'}}>
-      <div style={{position: 'relative', display: 'inline-flex', gap: 14, whiteSpace: 'nowrap', ...line.style}}>
-        <Selection w={w} h={h} o={selO} />
+    <div style={{transform: `translateX(${line.x + offX}px) rotate(${line.rot}deg)`, margin: '6px 0'}}>
+      <div style={{position: 'relative', display: 'inline-flex', gap: 18, whiteSpace: 'nowrap', ...line.style}}>
+        {/* blue selection box with handles, hugging the tag */}
+        <div style={{position: 'absolute', inset: -10, border: `3px solid ${BLUE}`, opacity: selO, pointerEvents: 'none'}}>
+          {handles.map(([px, py], i) => (
+            <div key={i} style={{position: 'absolute', left: `calc(${px}% - ${hs / 2}px)`, top: `calc(${py}% - ${hs / 2}px)`, width: hs, height: hs, background: '#fff', border: `3px solid ${BLUE}`, boxSizing: 'border-box'}} />
+          ))}
+        </div>
         {line.words.map((wd, i) => (f >= sec(wd.s) ? <span key={i}>{wd.t}</span> : null))}
+        <div style={{position: 'absolute', left: '62%', top: '45%', transform: `translate(${curDrift}px, ${curDrift * 0.3}px)`}}>
+          <Cursor x={0} y={0} o={curO} press={k < 9 ? 1 : 0} />
+        </div>
       </div>
-      <Cursor x={w * 0.55 + curDrift} y={h * 0.45 + curDrift * 0.3} o={curO} press={k < 9 ? 1 : 0} />
     </div>
   );
 };
@@ -103,7 +114,7 @@ const TypeLine: React.FC = () => {
   });
   const caret = Math.floor(f / 8) % 2 === 0;
   return (
-    <div style={{position: 'absolute', left: 140, top: 650, fontFamily: SERIF, fontStyle: 'italic', fontSize: 56, color: INK, whiteSpace: 'nowrap', background: 'rgba(255,253,248,0.92)', padding: '2px 18px 8px', borderRadius: 8, boxShadow: '0 6px 14px rgba(0,0,0,0.15)', transform: 'rotate(-2deg)'}}>
+    <div style={{marginTop: 22, marginLeft: -60, fontFamily: SERIF, fontStyle: 'italic', fontSize: 64, color: INK, whiteSpace: 'nowrap', background: 'rgba(255,253,248,0.92)', padding: '2px 18px 8px', borderRadius: 8, boxShadow: '0 6px 14px rgba(0,0,0,0.15)', transform: 'rotate(-2deg)'}}>
       {text}
       <span style={{display: 'inline-block', width: 4, height: 54, marginLeft: 4, background: INK, verticalAlign: '-8px', opacity: caret ? 1 : 0}} />
     </div>
@@ -114,22 +125,28 @@ export const HookCanva: React.FC = () => {
   const f = useCurrentFrame();
   if (f > sec(CUT_SHELF)) return null;
   const [l1, l2] = hook();
-  const lines: (Line & {w: number; h: number})[] = [
-    {words: l1, x: 100, y: 280, rot: -3, w: 600, h: 104, style: {fontFamily: SANS, fontWeight: 600, fontSize: 78, color: INK, background: '#CFE6F7', padding: '2px 20px 6px', borderRadius: 6, boxShadow: '0 6px 14px rgba(0,0,0,0.15)'}},
-    {words: l2.slice(0, 2), x: 225, y: 392, rot: -3, w: 520, h: 108, style: {fontFamily: SANS, fontWeight: 600, fontSize: 90, color: '#F26B3A', WebkitTextStroke: '7px #fff', paintOrder: 'stroke fill', filter: 'drop-shadow(0 5px 8px rgba(0,0,0,0.2))'}},
-    {words: l2.slice(2), x: 370, y: 515, rot: -3, w: 245, h: 108, style: {fontFamily: SANS, fontWeight: 600, fontSize: 86, color: INK, background: '#FFE680', padding: '2px 22px 6px', borderRadius: 6, boxShadow: '0 6px 14px rgba(0,0,0,0.15)'}},
+  // on-screen hook wording requested by the creator: "...mix dengan liquid apa?" ("liquid" is not spoken; it pops with "apa?")
+  const l3: Word[] = [{t: 'liquid', s: 1.12, e: 1.2}, l2[2]];
+  const lines: Line[] = [
+    {words: l1, x: -70, y: 0, rot: -3, style: {fontFamily: SANS, fontWeight: 600, fontSize: 100, color: INK, background: '#CFE6F7', padding: '0 26px 8px', borderRadius: 8, boxShadow: '0 8px 18px rgba(0,0,0,0.16)'}},
+    {words: l2.slice(0, 2), x: 30, y: 0, rot: -3, style: {fontFamily: SANS, fontWeight: 600, fontSize: 116, color: '#F26B3A', WebkitTextStroke: '9px #fff', paintOrder: 'stroke fill', filter: 'drop-shadow(0 6px 10px rgba(0,0,0,0.22))', lineHeight: 1.05}},
+    {words: l3, x: 90, y: 0, rot: -3, style: {fontFamily: SANS, fontWeight: 600, fontSize: 104, color: INK, background: '#FFE680', padding: '0 26px 8px', borderRadius: 8, boxShadow: '0 8px 18px rgba(0,0,0,0.16)'}},
   ];
   return (
     <AbsoluteFill style={{opacity: leave(f), pointerEvents: 'none'}}>
-      {lines.map((l, i) => (
-        <Tag key={i} line={l} w={l.w} h={l.h} />
-      ))}
-      <DAISY x={735} y={282} s={1.15} at={0.5} />
-      <Star4 x={95} y={430} s={1.1} at={0.9} c="#F6C343" />
-      <Dot x={640} y={590} r={14} c="#3D5BD9" at={1.35} />
-      <Dot x={250} y={610} r={11} c="#F08BB0" at={1.45} />
-      <Star4 x={790} y={470} s={0.8} at={1.3} c="#F08BB0" />
-      <TypeLine />
+      <div style={{position: 'absolute', top: 470, left: 0, width: 1080, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <div style={{width: 1000, display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: -98}}>
+          {lines.map((l, i) => (
+            <Tag key={i} line={l} />
+          ))}
+        </div>
+        <TypeLine />
+      </div>
+      <DAISY x={850} y={470} s={1.4} at={0.5} />
+      <Star4 x={120} y={640} s={1.5} at={0.9} c="#F6C343" />
+      <Dot x={880} y={800} r={17} c="#3D5BD9" at={1.35} />
+      <Dot x={190} y={860} r={13} c="#F08BB0" at={1.45} />
+      <Star4 x={860} y={655} s={1.0} at={1.3} c="#F08BB0" />
     </AbsoluteFill>
   );
 };
