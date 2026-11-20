@@ -22,6 +22,12 @@ python3 scripts/skin_captions.py
 npm run render
 ```
 
+## Background replacement (neutral wall -> studio image)
+`scripts/bg_replace_chroma.py <in.mp4> public/backgrounds/beauty_studio.png <out.mp4> [offset_x]` — chroma matte
+(subject is coloured, original wall is neutral grey), small-hole fill, temporal smoothing, soft DOF on the new
+background, contact shadow, warm colour match and light wrap. Used for the booih foam highlights -> `out/foam-studio-bg.mp4`
+(segments cut from the foam clip, original sound kept, loudnorm -16 LUFS).
+
 ## OtmsBeige – bright airy beige whimsy version of the OTMS video (24 s, `npm run render:otms-beige` -> `out/otms-beige.mp4`)
 - `src/otms2/` – `data.ts` (word-level transcript, palette, safe zone, scene times), `Camera.tsx` (camera + background treatment,
   studio light, light leaks), `Captions.tsx` (word-synced Poppins captions + keyword highlights), `Doodles.tsx` (hand-drawn rings,
