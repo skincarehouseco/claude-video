@@ -1,0 +1,30 @@
+{
+  "episode": 1,
+  "title": "Jerawat ambil masa berapa lama untuk terbentuk?",
+  "topic": "Acne formation + soothing a painful red pimple",
+  "source": "Creator reference video (English podcast clip): acne can take ~90 days to form; ice helps calm painful, inflamed pimples.",
+  "fact_check": [
+    "Acne starts as a microcomedone: a pore/follicle blocked by excess sebum and dead skin cells, forming under the skin before anything is visible (AAD; Thiboutot & Zaenglein, J Am Acad Dermatol).",
+    "The process from microcomedone to a visible pimple is commonly described as taking weeks up to around 2–3 months; the '90 days' figure from the reference is presented as 'boleh ambil masa sampai lebih kurang 90 hari' (up to ~90 days), not as an exact rule.",
+    "Four drivers: excess oil (sebum), dead skin cells clogging the pore, C. acnes bacteria multiplying, and inflammation (AAD).",
+    "A cold compress (ice wrapped in a cloth, briefly) can temporarily reduce swelling, redness and pain of an inflamed pimple; it does not cure acne. Never apply ice directly for long.",
+    "Severe or persistent acne should be seen by a doctor/dermatologist. Nadia is a skincare educator, not a medical professional."
+  ],
+  "lines": [
+    {"id": "m1", "speaker": "maya",  "text": "Eh Nadia, you tahu tak, I ingat jerawat ni tiba-tiba je naik overnight."},
+    {"id": "n1", "speaker": "nadia", "text": "Actually tak, Maya. Jerawat tu dah mula terbentuk bawah kulit, lama sebelum kita nampak."},
+    {"id": "m2", "speaker": "maya",  "text": "Serius? Berapa lama?"},
+    {"id": "n2", "speaker": "nadia", "text": "Boleh ambil masa sampai lebih kurang sembilan puluh hari.", "display": "Boleh ambil masa sampai lebih kurang 90 hari."},
+    {"id": "m3", "speaker": "maya",  "text": "Sembilan puluh hari? Macam mana boleh jadi?", "display": "90 hari? Macam mana boleh jadi?"},
+    {"id": "n3", "speaker": "nadia", "text": "Pori tersumbat dengan minyak dan sel kulit mati. Lepas tu bakteria membiak, kulit jadi meradang, baru jerawat naik."},
+    {"id": "m4", "speaker": "maya",  "text": "Ohh, so masa kita nampak tu, benda tu dah lama jadi la."},
+    {"id": "n4", "speaker": "nadia", "text": "Betul. Kalau jerawat merah yang sakit, cuba tuam ais yang dibalut kain, sekejap je. Boleh bantu kurangkan bengkak."},
+    {"id": "m5", "speaker": "maya",  "text": "Senangnya! Nanti I try."},
+    {"id": "n5", "speaker": "nadia", "text": "Tapi kalau jerawat teruk, jumpa doktor ya."}
+  ],
+  "infographics": [
+    {"id": "timeline", "at_line": "n2", "kind": "acne-timeline", "label": "Bawah kulit → nampak di permukaan (sampai ~90 hari)"},
+    {"id": "pore", "at_line": "n3", "kind": "pore-cross-section", "steps": ["minyak", "sel kulit mati", "bakteria", "radang"]},
+    {"id": "ice", "at_line": "n4", "kind": "tip-card", "items": ["Balut ais dengan kain", "Tuam sekejap je", "Bantu kurangkan bengkak"]}
+  ]
+}

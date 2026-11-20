@@ -1,0 +1,26 @@
+{
+  "model": "mesolitica/Malaysian-TTS-0.6B-v1",
+  "codec": "IDEA-Emdoor/DistilCodec-v1.0 (model_config.json + g_00204000)",
+  "note": "Permanent voice profiles. Keep speaker, seed and temperature fixed so every episode sounds the same. Malay-English code-switching is supported by the model. Only one Malaysian female speaker ('idayu') exists in this model; Nadia uses the 'singaporean' female voice, which is lower and calmer but may sound slightly Singaporean on English words. Swap tts_speaker here (e.g. to a cloned/licensed Malaysian voice) to change it for every future episode.",
+  "hosts": {
+    "maya": {
+      "tts_speaker": "idayu",
+      "seed": 1100,
+      "temperature": 0.7,
+      "character": "bubbly, curious host",
+      "measured_f0_hz": 270
+    },
+    "nadia": {
+      "tts_speaker": "singaporean",
+      "seed": 2200,
+      "temperature": 0.6,
+      "character": "calm, confident skincare educator",
+      "measured_f0_hz": 196
+    }
+  },
+  "mix": {
+    "voice_lufs": -15,
+    "sfx_below_voice_db": "18-24",
+    "gap_between_lines_s": 0.16
+  }
+}

@@ -1,0 +1,642 @@
+[
+ {
+  "id": "m1",
+  "speaker": "maya",
+  "text": "Eh Nadia, you tahu tak, I ingat jerawat ni tiba-tiba je naik overnight.",
+  "display": "Eh Nadia, you tahu tak, I ingat jerawat ni tiba-tiba je naik overnight.",
+  "duration": 3.769,
+  "asr": "Eh Nadia, you tahu tak, I ingat jerawat ni tiba -tiba je naik overnight.",
+  "score": 0.993,
+  "take": 0,
+  "words": [
+   {
+    "w": "Eh",
+    "s": 0.05,
+    "e": 0.13
+   },
+   {
+    "w": "Nadia,",
+    "s": 0.13,
+    "e": 0.63
+   },
+   {
+    "w": "you",
+    "s": 0.63,
+    "e": 0.77
+   },
+   {
+    "w": "tahu",
+    "s": 0.77,
+    "e": 1.05
+   },
+   {
+    "w": "tak,",
+    "s": 1.05,
+    "e": 1.21
+   },
+   {
+    "w": "I",
+    "s": 1.27,
+    "e": 1.49
+   },
+   {
+    "w": "ingat",
+    "s": 1.49,
+    "e": 1.83
+   },
+   {
+    "w": "jerawat",
+    "s": 1.83,
+    "e": 2.15
+   },
+   {
+    "w": "ni",
+    "s": 2.15,
+    "e": 2.25
+   },
+   {
+    "w": "tiba",
+    "s": 2.25,
+    "e": 2.53
+   },
+   {
+    "w": "-tiba",
+    "s": 2.53,
+    "e": 2.8699999999999997
+   },
+   {
+    "w": "je",
+    "s": 2.8699999999999997,
+    "e": 2.9299999999999997
+   },
+   {
+    "w": "naik",
+    "s": 2.9299999999999997,
+    "e": 3.19
+   },
+   {
+    "w": "overnight.",
+    "s": 3.19,
+    "e": 3.3499999999999996
+   }
+  ]
+ },
+ {
+  "id": "n1",
+  "speaker": "nadia",
+  "text": "Actually tak, Maya. Jerawat tu dah mula terbentuk bawah kulit, lama sebelum kita nampak.",
+  "display": "Actually tak, Maya. Jerawat tu dah mula terbentuk bawah kulit, lama sebelum kita nampak.",
+  "duration": 5.711,
+  "asr": "Actually tak amaya. Jerawat tu dah mula terbetul bawah kulit lama sebelum kita nampak.",
+  "score": 0.976,
+  "take": 2,
+  "words": [
+   {
+    "w": "Actually",
+    "s": 0.05,
+    "e": 0.35
+   },
+   {
+    "w": "tak",
+    "s": 0.35,
+    "e": 0.6100000000000001
+   },
+   {
+    "w": "amaya.",
+    "s": 0.6100000000000001,
+    "e": 1.07
+   },
+   {
+    "w": "Jerawat",
+    "s": 1.1700000000000002,
+    "e": 1.83
+   },
+   {
+    "w": "tu",
+    "s": 1.83,
+    "e": 2.01
+   },
+   {
+    "w": "dah",
+    "s": 2.01,
+    "e": 2.17
+   },
+   {
+    "w": "mula",
+    "s": 2.17,
+    "e": 2.4899999999999998
+   },
+   {
+    "w": "terbetul",
+    "s": 2.4899999999999998,
+    "e": 2.9899999999999998
+   },
+   {
+    "w": "bawah",
+    "s": 2.9899999999999998,
+    "e": 3.3299999999999996
+   },
+   {
+    "w": "kulit",
+    "s": 3.3299999999999996,
+    "e": 3.71
+   },
+   {
+    "w": "lama",
+    "s": 3.71,
+    "e": 4.29
+   },
+   {
+    "w": "sebelum",
+    "s": 4.29,
+    "e": 4.89
+   },
+   {
+    "w": "kita",
+    "s": 4.89,
+    "e": 5.03
+   },
+   {
+    "w": "nampak.",
+    "s": 5.03,
+    "e": 5.53
+   }
+  ]
+ },
+ {
+  "id": "m2",
+  "speaker": "maya",
+  "text": "Serius? Berapa lama?",
+  "display": "Serius? Berapa lama?",
+  "duration": 2.009,
+  "asr": "Serius? Berapa lama?",
+  "score": 1.0,
+  "take": 0,
+  "words": [
+   {
+    "w": "Serius?",
+    "s": 0.05,
+    "e": 0.31
+   },
+   {
+    "w": "Berapa",
+    "s": 1.03,
+    "e": 1.53
+   },
+   {
+    "w": "lama?",
+    "s": 1.53,
+    "e": 1.77
+   }
+  ]
+ },
+ {
+  "id": "n2",
+  "speaker": "nadia",
+  "text": "Boleh ambil masa sampai lebih kurang sembilan puluh hari.",
+  "display": "Boleh ambil masa sampai lebih kurang 90 hari.",
+  "duration": 3.087,
+  "asr": "Boleh ambil masa sampai lebih kurang 90 hari.",
+  "score": 0.84,
+  "take": 0,
+  "words": [
+   {
+    "w": "Boleh",
+    "s": 0.05,
+    "e": 0.31
+   },
+   {
+    "w": "ambil",
+    "s": 0.31,
+    "e": 0.6100000000000001
+   },
+   {
+    "w": "masa",
+    "s": 0.6100000000000001,
+    "e": 0.8300000000000001
+   },
+   {
+    "w": "sampai",
+    "s": 0.8300000000000001,
+    "e": 1.19
+   },
+   {
+    "w": "lebih",
+    "s": 1.19,
+    "e": 1.47
+   },
+   {
+    "w": "kurang",
+    "s": 1.47,
+    "e": 1.8900000000000001
+   },
+   {
+    "w": "90",
+    "s": 1.8900000000000001,
+    "e": 2.21
+   },
+   {
+    "w": "hari.",
+    "s": 2.21,
+    "e": 2.71
+   }
+  ]
+ },
+ {
+  "id": "m3",
+  "speaker": "maya",
+  "text": "Sembilan puluh hari? Macam mana boleh jadi?",
+  "display": "90 hari? Macam mana boleh jadi?",
+  "duration": 2.692,
+  "asr": "Sembilan puluh hari? Macam mana boleh jadi?",
+  "score": 1.0,
+  "take": 2,
+  "words": [
+   {
+    "w": "Sembilan",
+    "s": 0.05,
+    "e": 0.51
+   },
+   {
+    "w": "puluh",
+    "s": 0.51,
+    "e": 0.77
+   },
+   {
+    "w": "hari?",
+    "s": 0.77,
+    "e": 0.91
+   },
+   {
+    "w": "Macam",
+    "s": 1.4100000000000001,
+    "e": 1.85
+   },
+   {
+    "w": "mana",
+    "s": 1.85,
+    "e": 1.93
+   },
+   {
+    "w": "boleh",
+    "s": 1.93,
+    "e": 2.15
+   },
+   {
+    "w": "jadi?",
+    "s": 2.15,
+    "e": 2.4099999999999997
+   }
+  ]
+ },
+ {
+  "id": "n3",
+  "speaker": "nadia",
+  "text": "Pori tersumbat dengan minyak dan sel kulit mati. Lepas tu bakteria membiak, kulit jadi meradang, baru jerawat naik.",
+  "display": "Pori tersumbat dengan minyak dan sel kulit mati. Lepas tu bakteria membiak, kulit jadi meradang, baru jerawat naik.",
+  "duration": 7.311,
+  "asr": "Pori tersumbat dengan minyak dan sel kulit mati. Lepas tu bakteria membiak. Kulit jadi meradang, baru jerawat naik.",
+  "score": 1.0,
+  "take": "seed2253",
+  "words": [
+   {
+    "w": "Pori",
+    "s": 0.0,
+    "e": 0.28
+   },
+   {
+    "w": "tersumbat",
+    "s": 0.28,
+    "e": 0.9
+   },
+   {
+    "w": "dengan",
+    "s": 0.9,
+    "e": 1.06
+   },
+   {
+    "w": "minyak",
+    "s": 1.06,
+    "e": 1.52
+   },
+   {
+    "w": "dan",
+    "s": 1.52,
+    "e": 1.6
+   },
+   {
+    "w": "sel",
+    "s": 1.6,
+    "e": 1.84
+   },
+   {
+    "w": "kulit",
+    "s": 1.84,
+    "e": 2.2
+   },
+   {
+    "w": "mati.",
+    "s": 2.2,
+    "e": 2.62
+   },
+   {
+    "w": "Lepas",
+    "s": 3.05,
+    "e": 3.42
+   },
+   {
+    "w": "tu",
+    "s": 3.42,
+    "e": 3.5
+   },
+   {
+    "w": "bakteria",
+    "s": 3.5,
+    "e": 4.08
+   },
+   {
+    "w": "membiak.",
+    "s": 4.08,
+    "e": 4.58
+   },
+   {
+    "w": "Kulit",
+    "s": 4.64,
+    "e": 5.2
+   },
+   {
+    "w": "jadi",
+    "s": 5.2,
+    "e": 5.34
+   },
+   {
+    "w": "meradang,",
+    "s": 5.34,
+    "e": 6.04
+   },
+   {
+    "w": "baru",
+    "s": 6.04,
+    "e": 6.42
+   },
+   {
+    "w": "jerawat",
+    "s": 6.42,
+    "e": 6.82
+   },
+   {
+    "w": "naik.",
+    "s": 6.82,
+    "e": 7.14
+   }
+  ]
+ },
+ {
+  "id": "m4",
+  "speaker": "maya",
+  "text": "Ohh, so masa kita nampak tu, benda tu dah lama jadi la.",
+  "display": "Ohh, so masa kita nampak tu, benda tu dah lama jadi la.",
+  "duration": 3.673,
+  "asr": "Oh, so masa kita nampak tu, benda tu dah lama jadilah.",
+  "score": null,
+  "take": "recovered",
+  "words": [
+   {
+    "w": "Oh,",
+    "s": 0.0,
+    "e": 0.16
+   },
+   {
+    "w": "so",
+    "s": 0.24,
+    "e": 0.74
+   },
+   {
+    "w": "masa",
+    "s": 0.74,
+    "e": 0.98
+   },
+   {
+    "w": "kita",
+    "s": 0.98,
+    "e": 1.22
+   },
+   {
+    "w": "nampak",
+    "s": 1.22,
+    "e": 1.76
+   },
+   {
+    "w": "tu,",
+    "s": 1.76,
+    "e": 1.88
+   },
+   {
+    "w": "benda",
+    "s": 1.92,
+    "e": 2.3
+   },
+   {
+    "w": "tu",
+    "s": 2.3,
+    "e": 2.44
+   },
+   {
+    "w": "dah",
+    "s": 2.44,
+    "e": 2.6
+   },
+   {
+    "w": "lama",
+    "s": 2.6,
+    "e": 2.86
+   },
+   {
+    "w": "jadilah.",
+    "s": 2.86,
+    "e": 3.26
+   }
+  ]
+ },
+ {
+  "id": "n4",
+  "speaker": "nadia",
+  "text": "Betul. Kalau jerawat merah yang sakit, cuba tuam ais yang dibalut kain, sekejap je. Boleh bantu kurangkan bengkak.",
+  "display": "Betul. Kalau jerawat merah yang sakit, cuba tuam ais yang dibalut kain, sekejap je. Boleh bantu kurangkan bengkak.",
+  "duration": 7.737,
+  "asr": "Betul. Kalau jerawat merah yang sakit, cuba tuam ais yang dibalut kain. Sekejap je, boleh bantu kurangkan bengkak.",
+  "score": null,
+  "take": "recovered",
+  "words": [
+   {
+    "w": "Betul.",
+    "s": 0.0,
+    "e": 0.46
+   },
+   {
+    "w": "Kalau",
+    "s": 0.52,
+    "e": 1.1
+   },
+   {
+    "w": "jerawat",
+    "s": 1.1,
+    "e": 1.6
+   },
+   {
+    "w": "merah",
+    "s": 1.6,
+    "e": 1.96
+   },
+   {
+    "w": "yang",
+    "s": 1.96,
+    "e": 2.06
+   },
+   {
+    "w": "sakit,",
+    "s": 2.06,
+    "e": 2.58
+   },
+   {
+    "w": "cuba",
+    "s": 2.58,
+    "e": 3.22
+   },
+   {
+    "w": "tuam",
+    "s": 3.22,
+    "e": 3.44
+   },
+   {
+    "w": "ais",
+    "s": 3.44,
+    "e": 3.62
+   },
+   {
+    "w": "yang",
+    "s": 3.62,
+    "e": 3.84
+   },
+   {
+    "w": "dibalut",
+    "s": 3.84,
+    "e": 4.22
+   },
+   {
+    "w": "kain.",
+    "s": 4.22,
+    "e": 4.58
+   },
+   {
+    "w": "Sekejap",
+    "s": 4.82,
+    "e": 5.56
+   },
+   {
+    "w": "je,",
+    "s": 5.56,
+    "e": 5.68
+   },
+   {
+    "w": "boleh",
+    "s": 5.76,
+    "e": 6.24
+   },
+   {
+    "w": "bantu",
+    "s": 6.24,
+    "e": 6.64
+   },
+   {
+    "w": "kurangkan",
+    "s": 6.64,
+    "e": 7.08
+   },
+   {
+    "w": "bengkak.",
+    "s": 7.08,
+    "e": 7.56
+   }
+  ]
+ },
+ {
+  "id": "m5",
+  "speaker": "maya",
+  "text": "Senangnya! Nanti I try.",
+  "display": "Senangnya! Nanti I try.",
+  "duration": 1.892,
+  "asr": "Senangnya nanti I try.",
+  "score": null,
+  "take": "recovered",
+  "words": [
+   {
+    "w": "Senangnya",
+    "s": 0.0,
+    "e": 0.52
+   },
+   {
+    "w": "nanti",
+    "s": 0.52,
+    "e": 0.98
+   },
+   {
+    "w": "I",
+    "s": 0.98,
+    "e": 1.08
+   },
+   {
+    "w": "try.",
+    "s": 1.08,
+    "e": 1.36
+   }
+  ]
+ },
+ {
+  "id": "n5",
+  "speaker": "nadia",
+  "text": "Tapi kalau jerawat teruk, jumpa doktor ya.",
+  "display": "Tapi kalau jerawat teruk, jumpa doktor ya.",
+  "duration": 2.553,
+  "asr": "Tapi kalau jerawat teruk, jumpa doktor ya.",
+  "score": null,
+  "take": "recovered",
+  "words": [
+   {
+    "w": "Tapi",
+    "s": 0.0,
+    "e": 0.32
+   },
+   {
+    "w": "kalau",
+    "s": 0.32,
+    "e": 0.58
+   },
+   {
+    "w": "jerawat",
+    "s": 0.58,
+    "e": 1.08
+   },
+   {
+    "w": "teruk,",
+    "s": 1.08,
+    "e": 1.48
+   },
+   {
+    "w": "jumpa",
+    "s": 1.5,
+    "e": 1.92
+   },
+   {
+    "w": "doktor",
+    "s": 1.92,
+    "e": 2.22
+   },
+   {
+    "w": "ya.",
+    "s": 2.22,
+    "e": 2.32
+   }
+  ]
+ }
+]

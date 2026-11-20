@@ -7,9 +7,12 @@ import {DURATION_IN_FRAMES as SKIN_FRAMES} from './skin/theme';
 import {FoamEdit, FOAM_DURATION} from './foam/FoamEdit';
 import {OtmsEdit, OTMS_DURATION} from './otms/OtmsEdit';
 import {OtmsBeige, OTMS_BEIGE_DURATION} from './otms2/OtmsBeige';
+import {Episode, EpisodeData} from './skintalks/Episode';
+import ep01 from './skintalks/episodes/ep01.json';
 
 export const RemotionRoot: React.FC = () => (
   <>
+    <Composition id="SkinTalksEp01" component={Episode} defaultProps={{ep: ep01 as unknown as EpisodeData}} durationInFrames={(ep01 as unknown as EpisodeData).durationInFrames} fps={30} width={1080} height={1920} />
     <Composition id="OtmsBeige" component={OtmsBeige} durationInFrames={OTMS_BEIGE_DURATION} fps={30} width={1080} height={1920} />
     <Composition id="OtmsHookA" component={OtmsBeige} defaultProps={{hook: 'A' as const}} durationInFrames={OTMS_BEIGE_DURATION} fps={30} width={1080} height={1920} />
     <Composition id="OtmsHookB" component={OtmsBeige} defaultProps={{hook: 'B' as const}} durationInFrames={OTMS_BEIGE_DURATION} fps={30} width={1080} height={1920} />
