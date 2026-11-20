@@ -397,7 +397,7 @@ export const BooihKick: React.FC = () => {
       <Sub at={0.1} end={T(0, 1.55)} text="korang rasa ni..." />
       <Sub at={T(0, 1.65)} end={T(0, 3.75)} text="spray je *sikit*" />
       {/* 1 foam forms */}
-      <StickyNote at={T(1, 0.05)} end={T(2, 1.5)} />
+      <StickyNote at={T(1, 0.05)} end={T(2, 0.55)} />
       <FF at={T(1)} end={T(2) - 0.03} rate="x1.6" />
       <Sub at={T(1, 0.1)} end={T(2) - 0.03} text="terus jadi FOAM" />
       {/* 2 toss */}
