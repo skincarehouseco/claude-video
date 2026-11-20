@@ -8,24 +8,29 @@ import {bob, C, captionFont, clamp01, exitAt, FPS, italicFont, pop, roundFont, S
    (inspo structure: satisfying foam play first, product reveal at the end)
    ============================================================================================ */
 
-export const FOAM_DURATION = 600; // 20 s @ 30 fps
+export const FOAM_DURATION = 558; // 18.6 s @ 30 fps
 const XF = 3; // frames of soft dissolve into every shot
 
-type Shot = {at: number; dur: number; src: string; from: number; rate: number; z: [number, number]; audio: boolean};
-// at/dur in output seconds; from = start inside the source file (s)
+// Camera watermark in some girl shots sits at x 60-490, y 200-250: those shots zoom around it and the
+// product label sticker (fixed, top-left) covers it.
+const WM_ORIGIN = '25.5% 11.7%';
+type Shot = {at: number; dur: number; src: string; from: number; rate: number; z: [number, number]; audio: boolean; origin?: string; freezeAt?: number};
+// at/dur in output seconds; from = start inside the source file (s); freezeAt = output-local second to hold the frame
+const G = 'foam/girl.mp4';
 const SHOTS: Shot[] = [
-  {at: 0.0, dur: 3.0, src: 'foam/b1.mp4', from: 0.1, rate: 1.2, z: [1.14, 1.0], audio: true}, // foam heart
-  {at: 3.0, dur: 2.0, src: 'foam/b2.mp4', from: 0.1, rate: 2.0, z: [1.0, 1.07], audio: true}, // squish
-  {at: 5.0, dur: 1.3, src: 'foam/b3.mp4', from: 0.2, rate: 2.0, z: [1.07, 1.0], audio: true}, // roll into a ball
-  {at: 6.3, dur: 1.3, src: 'foam/b4.mp4', from: 0.1, rate: 1.0, z: [1.0, 1.08], audio: true}, // toss up
-  {at: 7.6, dur: 1.8, src: 'foam/b5.mp4', from: 0.1, rate: 1.0, z: [1.08, 1.0], audio: true}, // catch
-  {at: 9.4, dur: 2.0, src: 'foam/b6.mp4', from: 0.1, rate: 1.5, z: [1.0, 1.06], audio: true}, // two balls
-  {at: 11.4, dur: 1.6, src: 'foam/b7.mp4', from: 0.2, rate: 2.0, z: [1.06, 1.0], audio: true}, // bounce in hands
-  {at: 13.0, dur: 2.25, src: 'foam/girl.mp4', from: 0.55, rate: 1.0, z: [1.0, 1.06], audio: false}, // spray foam
-  {at: 15.25, dur: 1.25, src: 'foam/girl.mp4', from: 3.76, rate: 1.0, z: [1.06, 1.0], audio: false}, // hands close-up
-  {at: 16.5, dur: 1.5, src: 'foam/girl.mp4', from: 6.6, rate: 1.0, z: [1.0, 1.07], audio: false}, // squish near face
+  {at: 0.0, dur: 2.5, src: G, from: 0.0, rate: 0.5, z: [1.0, 1.08], audio: false, origin: '50% 45%', freezeAt: 1.0}, // hook: holding the 3 cans
+  {at: 2.5, dur: 2.27, src: G, from: 0.53, rate: 1.0, z: [1.08, 1.0], audio: false}, // spray foam
+  {at: 4.77, dur: 0.49, src: G, from: 2.8, rate: 0.75, z: [1.0, 1.03], audio: false}, // foam close to face
+  {at: 5.26, dur: 0.6, src: G, from: 3.17, rate: 0.77, z: [1.0, 1.03], audio: false, origin: WM_ORIGIN}, // wide, holding foam
+  {at: 5.86, dur: 1.44, src: 'foam/b1.mp4', from: 0.4, rate: 1.2, z: [1.1, 1.0], audio: true}, // cutaway: foam heart
+  {at: 7.3, dur: 1.63, src: G, from: 3.63, rate: 1.15, z: [1.0, 1.05], audio: false}, // hands squish
+  {at: 8.93, dur: 0.5, src: G, from: 5.5, rate: 0.75, z: [1.0, 1.02], audio: false, origin: WM_ORIGIN}, // wide hands
+  {at: 9.43, dur: 1.2, src: G, from: 5.87, rate: 0.5, z: [1.02, 1.05], audio: false, origin: WM_ORIGIN}, // foam on face, laughing
+  {at: 10.63, dur: 0.9, src: 'foam/b4.mp4', from: 0.4, rate: 1.0, z: [1.0, 1.06], audio: true}, // cutaway: toss
+  {at: 11.53, dur: 0.9, src: 'foam/b5.mp4', from: 0.5, rate: 1.0, z: [1.06, 1.0], audio: true}, // cutaway: catch
+  {at: 12.43, dur: 2.77, src: G, from: 6.47, rate: 0.6, z: [1.0, 1.08], audio: false}, // close squish near face
 ];
-const ENDCARD_AT = 18.0;
+const ENDCARD_AT = 15.2;
 
 const easeIO = Easing.inOut(Easing.cubic);
 
@@ -36,15 +41,17 @@ const ShotView: React.FC<{s: Shot}> = ({s}) => {
   const o = interpolate(f, [0, XF], [0, 1], {extrapolateRight: 'clamp'});
   return (
     <AbsoluteFill style={{opacity: s.at === 0 ? 1 : o, overflow: 'hidden'}}>
-      <AbsoluteFill style={{transform: `scale(${z})`}}>
-        <OffthreadVideo
-          src={staticFile(s.src)}
-          startFrom={Math.max(0, Math.round(s.from * FPS) - (s.at === 0 ? 0 : Math.round(XF * s.rate)))}
-          playbackRate={s.rate}
-          muted={!s.audio}
-          volume={s.audio ? 0.85 : 0}
-          style={{width: '100%', height: '100%', objectFit: 'cover'}}
-        />
+      <AbsoluteFill style={{transform: `scale(${z})`, transformOrigin: s.origin ?? '50% 50%'}}>
+        <Freeze frame={s.freezeAt === undefined ? 0 : sec(s.freezeAt)} active={s.freezeAt !== undefined && f >= sec(s.freezeAt)}>
+          <OffthreadVideo
+            src={staticFile(s.src)}
+            startFrom={Math.max(0, Math.round(s.from * FPS) - (s.at === 0 ? 0 : Math.round(XF * s.rate)))}
+            playbackRate={s.rate}
+            muted={!s.audio}
+            volume={s.audio ? 0.85 : 0}
+            style={{width: '100%', height: '100%', objectFit: 'cover'}}
+          />
+        </Freeze>
       </AbsoluteFill>
     </AbsoluteFill>
   );
@@ -52,7 +59,7 @@ const ShotView: React.FC<{s: Shot}> = ({s}) => {
 
 const EndCardFootage: React.FC = () => {
   const f = useCurrentFrame();
-  const z = interpolate(f, [0, sec(2.0)], [1.0, 1.1], {easing: Easing.out(Easing.cubic), extrapolateRight: 'clamp'});
+  const z = interpolate(f, [0, sec(3.4)], [1.0, 1.1], {easing: Easing.out(Easing.cubic), extrapolateRight: 'clamp'});
   return (
     <AbsoluteFill style={{overflow: 'hidden', opacity: interpolate(f, [0, XF], [0, 1], {extrapolateRight: 'clamp'})}}>
       <AbsoluteFill style={{transform: `scale(${z})`, transformOrigin: '50% 60%'}}>
@@ -208,30 +215,34 @@ const SparkleCut: React.FC<{at: number; x?: number; y?: number}> = ({at, x = 540
 /** small product label kept on screen during the foam play (like the inspo's product tag) */
 const ProductTag: React.FC = () => {
   const f = useCurrentFrame();
-  if (f < sec(0.3) || f > sec(13.0)) return null;
-  const p = pop(f, 0.3, FPS, 180, 12);
-  const out = exitAt(f, 12.8, 0.2);
+  if (f < sec(2.5) || f > sec(ENDCARD_AT)) return null;
+  const p = pop(f, 2.55, FPS, 180, 12);
+  const out = exitAt(f, ENDCARD_AT - 0.2, 0.2);
   return (
-    <div style={{position: 'absolute', top: 178, left: SAFE.left, width: SAFE.right - SAFE.left, display: 'flex', justifyContent: 'center', opacity: out}}>
+    <div style={{position: 'absolute', top: 180, left: 40, opacity: out, transform: `scale(${0.7 + 0.3 * p})`, transformOrigin: '50% 50%'}}>
       <div
         style={{
+          width: 476,
+          height: 88,
+          boxSizing: 'border-box',
           display: 'flex',
           alignItems: 'center',
+          justifyContent: 'center',
+          whiteSpace: 'nowrap',
           gap: 10,
-          background: 'rgba(255,251,240,0.92)',
+          background: '#FFFBF0',
           border: `4px solid ${C.mint}`,
           borderRadius: 40,
           padding: '8px 24px 10px',
           boxShadow: '0 8px 20px rgba(40,25,35,0.22)',
-          transform: `scale(${p}) rotate(${-2 + Math.sin(f / 20)}deg)`,
         }}
       >
         <svg width={30} height={30} viewBox="0 0 30 30">
           <circle cx={11} cy={17} r={9} fill={C.sky} stroke={C.ink} strokeWidth={2.5} />
           <circle cx={21} cy={10} r={6} fill={C.blush} stroke={C.ink} strokeWidth={2.5} />
         </svg>
-        <span style={{fontFamily: roundFont, fontWeight: 500, fontSize: 34, color: C.ink}}>Booo</span>
-        <span style={{fontFamily: italicFont, fontStyle: 'italic', fontSize: 32, color: C.ink}}>Fun Foam Cleanser</span>
+        <span style={{fontFamily: roundFont, fontWeight: 500, fontSize: 38, color: C.ink}}>Booo</span>
+        <span style={{fontFamily: italicFont, fontStyle: 'italic', fontSize: 36, color: C.ink}}>Fun Foam Cleanser</span>
       </div>
     </div>
   );
@@ -239,12 +250,12 @@ const ProductTag: React.FC = () => {
 
 const Hook: React.FC = () => {
   const f = useCurrentFrame();
-  if (f > sec(3.0)) return null;
+  if (f > sec(2.5)) return null;
   const p1 = pop(f, 0.35, FPS, 170, 11);
   const p2 = pop(f, 0.8, FPS, 220, 8);
-  const out = exitAt(f, 2.75, 0.25);
+  const out = exitAt(f, 2.3, 0.2);
   return (
-    <div style={{position: 'absolute', top: 290, left: SAFE.left, width: SAFE.right - SAFE.left, textAlign: 'center', opacity: out}}>
+    <div style={{position: 'absolute', top: 190, left: SAFE.left, width: SAFE.right - SAFE.left, textAlign: 'center', opacity: out}}>
       <div style={{fontFamily: italicFont, fontStyle: 'italic', fontSize: 64, color: '#fff', textShadow: SHADOW, opacity: clamp01(p1), transform: `translateY(${(1 - p1) * 20}px)`}}>mainan ke</div>
       <div style={{transform: `scale(${p2}) rotate(${-4 + Math.sin(f / 6) * 2}deg)`, marginTop: 4}}>
         <Bubbly text="SABUN?!" size={140} fill={C.coral} />
@@ -284,13 +295,14 @@ const EndCard: React.FC = () => {
 
 /* ============================== captions (butter yellow, regular weight) ============================== */
 const LINES: [number, number, string][] = [
-  [0.3, 2.95, 'foam ni boleh jadi bentuk love'],
-  [3.05, 6.25, 'lembut gila macam marshmallow'],
-  [6.35, 9.35, 'boleh baling dan tangkap'],
-  [9.45, 12.95, 'satisfying gila tengok'],
-  [13.05, 15.2, 'rahsianya? spray je'],
-  [15.3, 17.95, 'terus jadi foam yang lembut'],
-  [18.05, 19.9, 'sabun rupanya! mandi jadi fun'],
+  [0.3, 2.45, 'korang rasa ni mainan ke sabun?'],
+  [2.55, 4.7, 'spray je terus jadi foam'],
+  [4.8, 5.84, 'lembut macam marshmallow'],
+  [5.9, 7.25, 'boleh bentuk jadi love pulak'],
+  [7.35, 10.55, 'squishy & satisfying gila'],
+  [10.65, 12.38, 'boleh main baling-baling'],
+  [12.48, 15.1, 'tapi sebenarnya…'],
+  [15.25, 18.5, 'sabun rupanya! mandi jadi fun'],
 ];
 const CaptionLine: React.FC = () => {
   const f = useCurrentFrame();
@@ -332,36 +344,30 @@ const CaptionLine: React.FC = () => {
 
 const Overlays: React.FC = () => (
   <AbsoluteFill style={{pointerEvents: 'none'}}>
-    <Bubbles from={0} to={20} />
+    <Bubbles from={0} to={18.6} />
     <ProductTag />
     <Hook />
-    {/* hearts around the foam heart */}
-    <HeartDoodle x={120} y={640} s={1.2} at={0.9} end={3.0} color={C.rose} rot={-14} />
-    <HeartDoodle x={800} y={700} s={0.9} at={1.1} end={3.0} color={C.blush} rot={12} />
-    <HeartDoodle x={150} y={1120} s={0.8} at={1.3} end={3.0} color={C.lavender} rot={8} />
-    <HeartDoodle x={790} y={1080} s={1.1} at={1.5} end={3.0} color={C.coral} rot={-6} />
+    {/* hearts around the foam heart cutaway */}
+    <HeartDoodle x={120} y={640} s={1.2} at={6.0} end={7.3} color={C.rose} rot={-14} />
+    <HeartDoodle x={800} y={700} s={0.9} at={6.15} end={7.3} color={C.blush} rot={12} />
+    <HeartDoodle x={150} y={1120} s={0.8} at={6.3} end={7.3} color={C.lavender} rot={8} />
+    <HeartDoodle x={790} y={1080} s={1.1} at={6.45} end={7.3} color={C.coral} rot={-6} />
 
-    <Sfx text="squish!" at={3.15} dur={0.9} x={300} y={640} rot={-8} fill={C.rose} />
-    <Sfx text="squish~" at={4.1} dur={0.9} x={760} y={1120} rot={7} fill="#7FD8B4" size={70} />
-    <Sfx text="roll roll" at={5.1} dur={1.1} x={700} y={620} rot={-5} fill={C.lavender} size={66} />
-    <TossArc at={6.3} dur={1.3} />
-    <Sfx text="boing!" at={6.55} dur={1.0} x={300} y={560} rot={-10} fill={C.butterDeep} />
-    <Sfx text="catch!" at={8.1} dur={1.1} x={720} y={600} rot={8} fill={C.coral} />
-    <TossArc at={9.4} dur={1.4} flip />
-    <Sfx text="wheee~" at={9.6} dur={1.3} x={700} y={520} rot={6} fill="#7FD8B4" />
-    <Sfx text="boing boing" at={11.55} dur={1.3} x={400} y={330} rot={-6} fill={C.lavender} size={70} />
+    <Sfx text="psshh~" at={2.7} dur={1.4} x={220} y={820} rot={-8} fill={C.rose} />
+    <Sfx text="soft!" at={7.45} dur={1.1} x={290} y={560} rot={-8} fill={C.butterDeep} />
+    <Sfx text="hehe~" at={9.5} dur={1.1} x={250} y={1170} rot={-6} fill={C.lavender} size={74} />
+    <TossArc at={10.63} dur={0.9} />
+    <Sfx text="boing!" at={10.7} dur={0.8} x={300} y={560} rot={-10} fill={C.butterDeep} />
+    <Sfx text="catch!" at={11.6} dur={0.8} x={720} y={600} rot={8} fill={C.coral} />
+    <Sfx text="squishy~" at={12.7} dur={1.4} x={720} y={1140} rot={-4} fill="#7FD8B4" size={72} />
 
-    <Sfx text="psshh~" at={13.25} dur={1.4} x={260} y={270} rot={-8} fill={C.rose} />
-    <Sfx text="soft!" at={15.4} dur={1.0} x={290} y={560} rot={-8} fill={C.butterDeep} />
-    <Sfx text="squishy~" at={16.7} dur={1.2} x={720} y={1140} rot={-4} fill="#7FD8B4" size={72} />
-
-    <SparkleCut at={3.0} x={540} y={900} />
-    <SparkleCut at={6.3} x={540} y={800} />
-    <SparkleCut at={9.4} x={540} y={800} />
-    <BubbleWipe at={13.0} />
+    <SparkleCut at={2.5} x={540} y={900} />
+    <SparkleCut at={5.86} x={540} y={900} />
+    <SparkleCut at={10.63} x={540} y={800} />
+    <SparkleCut at={12.43} x={540} y={900} />
     <BubbleWipe at={ENDCARD_AT} />
     <EndCard />
-    <Sfx text="sabun!" at={18.7} dur={1.25} x={540} y={1150} rot={-6} fill="#5FCFC0" size={96} />
+    <Sfx text="sabun!" at={15.9} dur={2.4} x={540} y={1150} rot={-6} fill="#5FCFC0" size={96} />
     <CaptionLine />
   </AbsoluteFill>
 );
@@ -371,19 +377,20 @@ type Sx = [number, string, number];
 const SFX: Sx[] = [
   [0.35, 'pop', 0.14],
   [0.8, 'boing', 0.12],
-  [3.15, 'squish', 0.18],
-  [4.1, 'squish', 0.15],
-  [6.55, 'boing', 0.13],
-  [8.1, 'pop', 0.15],
-  [9.6, 'whoosh', 0.1],
-  [11.55, 'boing', 0.11],
-  [12.7, 'whoosh', 0.12],
-  [13.25, 'sparkle', 0.12],
-  [15.4, 'pop', 0.13],
-  [16.7, 'squish', 0.14],
-  [17.8, 'whoosh', 0.12],
-  [18.2, 'sparkle', 0.16],
-  [18.3, 'ding', 0.12],
+  [2.5, 'sparkle', 0.1],
+  [2.7, 'whoosh', 0.1],
+  [5.86, 'sparkle', 0.1],
+  [7.45, 'pop', 0.13],
+  [7.7, 'squish', 0.16],
+  [9.5, 'pop', 0.13],
+  [10.7, 'boing', 0.13],
+  [11.6, 'pop', 0.15],
+  [12.7, 'squish', 0.16],
+  [13.8, 'squish', 0.13],
+  [14.9, 'whoosh', 0.12],
+  [15.3, 'sparkle', 0.16],
+  [15.4, 'ding', 0.12],
+  [15.9, 'boing', 0.12],
 ];
 const AudioMix: React.FC = () => (
   <>
