@@ -22,6 +22,14 @@ python3 scripts/skin_captions.py
 npm run render
 ```
 
+## FoamEdit – Booo Fun Foam Cleanser "mainan ke sabun?!" (~20 s, `npm run render:foam` -> `out/foam.mp4`)
+No speech in the source clips, so captions are short playful lines timed to the action (Malay–English mix).
+Structure follows the inspo: satisfying foam play (heart, squish, toss & catch) first, then spraying the foam and the product reveal.
+- `src/foam/FoamEdit.tsx` – shot list (speed, zoom per shot, 3-frame dissolves), bubbly onomatopoeia stickers, toss arcs, floating bubbles, bubble wipes, end card, captions, audio mix
+- `scripts/make_foam_music.py` – original 120 BPM cute music bed + squish SFX
+- Media: cut segments from the foam clip into `public/foam/b1..b7.mp4` (+14 dB foam sounds) and the girl clip into `public/foam/girl.mp4` (see shot list for source times); shots avoid the camera watermark
+- Final loudness: `ffmpeg -i out/foam.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -c:a aac -b:a 192k out/foam-final.mp4`
+
 ## WhimsyEdit – earlier "don't mix these ingredients" edit (`npm run render:whimsy`)
 
 9:16 TikTok edit of the "don't mix these skincare ingredients" talking-head video.
