@@ -259,6 +259,13 @@ export const BooihWhimsy: React.FC<{version: 'A' | 'B'}> = ({version}) => {
       <AbsoluteFill style={{overflow: 'hidden'}}>
         <AbsoluteFill style={{transform: `scale(${zoomAt(t)})`, transformOrigin: '50% 48%'}}>
           <OffthreadVideo src={staticFile(src)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+          {/* B only: the last ~2 s is a defocused close-up where the foam fills the frame, so the matte is not meaningful;
+              dissolve to the enhanced original footage there (the new room is not visible in that shot anyway) */}
+          {version === 'B' && t > 34.0 && (
+            <AbsoluteFill style={{opacity: c01((t - 34.0) / 0.35)}}>
+              <OffthreadVideo src={staticFile('booih2/enhanced.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+            </AbsoluteFill>
+          )}
         </AbsoluteFill>
       </AbsoluteFill>
       <Doodles />

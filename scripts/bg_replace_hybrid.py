@@ -46,10 +46,20 @@ def wall_like(small):
 
 def matte(frame):
     small = cv2.resize(frame, (w2, h2), interpolation=cv2.INTER_AREA)
-    hk = huekey(small, small_hole=1500, min_blob=1200)
     sal = np.asarray(remove(Image.fromarray(small), session=sess, only_mask=True), np.float32) / 255
-    a = np.maximum(hk, sal * (1 - wall_like(small)))
+    hk0 = huekey(small, small_hole=1500, min_blob=1200)  # pass 1: global wall reference (finds pale foam too)
+    # pass 2: local wall colour estimated only from pixels neither pass 1 nor the saliency model call subject,
+    # so uneven wall lighting is rejected while real foam (excluded from the wall estimate) is kept
+    hk = huekey(small, small_hole=1500, min_blob=1200, exclude=np.maximum(sal > 0.3, hk0 > 0.5).astype(np.float32))
+    wl = wall_like(small)
+    a = np.maximum(hk, sal * (1 - wl))
     b = (a > 0.5).astype(np.uint8)
+    # drop whole regions that are, on average, wall-coloured (stray bright-wall patches the saliency model picks up)
+    nr, labr, str_, _ = cv2.connectedComponentsWithStats(b)
+    for i in range(1, nr):
+        reg = labr == i
+        if wl[reg].mean() > 0.55 and hk[reg].mean() < 0.35:
+            b[reg] = 0
     holes = (1 - b).astype(np.uint8)
     n, lab, st, _ = cv2.connectedComponentsWithStats(holes)
     for i in range(1, n):
@@ -59,7 +69,10 @@ def matte(frame):
     n, lab, st, _ = cv2.connectedComponentsWithStats(b)
     keep = np.zeros_like(b)
     for i in range(1, n):
-        if st[i, cv2.CC_STAT_AREA] > 1200:
+        x, y, w, h, area = st[i]
+        on_edge = x == 0 or y == 0 or x + w >= w2 or y + h >= h2
+        # real hands/arms entering from the frame edge are large; small edge-touching blobs are leftover wall patches
+        if area > 1200 and not (on_edge and area < 6000):
             keep[lab == i] = 1
     a = cv2.GaussianBlur(keep.astype(np.float32), (0, 0), 1.2)
     return cv2.resize(a, (W, H), interpolation=cv2.INTER_CUBIC).clip(0, 1)
