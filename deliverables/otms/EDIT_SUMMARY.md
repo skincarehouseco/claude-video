@@ -10,7 +10,7 @@
 
 ## Background treatment (what was actually done)
 - **Shelf scenes (3.5–22 s): enhanced, not replaced.** The wall was grey-lavender (≈RGB 172,170,177); the grade lifts it to a bright cream
-  (≈223,222,212) with warm-neutral highlights, gentle denoise and light sharpening. A soft window-light gradient, very faint drifting
+  (≈191,187,186 — toned down after review so it stays natural, ~8–10 % brighter than the original) with warm-neutral highlights, gentle denoise and light sharpening. A soft window-light gradient, very faint drifting
   leaf shadows (multiply, ~10%) and out-of-focus sage leaves in two corners give the airy studio feel. Products are untouched.
 - **Hand shots (0–3.5 s, 22–24 s):** the background is stacked stock boxes. AI matting was tested (rembg isnet-general-use, u2net):
   masks dropped the hand on some frames, which would flicker/halo, and BiRefNet ran out of memory on this machine. To keep it realistic,
@@ -18,7 +18,7 @@
 - No full AI background replacement was used, so no generated environment, no matting edges.
 
 ## Grade
-`hqdn3d=1.5:1.5:4:4, curves(all: 0.25→0.37, 0.5→0.70, 0.8→0.93), colorbalance (warm-neutral, −blue), saturation 1.04, unsharp 0.6`.
+`hqdn3d=1.5:1.5:4:4, curves(all: 0.25→0.27, 0.5→0.555, 0.8→0.84), colorbalance (warm-neutral, −blue), saturation 1.07, contrast 1.03, unsharp 0.6`; window-light overlay only a trace (≤12 %).
 No clipping on the wall (measured 0% pixels ≥250); skin moved from magenta toward neutral.
 
 ## Typography & captions

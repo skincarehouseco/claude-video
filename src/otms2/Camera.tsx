@@ -48,11 +48,11 @@ export const Camera: React.FC = () => {
               maskImage: 'radial-gradient(ellipse 58% 44% at 50% 50%, transparent 55%, black 100%)',
             }}
           >
-            <OffthreadVideo src={staticFile('otms/beige.mp4')} muted style={{...style, filter: 'blur(14px) saturate(0.85) brightness(1.06)'}} />
+            <OffthreadVideo src={staticFile('otms/beige.mp4')} muted style={{...style, filter: 'blur(14px) saturate(0.9)'}} />
           </AbsoluteFill>
         )}
       </AbsoluteFill>
-      {handShot && <AbsoluteFill style={{background: 'radial-gradient(ellipse 70% 55% at 50% 48%, rgba(255,249,241,0) 55%, rgba(246,236,222,0.55) 100%)'}} />}
+      {handShot && <AbsoluteFill style={{background: 'radial-gradient(ellipse 70% 55% at 50% 48%, rgba(255,249,241,0) 55%, rgba(236,224,208,0.22) 100%)'}} />}
     </AbsoluteFill>
   );
 };
@@ -70,7 +70,7 @@ export const StudioLight: React.FC = () => {
   return (
     <AbsoluteFill style={{pointerEvents: 'none'}}>
       {/* warm window light */}
-      <AbsoluteFill style={{background: 'linear-gradient(128deg, rgba(255,247,232,0.55) 0%, rgba(255,247,232,0.18) 35%, rgba(255,247,232,0) 60%)', mixBlendMode: 'screen'}} />
+      <AbsoluteFill style={{background: 'linear-gradient(128deg, rgba(255,247,232,0.12) 0%, rgba(255,247,232,0.04) 35%, rgba(255,247,232,0) 60%)', mixBlendMode: 'screen'}} />
       {/* dappled leaf shadows on the shelf wall */}
       {shelf && (
         <svg width={1080} height={1920} style={{position: 'absolute', mixBlendMode: 'multiply', opacity: 0.1, filter: 'blur(16px)'}}>
