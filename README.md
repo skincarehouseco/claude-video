@@ -27,3 +27,24 @@ python3 scripts/make_audio.py public/audio
 python3 scripts/build_captions.py
 npm run render   # -> out/final.mp4
 ```
+
+---
+
+# "Pagi atau Malam?" edit (composition `PagiMalam`)
+
+Whimsy TikTok edit of the AM/PM skincare-ingredients video (Malay/English), modelled on the
+"numbered tips" reference: title + tag + ✗/✓ comparison cards per ingredient.
+
+- `src/pagimalam/PagiMalam.tsx` – camera (smooth zooms on key words, zoom "breath" per ingredient, dissolved jump cuts), audio mix
+- `src/pagimalam/Graphics.tsx` – hook, 7 ingredient sections (pagi/malam cards timed to speech), reactions, outro, sparkle-sweep transitions
+- `src/pagimalam/Captions.tsx` – word-synced captions, Poppins Light (no bold), soft butter yellow `#FFF1A8`
+- `scripts/pagimalam_transcript_raw.json` – faster-whisper large-v3 word timings; `scripts/pagimalam_captions.py` -> `src/pagimalam/captions.json`
+- Fonts (SIL OFL): Poppins Light, DM Serif Display, Caveat, Sniglet, Quicksand
+
+```bash
+ffmpeg -i source.mov -an -c:v libx264 -crf 16 -pix_fmt yuv420p -r 30 public/pagimalam/main.mp4
+ffmpeg -i source.mov -vn -af "highpass=f=80,afftdn=nf=-30,acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120:makeup=2,loudnorm=I=-15:TP=-1.5:LRA=9" -ar 48000 -ac 2 public/pagimalam/voice.wav
+python3 scripts/make_audio.py public/audio
+python3 scripts/pagimalam_captions.py
+npx remotion render src/index.ts PagiMalam out/pagimalam_final.mp4 --codec h264 --crf 18 --audio-bitrate 192k
+```
