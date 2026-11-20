@@ -27,3 +27,28 @@ python3 scripts/make_audio.py public/audio
 python3 scripts/build_captions.py
 npm run render   # -> out/final.mp4
 ```
+
+---
+
+# "Back to basics" edit (`SkipcareEdit`, `src/v2/`)
+
+9:16 whimsy TikTok edit of the 34 s Malay/English "go back to the basics" skincare talking-head video.
+
+- `src/v2/captions.json` – from Whisper large-v3 word timings (`scripts/v2_transcript_raw.json`), corrected + phrase-chunked by `scripts/v2_build_captions.py`
+- `src/v2/Captions.tsx` – Quicksand regular (not bold), 52 px, soft butter yellow `#FFF0A6`, key words in Playfair italic; words float in as spoken
+- `src/v2/Camera.tsx` – smooth face-centred zoom keyframes, zoom-through + soft flash on both jump cuts (21.73 s, 26.40 s)
+- `src/v2/Graphics.tsx` – titles, blush, product pop-ups, "more skincare" strike-through, product pile, cleanse/hydrate/moisturize line-art cards, clouds, flask, hearts
+- `src/v2/face.json` – smoothed face track from `scripts/v2_face_track.py` (OpenCV)
+- Fonts: Quicksand, Dancing Script, Playfair Display Italic (SIL OFL, `public/fonts`)
+
+All text/graphics stay inside the TikTok safe zone (top 160 px, bottom 430 px, left 80 px, right 170 px clear).
+
+## Rebuild
+```bash
+ffmpeg -i source.mov -map 0:v:0 -c:v libx264 -crf 16 -pix_fmt yuv420p -r 30 -an public/v2/main.mp4
+ffmpeg -i source.mov -vn -af "highpass=f=80,afftdn=nf=-30,acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120:makeup=2,loudnorm=I=-15:TP=-1.5:LRA=9" -ar 48000 -ac 2 public/v2/voice.wav
+python3 scripts/make_audio.py /tmp/aud && ffmpeg -i /tmp/aud/music.wav -t 36 public/v2/music.wav
+python3 scripts/v2_face_track.py
+python3 scripts/v2_build_captions.py
+npm run render:v2   # -> out/skipcare_final.mp4
+```

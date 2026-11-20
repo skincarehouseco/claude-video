@@ -1,0 +1,740 @@
+[
+ {
+  "start": 0.76,
+  "end": 1.7,
+  "words": [
+   {
+    "text": "Sometimes",
+    "start": 0.76,
+    "end": 1.06,
+    "accent": false
+   },
+   {
+    "text": "you",
+    "start": 1.06,
+    "end": 1.28,
+    "accent": false
+   },
+   {
+    "text": "just",
+    "start": 1.28,
+    "end": 1.5,
+    "accent": false
+   },
+   {
+    "text": "need",
+    "start": 1.5,
+    "end": 1.7,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 1.7,
+  "end": 2.7,
+  "words": [
+   {
+    "text": "to",
+    "start": 1.7,
+    "end": 1.78,
+    "accent": false
+   },
+   {
+    "text": "go",
+    "start": 1.78,
+    "end": 1.82,
+    "accent": false
+   },
+   {
+    "text": "back",
+    "start": 1.82,
+    "end": 2.08,
+    "accent": false
+   },
+   {
+    "text": "to",
+    "start": 2.08,
+    "end": 2.22,
+    "accent": false
+   },
+   {
+    "text": "the",
+    "start": 2.22,
+    "end": 2.34,
+    "accent": false
+   },
+   {
+    "text": "basic.",
+    "start": 2.34,
+    "end": 2.6,
+    "accent": true
+   }
+  ]
+ },
+ {
+  "start": 2.7,
+  "end": 3.94,
+  "words": [
+   {
+    "text": "Kalau",
+    "start": 2.7,
+    "end": 3.08,
+    "accent": false
+   },
+   {
+    "text": "kulit",
+    "start": 3.08,
+    "end": 3.6,
+    "accent": false
+   },
+   {
+    "text": "korang",
+    "start": 3.6,
+    "end": 3.94,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 3.94,
+  "end": 5.18,
+  "words": [
+   {
+    "text": "tengah",
+    "start": 3.94,
+    "end": 4.14,
+    "accent": false
+   },
+   {
+    "text": "sensitive",
+    "start": 4.14,
+    "end": 4.44,
+    "accent": true
+   },
+   {
+    "text": "or",
+    "start": 4.44,
+    "end": 4.76,
+    "accent": false
+   },
+   {
+    "text": "breakout,",
+    "start": 4.76,
+    "end": 5.06,
+    "accent": true
+   }
+  ]
+ },
+ {
+  "start": 5.18,
+  "end": 5.96,
+  "words": [
+   {
+    "text": "jangan",
+    "start": 5.18,
+    "end": 5.4,
+    "accent": false
+   },
+   {
+    "text": "terlalu",
+    "start": 5.4,
+    "end": 5.82,
+    "accent": false
+   },
+   {
+    "text": "try",
+    "start": 5.82,
+    "end": 5.96,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 5.96,
+  "end": 6.98,
+  "words": [
+   {
+    "text": "banyak",
+    "start": 5.96,
+    "end": 6.34,
+    "accent": false
+   },
+   {
+    "text": "sangat",
+    "start": 6.34,
+    "end": 6.5,
+    "accent": false
+   },
+   {
+    "text": "produk.",
+    "start": 6.5,
+    "end": 6.74,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 6.98,
+  "end": 8.26,
+  "words": [
+   {
+    "text": "Your",
+    "start": 6.98,
+    "end": 7.38,
+    "accent": false
+   },
+   {
+    "text": "skin",
+    "start": 7.38,
+    "end": 7.62,
+    "accent": false
+   },
+   {
+    "text": "needs",
+    "start": 7.62,
+    "end": 7.88,
+    "accent": false
+   },
+   {
+    "text": "skincare",
+    "start": 7.88,
+    "end": 8.26,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 8.26,
+  "end": 10.66,
+  "words": [
+   {
+    "text": "and",
+    "start": 8.26,
+    "end": 8.72,
+    "accent": false
+   },
+   {
+    "text": "bukan",
+    "start": 8.72,
+    "end": 9.1,
+    "accent": false
+   },
+   {
+    "text": "more",
+    "start": 9.22,
+    "end": 9.82,
+    "accent": false
+   },
+   {
+    "text": "skincare.",
+    "start": 9.82,
+    "end": 10.22,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 10.66,
+  "end": 11.78,
+  "words": [
+   {
+    "text": "Kadang-kadang",
+    "start": 10.66,
+    "end": 11.26,
+    "accent": false
+   },
+   {
+    "text": "kita",
+    "start": 11.26,
+    "end": 11.46,
+    "accent": false
+   },
+   {
+    "text": "ni",
+    "start": 11.46,
+    "end": 11.64,
+    "accent": false
+   },
+   {
+    "text": "kan",
+    "start": 11.64,
+    "end": 11.78,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 11.78,
+  "end": 12.5,
+  "words": [
+   {
+    "text": "terlalu",
+    "start": 11.78,
+    "end": 12.22,
+    "accent": false
+   },
+   {
+    "text": "excited",
+    "start": 12.22,
+    "end": 12.5,
+    "accent": true
+   }
+  ]
+ },
+ {
+  "start": 12.5,
+  "end": 14.12,
+  "words": [
+   {
+    "text": "nak",
+    "start": 12.5,
+    "end": 12.96,
+    "accent": false
+   },
+   {
+    "text": "tambah",
+    "start": 12.96,
+    "end": 13.36,
+    "accent": false
+   },
+   {
+    "text": "macam-macam",
+    "start": 13.36,
+    "end": 13.88,
+    "accent": false
+   },
+   {
+    "text": "produk",
+    "start": 13.88,
+    "end": 14.12,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 14.12,
+  "end": 16.22,
+  "words": [
+   {
+    "text": "sampai",
+    "start": 14.12,
+    "end": 14.66,
+    "accent": false
+   },
+   {
+    "text": "5",
+    "start": 14.66,
+    "end": 15.04,
+    "accent": false
+   },
+   {
+    "text": "ke",
+    "start": 15.04,
+    "end": 15.4,
+    "accent": false
+   },
+   {
+    "text": "6",
+    "start": 15.4,
+    "end": 15.68,
+    "accent": false
+   },
+   {
+    "text": "layer.",
+    "start": 15.68,
+    "end": 16.0,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 16.22,
+  "end": 17.28,
+  "words": [
+   {
+    "text": "But",
+    "start": 16.22,
+    "end": 16.68,
+    "accent": false
+   },
+   {
+    "text": "honestly,",
+    "start": 16.68,
+    "end": 17.1,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 17.28,
+  "end": 18.34,
+  "words": [
+   {
+    "text": "less",
+    "start": 17.28,
+    "end": 17.54,
+    "accent": true
+   },
+   {
+    "text": "is",
+    "start": 17.54,
+    "end": 17.74,
+    "accent": false
+   },
+   {
+    "text": "better.",
+    "start": 17.74,
+    "end": 18.04,
+    "accent": true
+   }
+  ]
+ },
+ {
+  "start": 18.34,
+  "end": 19.88,
+  "words": [
+   {
+    "text": "Give",
+    "start": 18.34,
+    "end": 18.82,
+    "accent": false
+   },
+   {
+    "text": "your",
+    "start": 18.82,
+    "end": 19.02,
+    "accent": false
+   },
+   {
+    "text": "skin",
+    "start": 19.02,
+    "end": 19.28,
+    "accent": false
+   },
+   {
+    "text": "a",
+    "start": 19.28,
+    "end": 19.52,
+    "accent": false
+   },
+   {
+    "text": "break,",
+    "start": 19.52,
+    "end": 19.78,
+    "accent": true
+   }
+  ]
+ },
+ {
+  "start": 19.88,
+  "end": 20.66,
+  "words": [
+   {
+    "text": "focus",
+    "start": 19.88,
+    "end": 20.18,
+    "accent": false
+   },
+   {
+    "text": "dulu",
+    "start": 20.18,
+    "end": 20.46,
+    "accent": false
+   },
+   {
+    "text": "pada",
+    "start": 20.46,
+    "end": 20.66,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 20.66,
+  "end": 21.68,
+  "words": [
+   {
+    "text": "basic",
+    "start": 20.66,
+    "end": 21.0,
+    "accent": false
+   },
+   {
+    "text": "skincare.",
+    "start": 21.0,
+    "end": 21.34,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 21.68,
+  "end": 22.74,
+  "words": [
+   {
+    "text": "Ingat",
+    "start": 21.68,
+    "end": 22.04,
+    "accent": false
+   },
+   {
+    "text": "tiga",
+    "start": 22.04,
+    "end": 22.22,
+    "accent": false
+   },
+   {
+    "text": "benda",
+    "start": 22.22,
+    "end": 22.44,
+    "accent": false
+   },
+   {
+    "text": "ni,",
+    "start": 22.44,
+    "end": 22.64,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 22.74,
+  "end": 23.2,
+  "words": [
+   {
+    "text": "cleanse,",
+    "start": 22.74,
+    "end": 23.16,
+    "accent": true
+   }
+  ]
+ },
+ {
+  "start": 23.2,
+  "end": 23.58,
+  "words": [
+   {
+    "text": "hydrate,",
+    "start": 23.2,
+    "end": 23.54,
+    "accent": true
+   }
+  ]
+ },
+ {
+  "start": 23.58,
+  "end": 24.14,
+  "words": [
+   {
+    "text": "moisturize.",
+    "start": 23.58,
+    "end": 24.04,
+    "accent": true
+   }
+  ]
+ },
+ {
+  "start": 24.14,
+  "end": 24.78,
+  "words": [
+   {
+    "text": "Cleanse,",
+    "start": 24.14,
+    "end": 24.7,
+    "accent": true
+   }
+  ]
+ },
+ {
+  "start": 24.78,
+  "end": 26.41,
+  "words": [
+   {
+    "text": "hydrate",
+    "start": 24.78,
+    "end": 25.18,
+    "accent": true
+   },
+   {
+    "text": "and",
+    "start": 25.18,
+    "end": 25.48,
+    "accent": false
+   },
+   {
+    "text": "moisturize.",
+    "start": 25.48,
+    "end": 25.96,
+    "accent": true
+   }
+  ]
+ },
+ {
+  "start": 26.45,
+  "end": 27.48,
+  "words": [
+   {
+    "text": "Especially",
+    "start": 26.45,
+    "end": 27.02,
+    "accent": false
+   },
+   {
+    "text": "bila",
+    "start": 27.02,
+    "end": 27.48,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 27.48,
+  "end": 28.5,
+  "words": [
+   {
+    "text": "kulit",
+    "start": 27.48,
+    "end": 27.74,
+    "accent": false
+   },
+   {
+    "text": "korang",
+    "start": 27.74,
+    "end": 27.96,
+    "accent": false
+   },
+   {
+    "text": "tengah",
+    "start": 27.96,
+    "end": 28.14,
+    "accent": false
+   },
+   {
+    "text": "meragam.",
+    "start": 28.14,
+    "end": 28.48,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 28.5,
+  "end": 29.74,
+  "words": [
+   {
+    "text": "Ingat,",
+    "start": 28.5,
+    "end": 28.8,
+    "accent": false
+   },
+   {
+    "text": "keep",
+    "start": 28.8,
+    "end": 29.02,
+    "accent": false
+   },
+   {
+    "text": "it",
+    "start": 29.02,
+    "end": 29.14,
+    "accent": false
+   },
+   {
+    "text": "simple.",
+    "start": 29.14,
+    "end": 29.56,
+    "accent": true
+   }
+  ]
+ },
+ {
+  "start": 29.74,
+  "end": 31.02,
+  "words": [
+   {
+    "text": "Jangan",
+    "start": 29.74,
+    "end": 30.04,
+    "accent": false
+   },
+   {
+    "text": "terlalu",
+    "start": 30.04,
+    "end": 30.38,
+    "accent": false
+   },
+   {
+    "text": "banyak",
+    "start": 30.38,
+    "end": 30.6,
+    "accent": false
+   },
+   {
+    "text": "sangat",
+    "start": 30.6,
+    "end": 31.02,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 31.02,
+  "end": 32.08,
+  "words": [
+   {
+    "text": "nak",
+    "start": 31.02,
+    "end": 31.3,
+    "accent": false
+   },
+   {
+    "text": "buat",
+    "start": 31.3,
+    "end": 31.74,
+    "accent": false
+   },
+   {
+    "text": "experiment",
+    "start": 31.74,
+    "end": 32.08,
+    "accent": true
+   }
+  ]
+ },
+ {
+  "start": 32.08,
+  "end": 33.1,
+  "words": [
+   {
+    "text": "dengan",
+    "start": 32.08,
+    "end": 32.38,
+    "accent": false
+   },
+   {
+    "text": "kulit",
+    "start": 32.38,
+    "end": 32.82,
+    "accent": false
+   },
+   {
+    "text": "korang.",
+    "start": 32.82,
+    "end": 33.08,
+    "accent": false
+   }
+  ]
+ },
+ {
+  "start": 33.1,
+  "end": 33.8,
+  "words": [
+   {
+    "text": "Okay?",
+    "start": 33.1,
+    "end": 33.4,
+    "accent": false
+   }
+  ]
+ }
+]
