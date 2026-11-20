@@ -41,21 +41,9 @@ export const Camera: React.FC = () => {
   return (
     <AbsoluteFill style={{overflow: 'hidden', background: P.cream}}>
       <AbsoluteFill style={{transform: `scale(${(zoomAt(t) * settle).toFixed(5)})`, transformOrigin: originAt(t)}}>
-        <OffthreadVideo src={staticFile('otms/beige.mp4')} muted style={{...style, filter: handShot ? 'brightness(0.9) contrast(1.05) saturate(1.04)' : undefined}} />
-        {/* hand shots: lens-style focus falloff + warm beige wash on the busy stock shelves at the frame edges
-            (no AI matting: tested masks were unstable on the hand, so a mask-free treatment keeps it realistic) */}
-        {handShot && (
-          <AbsoluteFill
-            style={{
-              WebkitMaskImage: 'radial-gradient(ellipse 58% 44% at 50% 50%, transparent 55%, black 100%)',
-              maskImage: 'radial-gradient(ellipse 58% 44% at 50% 50%, transparent 55%, black 100%)',
-            }}
-          >
-            <OffthreadVideo src={staticFile('otms/beige.mp4')} muted style={{...style, filter: 'blur(14px) brightness(0.9) saturate(0.95)'}} />
-          </AbsoluteFill>
-        )}
+        {/* hand shots use their own crisp, natural grade (public/otms/intro.mp4): no blur, no haze, original exposure */}
+        <OffthreadVideo src={staticFile(handShot ? 'otms/intro.mp4' : 'otms/beige.mp4')} muted style={style} />
       </AbsoluteFill>
-      {handShot && <AbsoluteFill style={{background: 'radial-gradient(ellipse 70% 55% at 50% 48%, rgba(255,249,241,0) 55%, rgba(236,224,208,0.1) 100%)'}} />}
     </AbsoluteFill>
   );
 };

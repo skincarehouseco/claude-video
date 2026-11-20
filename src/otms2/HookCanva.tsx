@@ -134,7 +134,7 @@ export const HookCanva: React.FC = () => {
   ];
   return (
     <AbsoluteFill style={{opacity: leave(f), pointerEvents: 'none'}}>
-      <div style={{position: 'absolute', top: 470, left: 0, width: 1080, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      <div style={{position: 'absolute', top: 300, left: 0, width: 1080, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <div style={{width: 1000, display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: -98}}>
           {lines.map((l, i) => (
             <Tag key={i} line={l} />
@@ -142,11 +142,11 @@ export const HookCanva: React.FC = () => {
         </div>
         <TypeLine />
       </div>
-      <DAISY x={850} y={470} s={1.4} at={0.5} />
-      <Star4 x={120} y={640} s={1.5} at={0.9} c="#F6C343" />
-      <Dot x={880} y={800} r={17} c="#3D5BD9" at={1.35} />
-      <Dot x={190} y={860} r={13} c="#F08BB0" at={1.45} />
-      <Star4 x={860} y={655} s={1.0} at={1.3} c="#F08BB0" />
+      <DAISY x={850} y={300} s={1.4} at={0.5} />
+      <Star4 x={120} y={470} s={1.5} at={0.9} c="#F6C343" />
+      <Dot x={880} y={630} r={17} c="#3D5BD9" at={1.35} />
+      <Dot x={190} y={690} r={13} c="#F08BB0" at={1.45} />
+      <Star4 x={860} y={485} s={1.0} at={1.3} c="#F08BB0" />
     </AbsoluteFill>
   );
 };

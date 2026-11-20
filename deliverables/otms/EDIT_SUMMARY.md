@@ -12,7 +12,7 @@
 - **Shelf scenes (3.5–22 s): enhanced, not replaced.** The wall was grey-lavender (≈RGB 172,170,177); the grade lifts it to a bright cream
   (≈191,187,186 — toned down after review so it stays natural, ~8–10 % brighter than the original) with warm-neutral highlights, gentle denoise and light sharpening. A soft window-light gradient, very faint drifting
   leaf shadows (multiply, ~10%) and out-of-focus sage leaves in two corners give the airy studio feel. Products are untouched.
-- **Hand shots (0–3.5 s, 22–24 s):** the background is stacked stock boxes. AI matting was tested (rembg isnet-general-use, u2net):
+- **Hand shots (0–3.5 s, 22–24 s):** after review these use their own crisp, natural grade (`public/otms/intro.mp4`: light denoise, contrast 1.08, saturation 1.1, sharpening) with no blur or haze so the OTMS jar stays clear. Background is stacked stock boxes. AI matting was tested (rembg isnet-general-use, u2net):
   masks dropped the hand on some frames, which would flicker/halo, and BiRefNet ran out of memory on this machine. To keep it realistic,
   a mask-free treatment is used instead: a lens-style focus falloff (edges blurred) plus a warm beige wash at the frame edges.
 - No full AI background replacement was used, so no generated environment, no matting edges.
