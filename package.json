@@ -7,7 +7,8 @@
     "render": "remotion render src/index.ts SkinTypesEdit out/skin-types.mp4 --codec h264 --crf 18 --audio-bitrate 192k --timeout 120000",
     "render:whimsy": "remotion render src/index.ts WhimsyEdit out/final.mp4 --codec h264 --crf 18 --audio-bitrate 192k --timeout 120000",
     "render:foam": "remotion render src/index.ts FoamEdit out/foam.mp4 --codec h264 --crf 18 --audio-bitrate 192k --timeout 120000",
-    "render:otms": "remotion render src/index.ts OtmsEdit out/otms.mp4 --codec h264 --crf 18 --audio-bitrate 192k --timeout 120000"
+    "render:otms": "remotion render src/index.ts OtmsEdit out/otms.mp4 --codec h264 --crf 18 --audio-bitrate 192k --timeout 120000",
+    "render:otms-beige": "remotion render src/index.ts OtmsBeige out/otms-beige.mp4 --codec h264 --crf 17 --audio-bitrate 192k --timeout 120000"
   },
   "dependencies": {
     "@remotion/cli": "4.0.290",

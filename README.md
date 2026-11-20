@@ -22,6 +22,14 @@ python3 scripts/skin_captions.py
 npm run render
 ```
 
+## OtmsBeige – bright airy beige whimsy version of the OTMS video (24 s, `npm run render:otms-beige` -> `out/otms-beige.mp4`)
+- `src/otms2/` – `data.ts` (word-level transcript, palette, safe zone, scene times), `Camera.tsx` (camera + background treatment,
+  studio light, light leaks), `Captions.tsx` (word-synced Poppins captions + keyword highlights), `Doodles.tsx` (hand-drawn rings,
+  arrows, icons, sparkles, flowers, badges), `OtmsBeige.tsx` (assembly + voice/SFX mix)
+- Footage grade -> `public/otms/beige.mp4`: `hqdn3d=1.5:1.5:4:4,curves=all='0/0 0.25/0.37 0.5/0.70 0.8/0.93 1/1',colorbalance=rm=0.035:gm=0.012:bm=-0.06:rh=0.04:gh=0.02:bh=-0.035:rs=0.0:gs=0.01:bs=-0.02,eq=saturation=1.04,unsharp=5:5:0.6:5:5:0.0`
+- `scripts/otms_captions_export.py` -> `deliverables/otms/otms_captions.srt` + `otms_transcript.md`; notes in `deliverables/otms/EDIT_SUMMARY.md`
+- Final loudness: `ffmpeg -i out/otms-beige.mp4 -t 24 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -c:a aac -b:a 192k out/otms-beige-final.mp4`
+
 ## OtmsEdit – "OTMS ni boleh mix dengan apa?" (24 s, `npm run render:otms` -> `out/otms.mp4`)
 Yello Oatmeal Turmeric Mask & Scrub pairings. Wording/spelling follows the creator's draft (Jelita KL, Cyanara Essence,
 Blumé Bright Toner Mist, Bulaney Essence); timing from Whisper large-v3 word timings of the voice.
