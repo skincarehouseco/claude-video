@@ -1,6 +1,6 @@
 import React from 'react';
-import {AbsoluteFill, interpolate, random, useCurrentFrame} from 'remotion';
-import {Bubbles, Calendar, Check, FaceGlow, FaceSpots, GelTube, HeavyCream, Star, SunMoon, Sunscreen} from './Art';
+import {AbsoluteFill, Img, interpolate, random, staticFile, useCurrentFrame} from 'remotion';
+import {Bubbles, Calendar, Check, GelTube, HeavyCream, Star, SunMoon, Sunscreen} from './Art';
 import {SECTION_CUTS} from './camera';
 import {bob, C, captionFont, clamp01, displayFont, emojiFont, exitAt, FPS, italicFont, pop, SAFE, SAFE_CENTER_X, sec} from './theme';
 
@@ -170,15 +170,70 @@ const Sticker: React.FC<{e: string; at: number; dur: number; x: number; y: numbe
   );
 };
 
-/* ---------------- hook: pakai vs faham ---------------- */
+/* ---------------- hook: pakai vs faham (real before/after photo, public/hook/before_after.jpg) ---------------- */
+// left half of the photo = "pakai skincare", right half = "faham skincare"; [x, y] zoom focus inside each half (%)
+const HALF_FOCUS = {L: [40, 50], R: [45, 55]} as const;
+
+/** one half of the before/after photo in a white frame, with a slow zoom-in inside the frame */
+const PhotoCard: React.FC<{half: 'L' | 'R'; x: number; y: number; w: number; h: number; at: number; end: number; tilt: number; label: string; labelSize?: number}> = ({
+  half, x, y, w, h, at, end, tilt, label, labelSize = 36,
+}) => {
+  const f = useCurrentFrame();
+  if (f < sec(at) - 1 || f > sec(end) + 1) return null;
+  const p = pop(f, at, FPS, 170, 12);
+  const out = exitAt(f, end - 0.22, 0.22);
+  const zoom = interpolate(f, [sec(at), sec(end)], [1.0, 1.22], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const [fx, fy] = HALF_FOCUS[half];
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        left: x,
+        top: y,
+        width: w,
+        opacity: Math.min(1, p * 1.4) * out,
+        transform: `translateY(${(1 - p) * 40 + bob(f, 4, 80)}px) scale(${(0.6 + 0.4 * p) * (0.85 + 0.15 * out)}) rotate(${tilt * p}deg)`,
+        transformOrigin: '50% 100%',
+      }}
+    >
+      <div style={{width: w, height: h, background: '#fff', padding: 8, borderRadius: 22, boxSizing: 'border-box', boxShadow: '0 12px 28px rgba(40,25,35,0.32)'}}>
+        <div style={{width: '100%', height: '100%', overflow: 'hidden', borderRadius: 15, position: 'relative'}}>
+          <div style={{position: 'absolute', inset: 0, transform: `scale(${zoom})`, transformOrigin: `${fx}% ${fy}%`}}>
+            {(() => {
+              // square photo sized so one half covers the frame; centre that half in the frame
+              const iw = w - 16;
+              const ih = h - 16;
+              const S = Math.max(2 * iw, ih);
+              const left = iw / 2 - (half === 'L' ? S / 4 : (3 * S) / 4);
+              return <Img src={staticFile('hook/before_after.jpg')} style={{position: 'absolute', width: S, height: S, left, top: (ih - S) / 2}} />;
+            })()}
+          </div>
+        </div>
+      </div>
+      {/* washi tape */}
+      <div style={{position: 'absolute', top: -12, left: w / 2 - 38, width: 76, height: 24, background: 'rgba(255,241,168,0.9)', transform: `rotate(${-tilt * 1.5}deg)`, borderRadius: 3}} />
+      <div style={{width: w + 160, marginLeft: -80, marginTop: 10, textAlign: 'center', fontFamily: captionFont, fontWeight: 400, fontSize: labelSize, color: '#fff', textShadow: '0 2px 8px rgba(30,20,30,0.75)', whiteSpace: 'nowrap'}}>
+        {label}
+      </div>
+    </div>
+  );
+};
+
 const Hook: React.FC = () => {
   const f = useCurrentFrame();
   const shake = f > sec(2.74) && f < sec(3.8) ? Math.sin(f / 2.2) * 2.5 : 0;
   return (
-    <div style={{position: 'absolute', inset: 0, transform: `rotate(${shake * 0.3}deg)`}}>
-      <Card side="L" at={0.35} end={3.85} good={null} label="pakai skincare" art={(t) => <FaceSpots t={t} />} />
-      <Divider at={1.2} end={3.85} />
-      <Card side="R" at={1.42} end={3.85} good={null} label="faham skincare" art={(t) => <FaceGlow t={t} />} />
+    <div style={{position: 'absolute', inset: 0}}>
+      {/* "Yang ni pakai skincare" — speaker is zoomed to the left, pointing up-right: photo fills the empty right side */}
+      <PhotoCard half="L" x={590} y={172} w={320} h={370} at={0.3} end={1.22} tilt={4} label="pakai skincare" />
+      {/* "yang ni pula faham skincare" — speaker is zoomed to the right, pointing up-left: photo fills the empty left side */}
+      <PhotoCard half="R" x={88} y={172} w={320} h={370} at={1.4} end={2.62} tilt={-4} label="faham skincare" />
+      {/* "Dua-dua pakai skincare" — speaker centred: both photos side by side above her head */}
+      <div style={{position: 'absolute', inset: 0, transform: `rotate(${shake * 0.3}deg)`}}>
+        <PhotoCard half="L" x={cardX('L')} y={CARD_TOP - 40} w={CARD} h={210} at={2.66} end={3.85} tilt={-4} label="pakai skincare" labelSize={30} />
+        <Divider at={2.75} end={3.85} />
+        <PhotoCard half="R" x={cardX('R')} y={CARD_TOP - 40} w={CARD} h={210} at={2.76} end={3.85} tilt={4} label="faham skincare" labelSize={30} />
+      </div>
     </div>
   );
 };

@@ -9,6 +9,7 @@
 - `src/skin/Captions.tsx` – word-synced captions, DM Sans Regular 54px (non-bold), soft butter yellow `#FFF1A8`
 - `src/skin/Overlays.tsx` / `src/skin/Art.tsx` – titles (DM Serif Display + Playfair Italic), cards, SVG illustrations, emoji stickers, sparkle transitions
 - `src/skin/captions.json` – built by `scripts/skin_captions.py` from Whisper large-v3 word timings (`scripts/skin_transcript_raw.json`), with spelling fixes (pakai, faham, berjerawat)
+- Intro uses the real before/after photo `public/hook/before_after.jpg` (left half = pakai skincare, right half = faham skincare), placed in the empty side of each zoomed shot with a slow zoom
 - All text/graphics stay inside the TikTok safe zone (top 160px, bottom 430px, left 80px, right 170px clear). Emoji use the system colour-emoji font.
 
 Rebuild:
