@@ -7,6 +7,8 @@ const FONTS: [string, string, FontFaceDescriptors][] = [
   ['BeigeSans', 'fonts/Poppins-SemiBold.ttf', {weight: '600'}],
   ['BeigeSansMed', 'fonts/Poppins-Medium.ttf', {weight: '500'}],
   ['BeigeSerif', 'fonts/PlayfairDisplay-Italic.ttf', {weight: '400 900', style: 'italic'}],
+  ['BeigeRound', 'fonts/Fredoka.ttf', {weight: '300 700'}],
+  ['BeigeDisplay', 'fonts/DMSerifDisplay-Regular.ttf', {weight: '400'}],
 ];
 if (typeof window !== 'undefined' && 'FontFace' in window) {
   const h = delayRender('beige fonts', {timeoutInMilliseconds: 120000, retries: 2});
@@ -20,6 +22,8 @@ if (typeof window !== 'undefined' && 'FontFace' in window) {
 export const SANS = 'BeigeSans';
 export const SANS_MED = 'BeigeSansMed';
 export const SERIF = 'BeigeSerif';
+export const ROUND = 'BeigeRound';
+export const DISPLAY = 'BeigeDisplay';
 
 /* ------------------------------------------------------------------
    Timeline basics: 1080x1920, 30 fps, exactly 24 s = 720 frames

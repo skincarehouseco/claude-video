@@ -1,188 +1,204 @@
 import React from 'react';
-import {AbsoluteFill, Easing, Img, staticFile, useCurrentFrame} from 'remotion';
-import {CUT_SHELF, P, PHRASES, SAFE, SAFE_CX, SANS, sec, SERIF} from './data';
-import {c01, HookSpark, HookTeaser, HookTitle, leave, sp, THUMBS, TINT, TitleWord} from './Hook';
+import {AbsoluteFill, Easing, interpolate, useCurrentFrame} from 'remotion';
+import {CUT_SHELF, DISPLAY, P, PHRASES, ROUND, SAFE, SAFE_CX, SANS, sec, SERIF, Word} from './data';
+import {c01, HookSpark, HookTitle, leave, sp} from './Hook';
 
-/* Five alternative intro hooks (0 – 3.47 s). All use only the speaker's own words for the question;
-   the extra on-screen facts come from the video itself (4 pairings, the 4 partner products, the jar label). */
+/* Five typographic treatments of the same spoken hook "OTMS ni boleh mix dengan apa?".
+   Every word still appears only when it is spoken; only the font / layout / animation style changes. */
 
 export type HookId = 'A' | 'B' | 'C' | 'D' | 'E';
-const hookWords = () => PHRASES.find((p) => p.id === 'hook')!.lines;
-const HEART = 'M0 22 C-20 8 -32 -4 -28 -16 C-24 -30 -8 -30 0 -17 C8 -30 24 -30 28 -16 C32 -4 20 8 0 22Z';
+const lines = () => PHRASES.find((p) => p.id === 'hook')!.lines;
 const STAR = 'M0 -22 C3 -6 6 -3 22 0 C6 3 3 6 0 22 C-3 6 -6 3 -22 0 C-6 -3 -3 -6 0 -22Z';
-
-/* ---------- B: "4 cara mix OTMS" — big serif 4 + numbered steps; question as the normal caption ---------- */
-const HookFour: React.FC = () => {
+const GLOW = '0 0 22px rgba(255,250,243,0.95), 0 0 8px rgba(255,250,243,0.95), 0 0 2px rgba(255,250,243,1)';
+const shown = (f: number, w: Word) => f >= sec(w.s);
+const Wrap: React.FC<{children: React.ReactNode; top?: number}> = ({children, top = SAFE.top - 6}) => {
   const f = useCurrentFrame();
   if (f > sec(CUT_SHELF)) return null;
-  const k4 = sp(f, 0.03, 9, 220);
-  const kt = sp(f, 0.25, 13);
-  const words = hookWords().flat();
+  return <div style={{position: 'absolute', top, left: SAFE_CX - 420, width: 840, textAlign: 'center', opacity: leave(f), transform: `translateY(${(1 - leave(f)) * -20}px)`}}>{children}</div>;
+};
+
+/* ---------- B: editorial — elegant serif italic + bold caps (magazine / "After Marriage" look) ---------- */
+const HookEditorial: React.FC = () => {
+  const f = useCurrentFrame();
+  const [l1, l2] = lines();
+  const ul = Easing.inOut(Easing.cubic)(c01((f - sec(1.4)) / 12));
   return (
-    <div style={{position: 'absolute', top: SAFE.top, left: SAFE.left, width: 810, opacity: leave(f), transform: `translateY(${(1 - leave(f)) * -20}px)`}}>
-      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 26}}>
-        <div style={{position: 'relative', width: 220, height: 250, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: `scale(${k4}) rotate(${(1 - k4) * -25}deg)`}}>
-          <svg width={230} height={230} style={{position: 'absolute'}} viewBox="-115 -115 230 230">
-            <path d="M-80 -40 C-60 -110 70 -112 92 -30 C112 50 40 108 -30 96 C-100 84 -104 20 -80 -40Z" fill={P.butter} opacity={0.9} />
-          </svg>
-          <span style={{position: 'relative', fontFamily: SERIF, fontStyle: 'italic', fontSize: 250, lineHeight: 1, color: P.cocoa}}>4</span>
-        </div>
-        <div style={{fontFamily: SANS, fontWeight: 600, color: P.cocoa, lineHeight: 1.05, opacity: kt, transform: `translateX(${(1 - kt) * 30}px)`, textShadow: '0 0 18px rgba(255,250,243,0.95), 0 0 4px rgba(255,250,243,1)'}}>
-          <div style={{fontSize: 64}}>cara mix</div>
-          <div style={{fontSize: 108, position: 'relative', display: 'inline-block', zIndex: 0}}>
-            <span style={{position: 'absolute', left: -8, right: -8, top: '45%', bottom: '8%', background: P.blush, borderRadius: 14, transform: `scaleX(${Easing.out(Easing.cubic)(c01((f - sec(0.45)) / 8))})`, transformOrigin: '0 50%', zIndex: -1}} />
-            OTMS
-          </div>
-        </div>
-      </div>
-      {/* 01..04 chips pop on the question words */}
-      <div style={{display: 'flex', justifyContent: 'center', gap: 18, marginTop: 18}}>
-        {[0, 1, 2, 3].map((i) => {
-          const k = sp(f, words[2 + i]?.s ?? 1.2, 9, 260);
+    <Wrap>
+      <div style={{position: 'absolute', inset: '-40px -20px', background: 'radial-gradient(ellipse at 50% 50%, rgba(255,250,243,0.85) 0%, rgba(255,250,243,0.55) 45%, rgba(255,250,243,0) 72%)'}} />
+      <div style={{position: 'relative', display: 'flex', justifyContent: 'center', gap: 18}}>
+        {l1.map((w, i) => {
+          if (!shown(f, w)) return null;
+          const k = Easing.out(Easing.cubic)(c01((f - sec(w.s)) / 9));
           return (
-            <div key={i} style={{width: 92, height: 56, borderRadius: 28, background: 'rgba(255,250,243,0.92)', boxShadow: `0 6px 16px rgba(90,64,44,0.2), inset 0 0 0 3px ${TINT[i]}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: SERIF, fontStyle: 'italic', fontSize: 34, color: P.cocoa, transform: `scale(${k}) translateY(${Math.sin((f + i * 8) / 10) * 3}px)`}}>
-              0{i + 1}
-            </div>
+            <span key={i} style={{fontFamily: SERIF, fontStyle: 'italic', fontSize: 84, color: P.cocoa, textShadow: GLOW, opacity: k, transform: `translateY(${(1 - k) * 24}px)`, display: 'inline-block'}}>
+              {w.t}
+            </span>
           );
         })}
       </div>
-    </div>
-  );
-};
-
-/* ---------- C: sticky note with the question + hand-drawn arrow to the jar ---------- */
-const HookNote: React.FC = () => {
-  const f = useCurrentFrame();
-  if (f > sec(CUT_SHELF)) return null;
-  const [l1, l2] = hookWords();
-  const k = sp(f, 0.0, 12, 170);
-  const arrowK = Easing.inOut(Easing.cubic)(c01((f - sec(1.35)) / 12));
-  const ul = Easing.out(Easing.cubic)(c01((f - sec(1.3)) / 9));
-  return (
-    <AbsoluteFill style={{opacity: leave(f)}}>
-      <div style={{position: 'absolute', top: SAFE.top - 6, left: SAFE_CX - 330, width: 660, transform: `translateY(${(1 - k) * -60}px) rotate(${-3 + (1 - k) * -8}deg)`, opacity: Math.min(1, k * 1.5)}}>
-        <div style={{background: '#FBEBB5', borderRadius: 10, padding: '34px 36px 30px', boxShadow: '0 18px 30px rgba(90,64,44,0.25), inset 0 -10px 18px rgba(200,160,80,0.12)', textAlign: 'center'}}>
-          <div style={{display: 'flex', justifyContent: 'center', gap: 14, fontFamily: SANS, fontWeight: 600, color: P.cocoa, lineHeight: 1.15}}>
-            {l1.map((w, i) => (
-              <TitleWord key={i} w={w} size={62} />
-            ))}
-          </div>
-          <div style={{display: 'flex', justifyContent: 'center', gap: 16, fontFamily: SANS, fontWeight: 600, color: P.cocoa, lineHeight: 1.15, marginTop: 2}}>
-            {l2.map((w, i) => (
-              <TitleWord key={i} w={w} size={78} />
-            ))}
-          </div>
-          <svg width={560} height={22} style={{display: 'block', margin: '4px auto 0'}}>
-            <path d="M10 12 C120 4 240 18 360 9 C440 4 500 14 550 8" fill="none" stroke={P.blushDeep} strokeWidth={5} strokeLinecap="round" pathLength={1} strokeDasharray="1" strokeDashoffset={1 - ul} />
-          </svg>
-          <div style={{fontFamily: SERIF, fontStyle: 'italic', fontSize: 28, color: P.cocoa, opacity: 0.75 * sp(f, 1.45, 14)}}>Oatmeal Turmeric Mask &amp; Scrub</div>
-        </div>
-        {/* washi tape */}
-        <div style={{position: 'absolute', top: -18, left: '50%', width: 150, height: 38, marginLeft: -75, background: 'rgba(233,183,177,0.8)', transform: 'rotate(4deg)', borderRadius: 3}} />
+      <div style={{position: 'relative', display: 'flex', justifyContent: 'center', gap: 20, marginTop: -6}}>
+        {l2.map((w, i) => {
+          if (!shown(f, w)) return null;
+          const k = sp(f, w.s, 14, 220);
+          return (
+            <span key={i} style={{fontFamily: SANS, fontWeight: 600, fontSize: 98, letterSpacing: 2, textTransform: 'uppercase', color: w.t === 'apa?' ? P.blushDeep : P.cocoa, textShadow: GLOW, display: 'inline-block', transform: `translateY(${(1 - k) * -30}px) scale(${0.85 + 0.15 * k})`, opacity: Math.min(1, k * 1.5)}}>
+              {w.t}
+            </span>
+          );
+        })}
       </div>
-      <svg width={1080} height={1920} style={{position: 'absolute'}}>
-        <path d="M770 560 C850 600 860 690 790 740" fill="none" stroke={P.cocoa} strokeWidth={5} strokeLinecap="round" pathLength={1} strokeDasharray="1" strokeDashoffset={1 - arrowK} />
-        <path d="M812 724 L788 744 L782 712" fill="none" stroke={P.cocoa} strokeWidth={5} strokeLinecap="round" strokeLinejoin="round" opacity={arrowK > 0.95 ? 1 : 0} />
+      <svg width={760} height={30} style={{position: 'relative', display: 'block', margin: '0 auto'}}>
+        <path d="M20 16 C200 6 420 24 600 12 C660 8 710 14 740 12" fill="none" stroke={P.cocoa} strokeWidth={4} strokeLinecap="round" pathLength={1} strokeDasharray="1" strokeDashoffset={1 - ul} />
+      </svg>
+      <svg width={840} height={320} style={{position: 'absolute', left: 0, top: -30, pointerEvents: 'none'}}>
         {[
-          [230, 600, 1.2, 1.5],
-          [880, 520, 0.9, 1.7],
+          [70, 60, 1.6, 0.5],
+          [790, 40, 1.2, 0.8],
+          [770, 250, 1.0, 1.3],
         ].map(([x, y, s, at], i) => (
-          <path key={i} d={STAR} transform={`translate(${x} ${y}) scale(${s * sp(f, at, 9)}) rotate(${Math.sin(f / 15 + i) * 12})`} fill={i ? P.blush : P.butter} stroke={P.cocoa} strokeWidth={2} />
+          <path key={i} d={STAR} transform={`translate(${x} ${y}) scale(${s * sp(f, at, 9)}) rotate(${Math.sin(f / 14 + i) * 14})`} fill={i === 1 ? P.blush : '#fff'} stroke={P.cocoa} strokeWidth={1.6} />
         ))}
       </svg>
-    </AbsoluteFill>
+    </Wrap>
   );
 };
 
-/* ---------- D: polaroid cards of the four partner products fanned around the jar ---------- */
-const POLA = [
-  {x: 70, y: 700, r: -9},
-  {x: 110, y: 1010, r: 6},
-  {x: 740, y: 690, r: 8},
-  {x: 710, y: 1000, r: -6},
-];
-const HookPolaroids: React.FC = () => {
+/* ---------- C: bubbly — rounded letters, white outline, pastel fills, letter-by-letter bounce ---------- */
+const BUBBLE_FILL = [P.blushDeep, '#E8A06A', '#86A877', '#9C8CD0', '#D98F88', '#C9A04A'];
+const HookBubbly: React.FC = () => {
   const f = useCurrentFrame();
-  if (f < sec(0.8) || f > sec(CUT_SHELF)) return null;
-  const words = hookWords().flat();
-  return (
-    <AbsoluteFill style={{opacity: leave(f)}}>
-      {POLA.map((p, i) => {
-        const at = words[2 + i]?.s ?? 1.2;
-        const k = sp(f, at, 10, 220);
-        const q = sp(f, 1.25 + i * 0.05, 8, 260);
+  const [l1, l2] = lines();
+  const line = (ws: Word[], off: number, size: number) => (
+    <div style={{display: 'flex', justifyContent: 'center', gap: size * 0.22}}>
+      {ws.map((w, wi) => {
+        if (!shown(f, w)) return null;
         return (
-          <div key={i} style={{position: 'absolute', left: p.x, top: p.y, width: 190, background: P.warmWhite, padding: '12px 12px 0', borderRadius: 6, boxShadow: '0 14px 26px rgba(90,64,44,0.28)', transform: `translateY(${(1 - k) * 60 + Math.sin((f + i * 12) / 13) * 5}px) rotate(${p.r * k}deg) scale(${0.6 + 0.4 * k})`, opacity: Math.min(1, k * 1.6)}}>
-            <div style={{width: 166, height: 166, overflow: 'hidden', borderRadius: 3, background: P.cream}}>
-              <Img src={staticFile(THUMBS[i])} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-            </div>
-            <div style={{height: 50, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 4px'}}>
-              <span style={{fontFamily: SERIF, fontStyle: 'italic', fontSize: 26, color: P.cocoa}}>mix 0{i + 1}</span>
-              <span style={{fontFamily: SANS, fontWeight: 600, fontSize: 32, color: P.blushDeep, display: 'inline-block', transform: `scale(${q})`}}>?</span>
-            </div>
-            <div style={{position: 'absolute', top: -12, left: 60, width: 70, height: 24, background: `${TINT[i]}`, opacity: 0.85, transform: 'rotate(-4deg)'}} />
-          </div>
+          <span key={wi} style={{display: 'inline-flex'}}>
+            {w.t.split('').map((ch, ci) => {
+              const at = w.s + ci * 0.025;
+              const k = sp(f, at, 8, 280);
+              const kk = f - sec(at);
+              const st = kk > 0 ? 0.2 * Math.sin(kk * 0.8) * Math.exp(-kk * 0.15) : 0;
+              return (
+                <span
+                  key={ci}
+                  style={{
+                    display: 'inline-block',
+                    fontFamily: ROUND,
+                    fontWeight: 600,
+                    fontSize: size,
+                    lineHeight: 1.05,
+                    color: BUBBLE_FILL[(wi + off) % BUBBLE_FILL.length],
+                    WebkitTextStroke: `${size * 0.1}px #fff`,
+                    paintOrder: 'stroke fill',
+                    filter: 'drop-shadow(0 6px 8px rgba(90,64,44,0.25))',
+                    transform: `translateY(${(1 - k) * 40 + Math.sin((f - (ci + wi * 3) * 3) / 6) * 4}px) scale(${k * (1 + st)}, ${k * (1 - st)})`,
+                    transformOrigin: '50% 90%',
+                  }}
+                >
+                  {ch}
+                </span>
+              );
+            })}
+          </span>
         );
       })}
-    </AbsoluteFill>
-  );
-};
-
-/* ---------- E: quiz equation OTMS + [shuffling products] = heart ---------- */
-const HookQuiz: React.FC = () => {
-  const f = useCurrentFrame();
-  if (f < sec(0.8) || f > sec(CUT_SHELF)) return null;
-  const k = sp(f, 0.82, 11, 220);
-  const t = f / 30;
-  const shuffling = t < 1.2;
-  const idx = Math.floor((f - sec(0.82)) / 3) % 4;
-  const land = sp(f, 1.2, 8, 260);
-  const heartK = sp(f, 1.45, 8, 240);
-  const size = 170;
-  return (
-    <div style={{position: 'absolute', top: SAFE.top + 330, left: SAFE.left, width: 810, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 18, opacity: leave(f) * Math.min(1, k * 1.5), transform: `scale(${0.8 + 0.2 * k})`}}>
-      <div style={{background: P.blush, color: P.cocoa, fontFamily: SANS, fontWeight: 600, fontSize: 52, padding: '10px 24px 12px', borderRadius: 30, boxShadow: '0 8px 18px rgba(90,64,44,0.2)'}}>OTMS</div>
-      <span style={{fontFamily: SANS, fontWeight: 600, fontSize: 64, color: P.cocoa, textShadow: '0 0 12px rgba(255,250,243,1)'}}>+</span>
-      <div style={{position: 'relative', width: size, height: size, borderRadius: '50%', overflow: 'hidden', border: `7px solid ${P.warmWhite}`, boxShadow: `0 12px 26px rgba(90,64,44,0.28), 0 0 0 4px ${P.butter}`, background: shuffling ? P.cream : P.butter}}>
-        {shuffling && <Img src={staticFile(THUMBS[idx])} style={{width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(1.5px)', transform: `translateY(${((f % 3) - 1) * 10}px)`}} />}
-        {!shuffling && (
-          <div style={{position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: SANS, fontWeight: 600, fontSize: 110, color: P.cocoa, transform: `scale(${land})`}}>?</div>
-        )}
-      </div>
-      <span style={{fontFamily: SANS, fontWeight: 600, fontSize: 64, color: P.cocoa, textShadow: '0 0 12px rgba(255,250,243,1)'}}>=</span>
-      <svg width={110} height={110} viewBox="-55 -55 110 110" style={{transform: `scale(${heartK}) rotate(${Math.sin(f / 8) * 8}deg)`}}>
-        <path d={HEART} transform="scale(1.6)" fill={P.blush} stroke={P.cocoa} strokeWidth={2} />
-      </svg>
     </div>
   );
-};
-
-/** which hook layers to draw, and where the spoken question goes */
-export const HOOK_CAPTION_PLACE: Record<HookId, 'title' | 'low' | 'none'> = {A: 'title', B: 'low', C: 'none', D: 'title', E: 'title'};
-
-export const HookLayer: React.FC<{id: HookId}> = ({id}) => {
-  if (id === 'A')
-    return (
-      <>
-        <HookTeaser />
-        <HookTitle />
-        <HookSpark />
-      </>
-    );
-  if (id === 'B') return <HookFour />;
-  if (id === 'C') return <HookNote />;
-  if (id === 'D')
-    return (
-      <>
-        <HookPolaroids />
-        <HookTitle />
-        <HookSpark />
-      </>
-    );
   return (
-    <>
-      <HookQuiz />
-      <HookTitle />
-    </>
+    <Wrap>
+      <div style={{transform: `rotate(-3deg)`}}>
+        {line(l1, 0, 100)}
+        {line(l2, 3, 118)}
+      </div>
+    </Wrap>
   );
 };
+
+/* ---------- D: highlight boxes — each word in its own box, the word being spoken lights up ---------- */
+const HookBoxes: React.FC = () => {
+  const f = useCurrentFrame();
+  const [l1, l2] = lines();
+  const all = [...l1, ...l2];
+  const t = f / 30;
+  const activeIdx = all.reduce((acc, w, i) => (t >= w.s ? i : acc), -1);
+  const box = (w: Word, i: number, size: number) => {
+    if (!shown(f, w)) return null;
+    const k = sp(f, w.s, 11, 260);
+    const active = i === activeIdx && t < 1.75;
+    const isApa = w.t === 'apa?';
+    const bg = active ? (isApa ? P.blush : P.butter) : isApa ? P.blush : 'rgba(255,250,243,0.95)';
+    return (
+      <span key={i} style={{display: 'inline-block', fontFamily: SANS, fontWeight: 600, fontSize: size, color: P.cocoa, background: bg, padding: '2px 18px 6px', borderRadius: 12, boxShadow: '0 8px 18px rgba(90,64,44,0.2)', transform: `scale(${(0.7 + 0.3 * k) * (active ? 1.06 : 1)}) rotate(${active ? -2 : 0}deg)`, opacity: Math.min(1, k * 1.6)}}>
+        {w.t}
+      </span>
+    );
+  };
+  return (
+    <Wrap>
+      <div style={{display: 'flex', justifyContent: 'center', gap: 12}}>{l1.map((w, i) => box(w, i, 70))}</div>
+      <div style={{display: 'flex', justifyContent: 'center', gap: 12, marginTop: 14}}>{l2.map((w, i) => box(w, i + l1.length, 82))}</div>
+    </Wrap>
+  );
+};
+
+/* ---------- E: kinetic — one big word at a time with a punch, then the full line settles in ---------- */
+const KSTYLE: Record<string, React.CSSProperties> = {
+  OTMS: {fontFamily: SANS, fontWeight: 600, fontSize: 200, letterSpacing: 4},
+  ni: {fontFamily: SERIF, fontStyle: 'italic', fontSize: 200},
+  boleh: {fontFamily: SANS, fontWeight: 600, fontSize: 170},
+  mix: {fontFamily: DISPLAY, fontSize: 210},
+  dengan: {fontFamily: SERIF, fontStyle: 'italic', fontSize: 170},
+  'apa?': {fontFamily: ROUND, fontWeight: 600, fontSize: 210, color: P.blushDeep, WebkitTextStroke: '16px #fff', paintOrder: 'stroke fill'},
+};
+const HookKinetic: React.FC = () => {
+  const f = useCurrentFrame();
+  const [l1, l2] = lines();
+  const all = [...l1, ...l2];
+  const t = f / 30;
+  const settleAt = 1.75;
+  if (t < settleAt) {
+    const i = all.reduce((acc, w, j) => (t >= w.s ? j : acc), -1);
+    if (i < 0) return null;
+    const w = all[i];
+    const k = f - sec(w.s);
+    const punch = interpolate(k, [0, 3, 8], [1.35, 0.96, 1], {extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
+    return (
+      <Wrap top={SAFE.top + 40}>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 260}}>
+          <span style={{color: P.cocoa, textShadow: GLOW, display: 'inline-block', transform: `scale(${punch}) rotate(${(i % 2 ? 1 : -1) * 2}deg)`, ...KSTYLE[w.t]}}>{w.t}</span>
+        </div>
+      </Wrap>
+    );
+  }
+  const k = sp(f, settleAt, 14, 200);
+  return (
+    <Wrap>
+      <div style={{transform: `scale(${0.85 + 0.15 * k})`, opacity: Math.min(1, k * 1.5)}}>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'baseline', gap: 16, color: P.cocoa, textShadow: GLOW}}>
+          <span style={{fontFamily: SANS, fontWeight: 600, fontSize: 80}}>OTMS</span>
+          <span style={{fontFamily: SERIF, fontStyle: 'italic', fontSize: 76}}>ni boleh</span>
+        </div>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'baseline', gap: 16, color: P.cocoa, textShadow: GLOW, marginTop: -4}}>
+          <span style={{fontFamily: DISPLAY, fontSize: 96, background: P.butter, padding: '0 14px', borderRadius: 14, textShadow: 'none'}}>mix</span>
+          <span style={{fontFamily: SERIF, fontStyle: 'italic', fontSize: 80}}>dengan</span>
+          <span style={{fontFamily: ROUND, fontWeight: 600, fontSize: 104, color: P.blushDeep, WebkitTextStroke: '9px #fff', paintOrder: 'stroke fill', textShadow: 'none'}}>apa?</span>
+        </div>
+      </div>
+    </Wrap>
+  );
+};
+
+/** where the spoken question is shown: always as the hook title in these variants */
+export const HOOK_CAPTION_PLACE: Record<HookId, 'title' | 'low' | 'none'> = {A: 'title', B: 'title', C: 'title', D: 'title', E: 'title'};
+
+export const HookLayer: React.FC<{id: HookId}> = ({id}) => (
+  <AbsoluteFill style={{pointerEvents: 'none'}}>
+    {id === 'A' && <HookTitle />}
+    {id === 'B' && <HookEditorial />}
+    {id === 'C' && <HookBubbly />}
+    {id === 'D' && <HookBoxes />}
+    {id === 'E' && <HookKinetic />}
+    <HookSpark />
+  </AbsoluteFill>
+);
