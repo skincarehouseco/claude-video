@@ -1,10 +1,10 @@
 import React from 'react';
-import {AbsoluteFill, Audio, Easing, interpolate, OffthreadVideo, random, Sequence, staticFile, useCurrentFrame, useVideoConfig, spring} from 'remotion';
+import {AbsoluteFill, Audio, Easing, Img, interpolate, OffthreadVideo, random, Sequence, staticFile, useCurrentFrame, useVideoConfig, spring} from 'remotion';
 import {Star} from '../skin/Art';
 import {bob, C, captionFont, clamp01, exitAt, FPS, italicFont, pop, roundFont, SAFE, SAFE_CENTER_X, sec} from '../skin/theme';
 
 /* ============================================================================================
-   FoamEdit – ~20 s whimsy edit of the Booo Fun Foam Cleanser clips
+   FoamEdit – 20 s whimsy edit of the booih Fun Foam Cleanser clips
    (inspo structure: satisfying foam play first, product reveal at the end)
    ============================================================================================ */
 
@@ -348,27 +348,50 @@ const Hook: React.FC = () => {
 const EndCard: React.FC = () => {
   const f = useCurrentFrame();
   if (f < sec(ENDCARD_AT)) return null;
-  const word = 'Booo';
+  // real booih logo (public/brand/booih_logo.png, pink background removed), jelly pop + gentle sway
+  const p = pop(f, ENDCARD_AT + 0.12, FPS, 240, 8);
+  const k = f - sec(ENDCARD_AT + 0.12);
+  const st = k > 0 ? 0.16 * Math.sin(k * 0.7) * Math.exp(-k * 0.12) : 0;
+  const tag = pop(f, ENDCARD_AT + 0.5, FPS, 220, 10);
+  const W = 520;
   return (
     <AbsoluteFill>
-      <div style={{position: 'absolute', top: 190, left: SAFE.left, width: SAFE.right - SAFE.left, textAlign: 'center'}}>
-        <div style={{display: 'flex', justifyContent: 'center'}}>
-          {word.split('').map((ch, i) => {
-            const p = pop(f, ENDCARD_AT + 0.15 + i * 0.07, FPS, 260, 8);
-            return (
-              <span key={i} style={{display: 'inline-block', transform: `translateY(${(1 - p) * 60 + Math.sin((f + i * 6) / 6) * 5}px) scale(${p})`}}>
-                <Bubbly text={ch} size={150} fill={[C.butterDeep, C.coral, '#5FCFC0', C.lavender][i]} />
-              </span>
-            );
-          })}
+      <div style={{position: 'absolute', top: 168, left: SAFE.left, width: SAFE.right - SAFE.left, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <Img
+          src={staticFile('brand/booih_logo.png')}
+          style={{
+            width: W,
+            height: (W * 477) / 858,
+            transform: `translateY(${(1 - p) * 60 + Math.sin(f / 7) * 5}px) scale(${p * (1 + st)}, ${p * (1 - st)}) rotate(${Math.sin(f / 10) * 2.5}deg)`,
+            transformOrigin: '50% 90%',
+            filter: 'drop-shadow(0 10px 18px rgba(80,30,60,0.3))',
+          }}
+        />
+        <div
+          style={{
+            marginTop: 6,
+            background: '#E07399',
+            color: '#fff',
+            fontFamily: roundFont,
+            fontWeight: 500,
+            fontSize: 40,
+            padding: '6px 28px 10px',
+            borderRadius: 40,
+            border: '4px solid #fff',
+            boxShadow: '0 8px 18px rgba(120,40,70,0.3)',
+            whiteSpace: 'nowrap',
+            opacity: clamp01(tag * 1.5),
+            transform: `scale(${tag}) rotate(${-2 + Math.sin(f / 9)}deg)`,
+          }}
+        >
+          Booih dulu, baru mandi!
         </div>
-        <div style={{display: 'inline-block', fontFamily: italicFont, fontStyle: 'italic', fontSize: 56, color: C.ink, background: 'rgba(255,251,240,0.9)', borderRadius: 40, padding: '4px 30px 10px', marginTop: 10, boxShadow: '0 8px 20px rgba(40,25,35,0.2)', opacity: clamp01((f - sec(ENDCARD_AT + 0.4)) / 6), transform: `scale(${pop(f, ENDCARD_AT + 0.4, FPS, 200, 11)})`}}>Fun Foam Cleanser</div>
       </div>
       <svg width={1080} height={1920} style={{position: 'absolute'}}>
-        <Star x={170} y={230} s={2.4} t={f} color={C.butter} />
-        <Star x={880} y={260} s={1.8} t={f} phase={30} />
-        <Star x={820} y={560} s={1.4} t={f} color={C.rose} phase={60} />
-        <Star x={210} y={560} s={1.3} t={f} phase={90} />
+        <Star x={150} y={220} s={2.4} t={f} color={C.butter} />
+        <Star x={900} y={250} s={1.8} t={f} phase={30} />
+        <Star x={860} y={540} s={1.4} t={f} color={C.rose} phase={60} />
+        <Star x={190} y={540} s={1.3} t={f} phase={90} />
       </svg>
     </AbsoluteFill>
   );
