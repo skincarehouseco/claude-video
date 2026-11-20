@@ -7,6 +7,8 @@ import {continueRender, delayRender, staticFile} from 'remotion';
  */
 export const LASH_FPS = 30;
 export const LASH_DURATION = 437; // 14.567 s of source footage / original sound
+// the source video runs 2.7 s past the song (extra live eye close-up); it plays at the start of the extension
+export const SOURCE_FRAMES = 519; // 17.3 s
 export const EXTEND = 600; // +20 s: final eye close-up held with a slow zoom, original sound looped
 export const LASH_TOTAL = LASH_DURATION + EXTEND; // 1037 frames = 34.57 s
 export const f = (s: number) => Math.round(s * LASH_FPS);
