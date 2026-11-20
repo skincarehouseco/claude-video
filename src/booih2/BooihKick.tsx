@@ -19,6 +19,7 @@ const P = {
 };
 const SAFE = {top: 230, bottom: 1498, left: 86, right: 896};
 const NUN = 'BWNunito';
+const INK = P.cocoa; // all titles one colour (creator: fonts don't need to be colourful)
 const ROUND = 'BWRound';
 const SERIF = 'BWSerif';
 
@@ -104,7 +105,7 @@ const BigWord: React.FC<{text: string; at: number; end: number; size: number; co
           <span key={i} style={{width: size * 0.28}} />
         ) : (
           <span key={i} style={{display: 'inline-block', transform: `translateY(${(1 - p) * -60 + Math.sin((f - i * 5) / 5) * 5}px) scale(${p * 1.0 * (1 + st)}, ${p * (1 - st)}) rotate(${(i % 2 ? 4 : -4) * (1 - p)}deg)`, transformOrigin: '50% 90%'}}>
-            <Bubbly text={ch} size={size} fill={cols[i % cols.length]} font={font} italic={italic} />
+            <Bubbly text={ch} size={size} fill={INK} font={font} italic={italic} />
           </span>
         );
       })}
@@ -128,12 +129,12 @@ const Sub: React.FC<{at: number; end: number; text: string; y?: number}> = ({at,
         const caps = !em && w.length > 1 && w === w.toUpperCase() && /[A-Z]/.test(w);
         const txt = em ? w.slice(1, -1) : w;
         const style: React.CSSProperties = em
-          ? {fontFamily: SERIF, fontStyle: 'italic', fontWeight: 800, fontSize: 52, color: P.gold}
+          ? {fontFamily: SERIF, fontStyle: 'italic', fontWeight: 800, fontSize: 52, color: '#fff'}
           : caps
-          ? {fontFamily: ROUND, fontWeight: 700, fontSize: 54, color: P.pinkDeep}
+          ? {fontFamily: ROUND, fontWeight: 700, fontSize: 54, color: '#fff'}
           : {fontFamily: NUN, fontWeight: 900, fontSize: 42, color: '#fff'};
         return (
-          <span key={i} style={{...style, display: 'inline-block', lineHeight: 1.2, WebkitTextStroke: `${caps || em ? 9 : 8}px ${caps || em ? '#fff' : P.cocoa}`, paintOrder: 'stroke fill', filter: 'drop-shadow(0 3px 0 rgba(78,59,48,0.9))', transform: `translateY(${(1 - k) * 14}px) scale(${0.6 + 0.4 * k})`}}>
+          <span key={i} style={{...style, display: 'inline-block', lineHeight: 1.2, WebkitTextStroke: `${caps || em ? 9 : 8}px ${P.cocoa}`, paintOrder: 'stroke fill', filter: 'drop-shadow(0 3px 0 rgba(78,59,48,0.9))', transform: `translateY(${(1 - k) * 14}px) scale(${0.6 + 0.4 * k})`}}>
             {txt}
           </span>
         );
@@ -217,24 +218,145 @@ const Glitch: React.FC<{at: number; frames: number}> = ({at, frames}) => {
 /* sticker shapes */
 const STAR4 = 'M0 -40 C5 -10 10 -5 40 0 C10 5 5 10 0 40 C-5 10 -10 5 -40 0 C-10 -5 -5 -10 0 -40Z';
 const HEART = 'M0 22 C-20 8 -32 -4 -28 -16 C-24 -30 -8 -30 0 -17 C8 -30 24 -30 28 -16 C32 -4 20 8 0 22Z';
-type Thing = {kind: 'chrome' | 'heart' | 'donut' | 'star'; x: number; y: number; s: number; at: number; end: number; col?: string; rot?: number};
+type Kind = 'chrome' | 'heart' | 'donut' | 'star' | 'bubble' | 'bow' | 'cloud' | 'foamy' | 'duck' | 'smile' | 'soap' | 'flower' | 'sparkle';
+type Thing = {kind: Kind; x: number; y: number; s: number; at: number; end: number; col?: string; rot?: number};
+const segEnd = (i: number) => (i + 1 < SEG_F.length ? T(i + 1) - 0.05 : BK_DURATION / FPS);
+const S = (kind: Kind, x: number, y: number, s: number, seg: number, o: number, extra: Partial<Thing> = {}): Thing => ({kind, x, y, s, at: T(seg, o), end: extra.end ?? segEnd(seg), ...extra});
 const THINGS: Thing[] = [
-  {kind: 'chrome', x: 880, y: 420, s: 1.3, at: 0.2, end: T(0, 3.7)},
-  {kind: 'chrome', x: 190, y: 1180, s: 0.8, at: 0.5, end: T(0, 3.7)},
-  {kind: 'heart', x: 160, y: 560, s: 2.2, at: T(3, 0.2), end: T(3, 3.3), col: P.pink, rot: -14},
-  {kind: 'heart', x: 900, y: 640, s: 1.5, at: T(3, 0.3), end: T(3, 3.3), col: P.pinkDeep, rot: 12},
-  {kind: 'heart', x: 880, y: 1160, s: 1.1, at: T(3, 0.45), end: T(3, 3.3), col: '#fff', rot: 8},
-  {kind: 'chrome', x: 190, y: 1090, s: 1.0, at: T(3, 0.5), end: T(3, 3.3)},
-  {kind: 'star', x: 860, y: 450, s: 1.0, at: T(5, 0.2), end: T(5, 2.9), col: P.butter},
-  {kind: 'donut', x: 840, y: 1130, s: 1.25, at: T(7, 0.25), end: T(7, 2.4), rot: 12},
-  {kind: 'chrome', x: 180, y: 520, s: 1.2, at: T(7, 0.3), end: T(7, 2.4)},
-  {kind: 'chrome', x: 900, y: 420, s: 1.2, at: T(8, 0.1), end: T(8, 2.7)},
-  {kind: 'chrome', x: 170, y: 1200, s: 0.9, at: T(8, 0.3), end: T(8, 2.7)},
-  {kind: 'star', x: 200, y: 470, s: 0.9, at: T(8, 0.5), end: T(8, 2.7), col: P.pink},
-  {kind: 'chrome', x: 870, y: 460, s: 1.3, at: T(9, 1.4), end: T(9, 3.3)},
-  {kind: 'heart', x: 180, y: 1150, s: 1.3, at: T(9, 1.5), end: T(9, 3.3), col: P.pink, rot: -10},
+  // 0 spray
+  S('soap', 880, 430, 1.1, 0, 0.3, {rot: 8}), S('bubble', 180, 520, 1.0, 0, 0.6), S('sparkle', 830, 1150, 0.9, 0, 1.0, {col: P.butter}),
+  S('duck', 175, 1150, 1.0, 0, 1.7, {rot: -8}), S('chrome', 900, 760, 0.9, 0, 2.2), S('bubble', 250, 340, 0.6, 0, 2.6),
+  // 1 foam forms (sticky note top-left)
+  S('bubble', 900, 560, 0.8, 1, 0.2), S('foamy', 880, 1120, 1.1, 1, 0.4, {rot: 6}), S('sparkle', 180, 1180, 0.8, 1, 0.8, {col: P.pink}),
+  // 2 toss
+  S('cloud', 860, 400, 1.1, 2, 0.1), S('star', 180, 1150, 0.9, 2, 0.4, {col: P.butter}), S('bubble', 900, 1050, 0.7, 2, 0.7),
+  // 3 heart
+  S('heart', 160, 560, 2.2, 3, 0.2, {col: P.pink, rot: -14}), S('heart', 900, 640, 1.5, 3, 0.3, {col: P.pinkDeep, rot: 12}),
+  S('bow', 880, 1150, 1.0, 3, 0.6, {rot: 10}), S('flower', 160, 1180, 0.9, 3, 1.4), S('smile', 880, 400, 0.9, 3, 2.0, {rot: -6}), S('sparkle', 220, 400, 0.8, 3, 2.4, {col: P.butter}),
+  // 4 squish
+  S('foamy', 860, 400, 1.0, 4, 0.1, {rot: -6}), S('bubble', 180, 1120, 0.9, 4, 0.4), S('bubble', 240, 1000, 0.5, 4, 0.5), S('sparkle', 900, 1180, 0.8, 4, 0.9, {col: P.blue}),
+  // 5 tosses
+  S('star', 860, 450, 1.0, 5, 0.2, {col: P.butter}), S('cloud', 180, 420, 1.0, 5, 0.3), S('duck', 880, 1180, 1.0, 5, 1.2, {rot: 8}),
+  S('bubble', 200, 1180, 0.7, 5, 1.6), S('sparkle', 900, 760, 0.8, 5, 2.2, {col: P.pink}),
+  // 6 rolling
+  S('sparkle', 870, 420, 0.9, 6, 0.3, {col: P.butter}), S('bubble', 180, 1150, 0.7, 6, 0.4),
+  // 7 donut
+  S('donut', 840, 1130, 1.25, 7, 0.25, {rot: 12}), S('chrome', 180, 520, 1.2, 7, 0.3), S('bow', 880, 420, 0.9, 7, 0.6, {rot: -10}), S('smile', 180, 1180, 0.9, 7, 1.2),
+  // 8 squishing
+  S('chrome', 900, 400, 1.2, 8, 0.1), S('star', 190, 440, 0.9, 8, 0.5, {col: P.pink}), S('soap', 880, 1150, 1.0, 8, 0.9, {rot: -8}),
+  S('bubble', 160, 760, 0.7, 8, 1.3), S('flower', 900, 760, 0.8, 8, 1.8),
+  // 9 reveal
+  S('cloud', 880, 380, 1.0, 9, 0.1), S('bubble', 180, 1100, 0.8, 9, 0.5), S('chrome', 870, 460, 1.3, 9, 1.4), S('heart', 180, 1150, 1.3, 9, 1.5, {col: P.pink, rot: -10}),
+  S('foamy', 880, 1150, 1.0, 9, 1.8, {rot: 6}), S('sparkle', 200, 420, 0.9, 9, 2.2, {col: P.butter}),
+  // 10 end card (drawn above the end-card veil)
+  S('bubble', 170, 400, 0.9, 10, 0.5), S('heart', 900, 330, 1.4, 10, 0.6, {col: P.pink, rot: 12}), S('bow', 190, 820, 0.9, 10, 0.75, {rot: -12}),
+  S('sparkle', 880, 800, 1.0, 10, 0.85, {col: P.butter}), S('flower', 170, 1380, 0.9, 10, 1.0), S('soap', 900, 1390, 0.9, 10, 1.1, {rot: 10}),
+  S('duck', 540, 1500, 0.8, 10, 1.25),
 ];
-const Stickers: React.FC = () => {
+const Face: React.FC<{y?: number; k?: number}> = ({y = 0, k = 1}) => (
+  <g transform={`translate(0 ${y}) scale(${k})`}>
+    <circle cx={-12} cy={-2} r={4.5} fill={P.cocoa} />
+    <circle cx={12} cy={-2} r={4.5} fill={P.cocoa} />
+    <circle cx={-10.5} cy={-3.5} r={1.4} fill="#fff" />
+    <circle cx={13.5} cy={-3.5} r={1.4} fill="#fff" />
+    <ellipse cx={-22} cy={8} rx={6} ry={3.5} fill={P.pinkDeep} opacity={0.7} />
+    <ellipse cx={22} cy={8} rx={6} ry={3.5} fill={P.pinkDeep} opacity={0.7} />
+    <path d="M-6 6 Q-3 11 0 6 Q3 11 6 6" fill="none" stroke={P.cocoa} strokeWidth={2.5} strokeLinecap="round" />
+  </g>
+);
+const ST = {stroke: P.cocoa, strokeWidth: 3, strokeLinejoin: 'round' as const};
+const drawThing = (th: Thing) => {
+  switch (th.kind) {
+    case 'chrome': return <path d={STAR4} fill="url(#chrome)" stroke="#fff" strokeWidth={3} />;
+    case 'star': return <path d={STAR4} fill={th.col} {...ST} />;
+    case 'sparkle': return <g><path d={STAR4} transform="scale(0.7)" fill={th.col} {...ST} /><path d={STAR4} transform="translate(34 -30) scale(0.3)" fill="#fff" {...ST} /></g>;
+    case 'heart': return <path d={HEART} fill={th.col} stroke={P.cocoa} strokeWidth={2.5} />;
+    case 'bubble':
+      return (
+        <g>
+          <circle r={40} fill="rgba(201,226,244,0.35)" stroke="#fff" strokeWidth={5} />
+          <circle r={40} fill="none" stroke="rgba(141,191,227,0.6)" strokeWidth={1.5} />
+          <path d="M-24 -12 A26 26 0 0 1 -6 -27" fill="none" stroke="#fff" strokeWidth={6} strokeLinecap="round" />
+          <circle cx={18} cy={18} r={4} fill="#fff" />
+        </g>
+      );
+    case 'bow':
+      return (
+        <g>
+          <path d="M-4 6 L-26 50 L-14 44 L-6 54 Z M4 6 L26 50 L14 44 L6 54 Z" fill={P.pinkDeep} {...ST} />
+          <path d="M0 0 C-18 -34 -62 -34 -58 0 C-62 34 -18 34 0 0Z" fill={P.pink} {...ST} />
+          <path d="M0 0 C18 -34 62 -34 58 0 C62 34 18 34 0 0Z" fill={P.pink} {...ST} />
+          <path d="M-20 -8 C-30 -12 -38 -6 -40 2 M20 -8 C30 -12 38 -6 40 2" fill="none" stroke={P.pinkDeep} strokeWidth={3} strokeLinecap="round" />
+          <rect x={-11} y={-12} width={22} height={24} rx={8} fill={P.pinkDeep} {...ST} />
+        </g>
+      );
+    case 'cloud':
+      return (
+        <g>
+          <path d="M-58 24 C-78 24 -78 -8 -54 -6 C-56 -34 -20 -42 -8 -22 C0 -46 44 -44 44 -14 C70 -18 76 24 52 24 Z" fill="#fff" {...ST} />
+          <Face y={0} k={0.9} />
+        </g>
+      );
+    case 'foamy':
+      return (
+        <g>
+          <path d="M-46 30 C-64 26 -62 0 -48 -6 C-56 -30 -30 -46 -14 -36 C-6 -56 26 -54 30 -34 C52 -40 64 -14 50 0 C66 12 56 36 36 34 C26 46 -30 46 -46 30Z" fill="#CFE8BC" {...ST} />
+          <circle cx={-26} cy={-22} r={6} fill="#fff" opacity={0.9} />
+          <Face y={4} />
+        </g>
+      );
+    case 'duck':
+      return (
+        <g>
+          <path d="M-50 10 C-50 40 40 44 52 14 C58 -2 40 -4 26 4 C10 10 -20 -6 -50 10Z" fill="#F7D774" {...ST} />
+          <circle cx={-16} cy={-18} r={24} fill="#F7D774" {...ST} />
+          <path d="M-40 -16 C-54 -16 -56 -8 -40 -6 Z" fill="#F2A65A" {...ST} />
+          <circle cx={-22} cy={-22} r={4} fill={P.cocoa} />
+          <ellipse cx={-10} cy={-10} rx={5} ry={3} fill={P.pinkDeep} opacity={0.6} />
+          <path d="M-4 18 C8 28 26 22 30 10" fill="none" stroke={P.cocoa} strokeWidth={2.5} strokeLinecap="round" />
+        </g>
+      );
+    case 'smile':
+      return (
+        <g>
+          <circle r={40} fill={P.butter} {...ST} />
+          <Face y={2} k={1.1} />
+        </g>
+      );
+    case 'soap':
+      return (
+        <g>
+          <rect x={-48} y={-28} width={96} height={60} rx={22} fill={P.pink} {...ST} />
+          <rect x={-38} y={-20} width={28} height={8} rx={4} fill="#fff" opacity={0.8} />
+          <Face y={6} />
+          <circle cx={40} cy={-40} r={12} fill="rgba(201,226,244,0.5)" stroke="#fff" strokeWidth={3} />
+          <circle cx={56} cy={-60} r={7} fill="rgba(201,226,244,0.5)" stroke="#fff" strokeWidth={3} />
+        </g>
+      );
+    case 'flower':
+      return (
+        <g>
+          {[0, 72, 144, 216, 288].map((a) => (
+            <circle key={a} cx={Math.cos((a * Math.PI) / 180) * 24} cy={Math.sin((a * Math.PI) / 180) * 24} r={19} fill={a % 144 ? '#fff' : P.pink} {...ST} />
+          ))}
+          <circle r={14} fill={P.butter} {...ST} />
+        </g>
+      );
+    case 'donut':
+      return (
+        <g>
+          <circle r={60} fill="#E9C089" stroke={P.cocoa} strokeWidth={4} />
+          <path d="M-56 -8 C-50 -50 50 -56 56 -6 C60 20 40 14 30 26 C18 40 0 22 -16 34 C-34 44 -60 22 -56 -8Z" fill={P.pinkDeep} stroke={P.cocoa} strokeWidth={4} />
+          <circle r={20} fill={P.cream} stroke={P.cocoa} strokeWidth={4} />
+          {[[-34, -26, 20], [8, -44, -30], [36, -20, 60], [-40, 6, -50], [30, 10, 10], [-6, -34, 80]].map(([x, y, r], j) => (
+            <rect key={j} x={x - 7} y={y - 2.5} width={14} height={5} rx={2.5} fill={[P.butter, '#fff', P.blueDeep][j % 3]} transform={`rotate(${r} ${x} ${y})`} />
+          ))}
+        </g>
+      );
+  }
+};
+const END_AT = T(10);
+const Stickers: React.FC<{layer: 'main' | 'end'}> = ({layer}) => {
   const f = useCurrentFrame();
   const t = f / FPS;
   return (
@@ -247,32 +369,38 @@ const Stickers: React.FC = () => {
           <stop offset="0.7" stopColor="#9da3b4" />
           <stop offset="1" stopColor="#eef0f6" />
         </linearGradient>
+        {/* die-cut sticker look: white border + soft shadow */}
+        <filter id="diecut" x="-40%" y="-40%" width="180%" height="180%">
+          <feMorphology in="SourceAlpha" operator="dilate" radius="7" result="d" />
+          <feFlood floodColor="#ffffff" />
+          <feComposite in2="d" operator="in" result="w" />
+          <feGaussianBlur in="d" stdDeviation="5" result="b" />
+          <feOffset in="b" dy="5" result="o" />
+          <feFlood floodColor="rgba(78,59,48,0.28)" />
+          <feComposite in2="o" operator="in" result="sh" />
+          <feMerge><feMergeNode in="sh" /><feMergeNode in="w" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
       </defs>
       {THINGS.map((th, i) => {
+        if ((layer === 'end') !== th.at >= END_AT - 0.01) return null;
         if (t < th.at || t > th.end) return null;
         const p = pop(f, th.at, 8, 300) * fadeOut(f, th.end);
+        const k = f - sec(th.at);
+        const sq = 0.16 * Math.sin(k * 0.8) * Math.exp(-k * 0.18);
         const bob = Math.sin((f + i * 13) / 9) * 6;
-        const rot = (th.rot ?? 0) + Math.sin((f + i * 7) / 12) * 10 + (th.kind === 'chrome' ? f * 1.5 : 0);
-        const tr = `translate(${th.x} ${th.y + bob}) scale(${th.s * p}) rotate(${rot})`;
-        if (th.kind === 'chrome')
-          return <path key={i} d={STAR4} transform={tr} fill="url(#chrome)" stroke="#fff" strokeWidth={3} style={{filter: 'drop-shadow(0 4px 6px rgba(78,59,48,0.35))'}} />;
-        if (th.kind === 'star') return <path key={i} d={STAR4} transform={tr} fill={th.col} stroke={P.cocoa} strokeWidth={3} />;
-        if (th.kind === 'heart') return <path key={i} d={HEART} transform={tr} fill={th.col} stroke={P.cocoa} strokeWidth={2.5} />;
-        // donut
+        const rot = (th.rot ?? 0) + Math.sin((f + i * 7) / 12) * 8 + (th.kind === 'chrome' ? f * 1.5 : 0);
+        const tr = `translate(${th.x} ${th.y + bob}) rotate(${rot}) scale(${1.5 * th.s * p * (1 + sq)} ${1.5 * th.s * p * (1 - sq)})`;
+        const cut = th.kind !== 'bubble' && th.kind !== 'chrome';
         return (
-          <g key={i} transform={tr}>
-            <circle r={60} fill="#E9C089" stroke={P.cocoa} strokeWidth={4} />
-            <path d="M-56 -8 C-50 -50 50 -56 56 -6 C60 20 40 14 30 26 C18 40 0 22 -16 34 C-34 44 -60 22 -56 -8Z" fill={P.pinkDeep} stroke={P.cocoa} strokeWidth={4} />
-            <circle r={20} fill={P.cream} stroke={P.cocoa} strokeWidth={4} />
-            {[[-34, -26, 20], [8, -44, -30], [36, -20, 60], [-40, 6, -50], [30, 10, 10], [-6, -34, 80]].map(([x, y, r], j) => (
-              <rect key={j} x={x - 7} y={y - 2.5} width={14} height={5} rx={2.5} fill={[P.butter, '#fff', P.blueDeep][j % 3]} transform={`rotate(${r} ${x} ${y})`} />
-            ))}
+          <g key={i} transform={tr} filter={cut ? 'url(#diecut)' : undefined} style={th.kind === 'chrome' ? {filter: 'drop-shadow(0 4px 6px rgba(78,59,48,0.35))'} : undefined}>
+            {drawThing(th)}
           </g>
         );
       })}
     </svg>
   );
 };
+const STICKER_SFX = ['sticker', 'cute_pop', 'bloop', 'blip_up', 'plink', 'bubble_pop'];
 
 /** scrapbook sticky note "cara main" */
 const StickyNote: React.FC<{at: number; end: number}> = ({at, end}) => {
@@ -343,18 +471,20 @@ const EndCard: React.FC<{at: number}> = ({at}) => {
 
 /* ---------------- sound: dense SFX, no original audio, no music ---------------- */
 const SFX: [number, string, number][] = [
-  [0.0, 'punch', 0.55], [0.05, 'twinkle', 0.25], [0.35, 'psst', 0.35], [T(0, 1.1), 'pop', 0.5], [T(0, 1.6), 'punch', 0.6], [T(0, 1.62), 'boing2', 0.35],
-  [T(0, 2.7), 'bubble_pop', 0.4],
-  [T(1) - 0.13, 'whoosh', 0.35], [T(1, 0.05), 'plink', 0.35], [T(1, 0.3), 'bubble_pop', 0.35], [T(1, 0.6), 'bubble_pop', 0.35], [T(1, 0.9), 'bubble_pop', 0.35], [T(1, 1.0), 'punch', 0.4],
-  [T(2) - 0.13, 'whoosh', 0.35], [T(2, 0.6), 'slide_up', 0.4], [T(2, 0.62), 'punch', 0.45],
-  [T(3) - 0.13, 'whoosh', 0.4], [T(3, 0.15), 'punch', 0.6], [T(3, 0.2), 'heart', 0.45], [T(3, 1.4), 'pop', 0.4], [T(3, 2.4), 'sparkle', 0.3],
-  [T(4) - 0.13, 'whoosh', 0.35], [T(4, 0.1), 'squish2', 0.55], [T(4, 0.5), 'squish', 0.5], [T(4, 0.9), 'punch', 0.45], [T(4, 1.0), 'squeak', 0.35],
-  [T(5) - 0.13, 'whoosh', 0.35], [T(5, 0.15), 'boing', 0.5], [T(5, 0.2), 'punch', 0.45], [T(5, 1.2), 'slide_down', 0.35], [T(5, 2.1), 'boing2', 0.45], [T(5, 2.12), 'punch', 0.4],
-  [T(6), 'glitch', 0.45], [T(6, 0.35), 'oops', 0.35],
-  [T(7) - 0.13, 'whoosh', 0.4], [T(7, 0.15), 'punch', 0.6], [T(7, 0.2), 'ding', 0.35], [T(7, 0.3), 'twinkle', 0.3], [T(7, 1.3), 'bubble_pop', 0.4],
-  [T(8) - 0.13, 'whoosh', 0.35], [T(8, 0.1), 'squish2', 0.5], [T(8, 0.7), 'punch', 0.45], [T(8, 0.8), 'squish', 0.45], [T(8, 1.6), 'pop', 0.4], [T(8, 2.1), 'punch', 0.45], [T(8, 2.2), 'sparkle', 0.3],
-  [T(9) - 0.13, 'whoosh', 0.35], [T(9, 0.2), 'psst', 0.25], [T(9, 1.4), 'punch', 0.6], [T(9, 1.45), 'tada', 0.35], [T(9, 2.2), 'bubble_pop', 0.4],
-  [T(10) - 0.13, 'whoosh', 0.4], [T(10, 0.15), 'shutter', 0.6], [T(10, 0.45), 'boing2', 0.45], [T(10, 0.8), 'pop', 0.45], [T(10, 1.0), 'twinkle', 0.3],
+  [0.0, 'twinkle', 0.35], [0.35, 'psst', 0.3], [T(0, 1.1), 'blip_up', 0.4], [T(0, 1.6), 'xylo_up', 0.45], [T(0, 1.62), 'boing2', 0.3],
+  [T(0, 2.7), 'bloop', 0.4],
+  [T(1) - 0.13, 'whoosh', 0.22], [T(1, 0.05), 'chime', 0.3], [T(1, 0.3), 'bubble_pop', 0.35], [T(1, 0.6), 'bubble_pop', 0.35], [T(1, 0.9), 'bubble_pop', 0.35], [T(1, 1.0), 'blip_up', 0.35],
+  [T(2) - 0.13, 'whoosh', 0.22], [T(2, 0.6), 'slide_up', 0.4], [T(2, 0.62), 'wink', 0.35],
+  [T(3) - 0.13, 'whoosh', 0.25], [T(3, 0.15), 'xylo_up', 0.45], [T(3, 0.2), 'heart', 0.45], [T(3, 1.4), 'bloop', 0.4], [T(3, 2.4), 'sparkle', 0.3],
+  [T(4) - 0.13, 'whoosh', 0.22], [T(4, 0.1), 'squish2', 0.5], [T(4, 0.15), 'toy_squeak', 0.4], [T(4, 0.5), 'squish', 0.45], [T(4, 0.9), 'toy_squeak', 0.4], [T(4, 1.0), 'squeak', 0.3],
+  [T(5) - 0.13, 'whoosh', 0.22], [T(5, 0.15), 'boing', 0.5], [T(5, 1.2), 'slide_down', 0.35], [T(5, 2.1), 'boing2', 0.45], [T(5, 2.15), 'wink', 0.3],
+  [T(6), 'glitch', 0.4], [T(6, 0.25), 'oops', 0.35],
+  [T(7) - 0.13, 'whoosh', 0.25], [T(7, 0.15), 'xylo_up', 0.45], [T(7, 0.2), 'ding', 0.35], [T(7, 1.3), 'bloop', 0.4],
+  [T(8) - 0.13, 'whoosh', 0.22], [T(8, 0.1), 'squish2', 0.45], [T(8, 0.2), 'toy_squeak', 0.35], [T(8, 0.8), 'squish', 0.4], [T(8, 1.6), 'cute_pop', 0.4], [T(8, 2.1), 'toy_squeak', 0.35], [T(8, 2.2), 'sparkle', 0.3],
+  [T(9) - 0.13, 'whoosh', 0.22], [T(9, 0.2), 'psst', 0.2], [T(9, 1.4), 'xylo_up', 0.45], [T(9, 1.45), 'tada', 0.35], [T(9, 2.2), 'chime', 0.3],
+  [T(10) - 0.13, 'whoosh', 0.25], [T(10, 0.15), 'shutter', 0.55], [T(10, 0.45), 'boing2', 0.45], [T(10, 0.8), 'xylo_down', 0.35], [T(10, 1.0), 'twinkle', 0.3],
+  // every sticker lands with a tiny cute sound
+  ...THINGS.map((th, i): [number, string, number] => [th.at, STICKER_SFX[i % STICKER_SFX.length], 0.2]),
 ];
 const Sound: React.FC = () => (
   <>
@@ -383,19 +513,15 @@ export const BooihKick: React.FC = () => {
       </AbsoluteFill>
 
       {/* speed lines on the reveals */}
-      <SpeedLines at={T(0, 1.6)} end={T(0, 2.6)} />
       <SpeedLines at={T(3, 0.15)} end={T(3, 1.2)} />
       <SpeedLines at={T(7, 0.15)} end={T(7, 1.2)} />
       <SpeedLines at={T(9, 1.4)} end={T(9, 2.4)} col={P.butter} />
 
-      <Stickers />
+      <Stickers layer="main" />
 
       {/* 0 hook */}
-      <BigWord text="MAINAN" at={0.05} end={T(0, 1.05)} size={170} cols={[P.blueDeep, '#A9CFEA']} y={620} rot={-5} />
-      <BigWord text="ke" at={T(0, 1.1)} end={T(0, 1.55)} size={190} cols={[P.sageDeep]} y={640} rot={4} font={SERIF} italic />
-      <BigWord text="SABUN?!" at={T(0, 1.6)} end={T(0, 3.75)} size={200} cols={[P.pinkDeep, '#F2A9B5']} y={640} rot={-4} />
-      <Sub at={0.1} end={T(0, 1.55)} text="korang rasa ni..." />
-      <Sub at={T(0, 1.65)} end={T(0, 3.75)} text="spray je *sikit*" />
+      <Sub at={0.35} end={T(0, 1.9)} text="spray je *sikit*" />
+      <Sub at={T(0, 2.0)} end={T(0, 3.75)} text="makin KEMBANG~" />
       {/* 1 foam forms */}
       <StickyNote at={T(1, 0.05)} end={T(2, 0.55)} />
       <FF at={T(1)} end={T(2) - 0.03} rate="x1.6" />
@@ -434,6 +560,7 @@ export const BooihKick: React.FC = () => {
       <Sub at={T(9, 2.0)} end={T(9, 3.3)} text="mandi jadi FUN" />
       {/* 10 end */}
       <EndCard at={T(10)} />
+      <Stickers layer="end" />
 
       <Streaks />
       <Sound />
