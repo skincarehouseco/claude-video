@@ -27,3 +27,24 @@ python3 scripts/make_audio.py public/audio
 python3 scripts/build_captions.py
 npm run render   # -> out/final.mp4
 ```
+
+---
+
+# Hydration edit — "5 tanda kulit kamu tengah dehidrasi" (`HydrationEdit`)
+
+26 s, 9:16. Source in `src/hydration/`, scripts in `scripts/hydration/`.
+
+- Captions: Whisper large-v3 word timings, onsets snapped to real speech (silencedetect), Quicksand 500 + Cormorant italic for keywords, butter yellow `#FFF0A6`
+- Title lockups in the font references' style: Cormorant italic / DM Serif Display / Caveat with chrome stars
+- Sketch line-art icon card per sign, face-tracked effects (eye ring, zzz, oily glints), product stickers + droplet mascot on the outro
+- Smooth zooms centred on the tracked face (`camera.ts`); original colours untouched
+- Original music bed + SFX (`make_audio.py`); music ducked ~21 dB under the voice
+
+```bash
+ffmpeg -i source.mov -c:v libx264 -crf 15 -pix_fmt yuv420p -r 30 -an public/hydration/main.mp4
+ffmpeg -i source.mov -vn -af "highpass=f=75,afftdn=nf=-32,acompressor=threshold=-20dB:ratio=2.2:attack=8:release=140:makeup=2,loudnorm=I=-15:TP=-1.5:LRA=9" -ar 48000 -ac 2 public/hydration/voice.wav
+python3 scripts/hydration/make_audio.py public/hydration
+python3 scripts/hydration/track_face.py source.mov src/hydration/face.json
+python3 scripts/hydration/build_captions.py
+npx remotion render src/index.ts HydrationEdit out/hydration_final.mp4 --codec h264 --crf 17 --audio-bitrate 192k --timeout 120000
+```

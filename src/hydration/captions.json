@@ -1,0 +1,488 @@
+[
+ {
+  "start": 0.82,
+  "end": 1.58,
+  "words": [
+   {
+    "text": "5",
+    "start": 0.82,
+    "end": 0.95,
+    "emph": false
+   },
+   {
+    "text": "tanda",
+    "start": 0.95,
+    "end": 1.18,
+    "emph": false
+   },
+   {
+    "text": "kulit",
+    "start": 1.18,
+    "end": 1.38,
+    "emph": false
+   },
+   {
+    "text": "kamu",
+    "start": 1.38,
+    "end": 1.58,
+    "emph": false
+   }
+  ]
+ },
+ {
+  "start": 1.58,
+  "end": 2.96,
+  "words": [
+   {
+    "text": "tengah",
+    "start": 1.58,
+    "end": 2.06,
+    "emph": false
+   },
+   {
+    "text": "dehidrasi",
+    "start": 2.06,
+    "end": 2.66,
+    "emph": true
+   }
+  ]
+ },
+ {
+  "start": 3.72,
+  "end": 4.65,
+  "words": [
+   {
+    "text": "Yang",
+    "start": 3.72,
+    "end": 3.95,
+    "emph": false
+   },
+   {
+    "text": "pertama,",
+    "start": 3.95,
+    "end": 4.38,
+    "emph": false
+   }
+  ]
+ },
+ {
+  "start": 4.65,
+  "end": 5.96,
+  "words": [
+   {
+    "text": "kulit",
+    "start": 4.65,
+    "end": 4.9,
+    "emph": false
+   },
+   {
+    "text": "akan",
+    "start": 4.9,
+    "end": 5.04,
+    "emph": false
+   },
+   {
+    "text": "rasa",
+    "start": 5.04,
+    "end": 5.4,
+    "emph": false
+   },
+   {
+    "text": "lebih",
+    "start": 5.4,
+    "end": 5.66,
+    "emph": false
+   },
+   {
+    "text": "tight",
+    "start": 5.66,
+    "end": 5.96,
+    "emph": true
+   }
+  ]
+ },
+ {
+  "start": 5.96,
+  "end": 7.359999999999999,
+  "words": [
+   {
+    "text": "lepas",
+    "start": 5.96,
+    "end": 6.46,
+    "emph": false
+   },
+   {
+    "text": "cuci",
+    "start": 6.46,
+    "end": 6.74,
+    "emph": false
+   },
+   {
+    "text": "muka",
+    "start": 6.74,
+    "end": 7.06,
+    "emph": false
+   }
+  ]
+ },
+ {
+  "start": 8.15,
+  "end": 9.14,
+  "words": [
+   {
+    "text": "Yang",
+    "start": 8.15,
+    "end": 8.36,
+    "emph": false
+   },
+   {
+    "text": "kedua,",
+    "start": 8.36,
+    "end": 8.84,
+    "emph": false
+   }
+  ]
+ },
+ {
+  "start": 9.14,
+  "end": 10.08,
+  "words": [
+   {
+    "text": "fine",
+    "start": 9.14,
+    "end": 9.3,
+    "emph": true
+   },
+   {
+    "text": "line",
+    "start": 9.22,
+    "end": 9.44,
+    "emph": true
+   },
+   {
+    "text": "akan",
+    "start": 9.44,
+    "end": 9.7,
+    "emph": false
+   },
+   {
+    "text": "nampak",
+    "start": 9.7,
+    "end": 10.08,
+    "emph": false
+   }
+  ]
+ },
+ {
+  "start": 10.08,
+  "end": 11.5,
+  "words": [
+   {
+    "text": "lebih",
+    "start": 10.08,
+    "end": 10.32,
+    "emph": false
+   },
+   {
+    "text": "jelas",
+    "start": 10.32,
+    "end": 10.88,
+    "emph": true
+   }
+  ]
+ },
+ {
+  "start": 11.5,
+  "end": 12.53,
+  "words": [
+   {
+    "text": "Yang",
+    "start": 11.5,
+    "end": 11.72,
+    "emph": false
+   },
+   {
+    "text": "ketiga,",
+    "start": 11.72,
+    "end": 12.17,
+    "emph": false
+   }
+  ]
+ },
+ {
+  "start": 12.53,
+  "end": 13.72,
+  "words": [
+   {
+    "text": "kulit",
+    "start": 12.53,
+    "end": 12.84,
+    "emph": false
+   },
+   {
+    "text": "akan",
+    "start": 12.84,
+    "end": 12.98,
+    "emph": false
+   },
+   {
+    "text": "nampak",
+    "start": 12.98,
+    "end": 13.4,
+    "emph": false
+   },
+   {
+    "text": "kusam",
+    "start": 13.4,
+    "end": 13.72,
+    "emph": true
+   }
+  ]
+ },
+ {
+  "start": 13.72,
+  "end": 15.13,
+  "words": [
+   {
+    "text": "dan",
+    "start": 13.72,
+    "end": 14.08,
+    "emph": false
+   },
+   {
+    "text": "nampak",
+    "start": 14.08,
+    "end": 14.48,
+    "emph": false
+   },
+   {
+    "text": "penat",
+    "start": 14.48,
+    "end": 14.78,
+    "emph": true
+   }
+  ]
+ },
+ {
+  "start": 15.13,
+  "end": 16.21,
+  "words": [
+   {
+    "text": "Yang",
+    "start": 15.13,
+    "end": 15.36,
+    "emph": false
+   },
+   {
+    "text": "keempat,",
+    "start": 15.36,
+    "end": 15.9,
+    "emph": false
+   }
+  ]
+ },
+ {
+  "start": 16.21,
+  "end": 17.62,
+  "words": [
+   {
+    "text": "make",
+    "start": 16.21,
+    "end": 16.36,
+    "emph": false
+   },
+   {
+    "text": "up",
+    "start": 16.28,
+    "end": 16.54,
+    "emph": false
+   },
+   {
+    "text": "akan",
+    "start": 16.54,
+    "end": 16.76,
+    "emph": false
+   },
+   {
+    "text": "jadi",
+    "start": 16.76,
+    "end": 17.06,
+    "emph": false
+   },
+   {
+    "text": "mudah",
+    "start": 17.06,
+    "end": 17.44,
+    "emph": false
+   },
+   {
+    "text": "crack",
+    "start": 17.44,
+    "end": 17.62,
+    "emph": true
+   }
+  ]
+ },
+ {
+  "start": 17.62,
+  "end": 18.78,
+  "words": [
+   {
+    "text": "dan",
+    "start": 17.62,
+    "end": 17.98,
+    "emph": false
+   },
+   {
+    "text": "nampak",
+    "start": 17.98,
+    "end": 18.44,
+    "emph": false
+   },
+   {
+    "text": "cakey",
+    "start": 18.44,
+    "end": 18.78,
+    "emph": true
+   }
+  ]
+ },
+ {
+  "start": 18.78,
+  "end": 20.23,
+  "words": [
+   {
+    "text": "Yang",
+    "start": 18.78,
+    "end": 19.16,
+    "emph": false
+   },
+   {
+    "text": "terakhir,",
+    "start": 19.16,
+    "end": 19.84,
+    "emph": false
+   }
+  ]
+ },
+ {
+  "start": 20.23,
+  "end": 21.16,
+  "words": [
+   {
+    "text": "kulit",
+    "start": 20.23,
+    "end": 20.5,
+    "emph": false
+   },
+   {
+    "text": "akan",
+    "start": 20.5,
+    "end": 20.68,
+    "emph": false
+   },
+   {
+    "text": "nampak",
+    "start": 20.68,
+    "end": 21.16,
+    "emph": false
+   }
+  ]
+ },
+ {
+  "start": 21.16,
+  "end": 23.02,
+  "words": [
+   {
+    "text": "semakin",
+    "start": 21.16,
+    "end": 21.68,
+    "emph": false
+   },
+   {
+    "text": "berminyak",
+    "start": 21.68,
+    "end": 22.4,
+    "emph": true
+   }
+  ]
+ },
+ {
+  "start": 23.02,
+  "end": 24.08,
+  "words": [
+   {
+    "text": "Sekarang",
+    "start": 23.02,
+    "end": 23.25,
+    "emph": false
+   },
+   {
+    "text": "dah",
+    "start": 23.25,
+    "end": 23.33,
+    "emph": false
+   },
+   {
+    "text": "tahu",
+    "start": 23.33,
+    "end": 23.48,
+    "emph": false
+   },
+   {
+    "text": "kan?",
+    "start": 23.48,
+    "end": 23.74,
+    "emph": false
+   }
+  ]
+ },
+ {
+  "start": 24.08,
+  "end": 24.68,
+  "words": [
+   {
+    "text": "So",
+    "start": 24.08,
+    "end": 24.2,
+    "emph": false
+   },
+   {
+    "text": "jangan",
+    "start": 24.2,
+    "end": 24.32,
+    "emph": false
+   },
+   {
+    "text": "lupa",
+    "start": 24.32,
+    "end": 24.68,
+    "emph": false
+   }
+  ]
+ },
+ {
+  "start": 24.68,
+  "end": 26.040000000000003,
+  "words": [
+   {
+    "text": "fokus",
+    "start": 24.68,
+    "end": 25.04,
+    "emph": false
+   },
+   {
+    "text": "pada",
+    "start": 25.04,
+    "end": 25.16,
+    "emph": false
+   },
+   {
+    "text": "hydration",
+    "start": 25.16,
+    "end": 25.44,
+    "emph": true
+   }
+  ]
+ }
+]
