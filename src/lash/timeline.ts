@@ -10,15 +10,24 @@ export const LASH_DURATION = 437; // 14.567 s
 export const f = (s: number) => Math.round(s * LASH_FPS);
 
 // Extra fonts for this edit (SIL OFL, bundled in public/fonts)
-const EXTRA_FONTS: [string, string][] = [
-  ['LashHand', 'fonts/SwankyandMooMoo-Regular.ttf'], // thin handwritten marker ("whimsical" reference)
-  ['LashScript', 'fonts/PinyonScript-Regular.ttf'], // flourished calligraphy ("My Favorite" reference)
+// [family, file, weight, style]
+const EXTRA_FONTS: [string, string, string, string][] = [
+  ['LashHand', 'fonts/SwankyandMooMoo-Regular.ttf', '400', 'normal'],
+  ['LashScript', 'fonts/PinyonScript-Regular.ttf', '400', 'normal'],
+  // typography references (unboxing / date-idea / "what's that edit" / pasar-anyar clips)
+  ['LashSans', 'fonts/Poppins-Regular.ttf', '400', 'normal'], // clean rounded sans (refs 1 + 4)
+  ['LashSans', 'fonts/Poppins-Medium.ttf', '500', 'normal'],
+  ['LashSans', 'fonts/Poppins-SemiBoldItalic.ttf', '600', 'italic'],
+  ['LashSerif', 'fonts/PlayfairDisplay.ttf', '400 900', 'normal'], // editorial serif (ref 2)
+  ['LashSerif', 'fonts/PlayfairDisplay-Italic.ttf', '400 900', 'italic'],
+  ['LashBrush', 'fonts/Yellowtail-Regular.ttf', '400', 'normal'], // brush script, like "makan" (ref 2)
+  ['LashY2K', 'fonts/Comfortaa.ttf', '300 700', 'normal'], // bubbly geometric, like "what's that edit" (ref 3)
 ];
 if (typeof window !== 'undefined' && 'FontFace' in window) {
   const handle = delayRender('Loading lash fonts', {timeoutInMilliseconds: 120000, retries: 2});
   Promise.all(
-    EXTRA_FONTS.map(([family, file]) =>
-      new FontFace(family, `url(${staticFile(file)})`, {weight: '400'}).load().then((ff) => document.fonts.add(ff)),
+    EXTRA_FONTS.map(([family, file, weight, style]) =>
+      new FontFace(family, `url(${staticFile(file)})`, {weight, style}).load().then((ff) => document.fonts.add(ff)),
     ),
   )
     .then(() => continueRender(handle))
@@ -29,6 +38,10 @@ if (typeof window !== 'undefined' && 'FontFace' in window) {
 }
 export const handFont = 'LashHand';
 export const scriptFont = 'LashScript';
+export const sansFont = 'LashSans';
+export const serifFont2 = 'LashSerif';
+export const brushFont = 'LashBrush';
+export const y2kFont = 'LashY2K';
 
 // Hard cuts in the source (ffmpeg scene detection), in frames.
 export const CUTS = [57, 79, 102, 118, 138, 174, 216, 263, 298, 333, 359, 380, 396, 410];

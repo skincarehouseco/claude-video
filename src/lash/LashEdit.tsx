@@ -1,9 +1,9 @@
 import React from 'react';
 import {AbsoluteFill, Audio, interpolate, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
-import {C, captionFont, SAFE, SAFE_CENTER_X} from '../theme';
+import {C, SAFE, SAFE_CENTER_X} from '../theme';
 import {LashCamera} from './Camera';
 import {LashGraphics, PixelSparkle} from './Graphics';
-import {f, LASH_FPS, LYRICS, SECTION_CUTS} from './timeline';
+import {f, LASH_FPS, LYRICS, sansFont, SECTION_CUTS} from './timeline';
 
 /* ------------ word-synced lyric captions (soft butter yellow, regular weight) ------------ */
 const CAPTION_Y = 1340; // lower-middle, well above TikTok's caption/UI area (safe bottom = 1490)
@@ -18,8 +18,8 @@ const LyricCaptions: React.FC = () => {
   const note = (side: number) => (
     <span
       style={{
-        fontFamily: captionFont,
-        fontSize: 52,
+        fontFamily: sansFont,
+        fontSize: 46,
         color: C.pink,
         display: 'inline-block',
         transform: `translateY(${Math.sin(frame / 6 + side) * 5}px) rotate(${side * 10}deg)`,
@@ -55,16 +55,16 @@ const LyricCaptions: React.FC = () => {
           <span
             key={i}
             style={{
-              fontFamily: captionFont,
-              fontWeight: 400,
-              fontSize: 70,
+              fontFamily: sansFont,
+              fontWeight: 400, // regular, not bold
+              fontSize: 62,
               lineHeight: 1.15,
               letterSpacing: 0.5,
               color: C.butter,
               opacity: said ? 1 : 0.45, // upcoming words wait softly, then light up as they are sung
               display: 'inline-block',
               transform: `translateY(${-pop * 8}px) scale(${1 + pop * 0.08})`,
-              WebkitTextStroke: '6px #4B3340',
+              WebkitTextStroke: '5px #4B3340',
               paintOrder: 'stroke fill',
               textShadow: '0 4px 14px rgba(40,22,32,0.5)',
             }}
