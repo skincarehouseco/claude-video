@@ -5,13 +5,13 @@ import {CUT_SHELF, FPS, P, PHRASES, SAFE, SAFE_CX, SANS, sec, SERIF, Word} from 
 /* Intro hook (0 – 3.47 s): the speaker's own question as a big, word-synced title,
    plus a teaser row of the four partner products that the video goes on to show. */
 
-const c01 = (x: number) => Math.min(1, Math.max(0, x));
-const sp = (f: number, at: number, damping = 12, stiffness = 200) => (f < sec(at) ? 0 : spring({frame: f - sec(at), fps: FPS, config: {damping, stiffness, mass: 0.6}}));
-const leave = (f: number) => 1 - c01((f - sec(CUT_SHELF - 0.28)) / 7);
+export const c01 = (x: number) => Math.min(1, Math.max(0, x));
+export const sp = (f: number, at: number, damping = 12, stiffness = 200) => (f < sec(at) ? 0 : spring({frame: f - sec(at), fps: FPS, config: {damping, stiffness, mass: 0.6}}));
+export const leave = (f: number) => 1 - c01((f - sec(CUT_SHELF - 0.28)) / 7);
 
 const MARK: Record<string, string> = {mix: P.butter, 'apa?': P.blush};
 
-const TitleWord: React.FC<{w: Word; size: number}> = ({w, size}) => {
+export const TitleWord: React.FC<{w: Word; size: number}> = ({w, size}) => {
   const f = useCurrentFrame();
   if (f < sec(w.s)) return null; // appears only when spoken
   const k = sp(f, w.s, 10, 230);
@@ -66,8 +66,8 @@ export const HookTitle: React.FC = () => {
 };
 
 /* teaser: the four partner products (cropped from the shelf shots later in this video), each with a "?" */
-const THUMBS = ['otms/thumbs/p1.png', 'otms/thumbs/p2.png', 'otms/thumbs/p3.png', 'otms/thumbs/p4.png'];
-const TINT = [P.blush, P.butter, '#F2C9A8', P.sage];
+export const THUMBS = ['otms/thumbs/p1.png', 'otms/thumbs/p2.png', 'otms/thumbs/p3.png', 'otms/thumbs/p4.png'];
+export const TINT = [P.blush, P.butter, '#F2C9A8', P.sage];
 export const HookTeaser: React.FC = () => {
   const f = useCurrentFrame();
   if (f < sec(0.8) || f > sec(CUT_SHELF)) return null;

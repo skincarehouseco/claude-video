@@ -64,6 +64,7 @@ const CapWord: React.FC<{w: Word}> = ({w}) => {
 };
 
 const PhraseView: React.FC<{p: Phrase}> = ({p}) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const f = useCurrentFrame();
   if (f < sec(p.start) || f > sec(p.end)) return null;
   const inK = spring({frame: f - sec(p.start), fps: FPS, config: {damping: 18, stiffness: 160, mass: 0.7}});
@@ -106,10 +107,13 @@ const PhraseView: React.FC<{p: Phrase}> = ({p}) => {
   );
 };
 
-export const Captions: React.FC = () => (
+/** hookPlace: where the hook question is shown — 'title' (drawn by the hook layer), 'low' (normal caption) or 'none' */
+export const Captions: React.FC<{hookPlace?: 'title' | 'low' | 'none'}> = ({hookPlace = 'title'}) => (
   <AbsoluteFill style={{pointerEvents: 'none'}}>
-    {PHRASES.filter((p) => p.place !== 'title').map((p) => (
-      <PhraseView key={p.id} p={p} />
-    ))}
+    {PHRASES.map((p) => (p.place === 'title' ? (hookPlace === 'low' ? {...p, place: 'low' as const, end: 2.1} : null) : p))
+      .filter((p): p is Phrase => p !== null)
+      .map((p) => (
+        <PhraseView key={p.id} p={p} />
+      ))}
   </AbsoluteFill>
 );

@@ -4,7 +4,7 @@ import {Camera, LightLeak, StudioLight, SwapBloom} from './Camera';
 import {Captions} from './Captions';
 import {APPEAR, CUT_END, CUT_SHELF, DURATION, P, PAIRS, PHRASES, REMOVE, sec} from './data';
 import {EndDoodles, PairBadge, ShelfDoodles, SwapSparkles} from './Doodles';
-import {HookSpark, HookTeaser, HookTitle} from './Hook';
+import {HOOK_CAPTION_PLACE, HookId, HookLayer} from './HookVariants';
 
 /* ------------------------------------------------------------------
    Sound design: the cleaned voice stays dominant (~-15 LUFS); every SFX is mixed
@@ -53,7 +53,7 @@ const Fades: React.FC = () => {
 
 export const OTMS_BEIGE_DURATION = DURATION;
 
-export const OtmsBeige: React.FC = () => (
+export const OtmsBeige: React.FC<{hook?: HookId}> = ({hook = 'A'}) => (
   <AbsoluteFill style={{background: P.cream}}>
     <Camera />
     <StudioLight />
@@ -65,14 +65,12 @@ export const OtmsBeige: React.FC = () => (
     ))}
     <ShelfDoodles />
     <SwapSparkles />
-    <HookTeaser />
-    <HookTitle />
-    <HookSpark />
+    <HookLayer id={hook} />
     <PairBadge />
     <EndDoodles />
     <LightLeak at={CUT_SHELF} />
     <LightLeak at={CUT_END} />
-    <Captions />
+    <Captions hookPlace={HOOK_CAPTION_PLACE[hook]} />
     <Fades />
     <Sound />
   </AbsoluteFill>
