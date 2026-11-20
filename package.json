@@ -9,7 +9,9 @@
     "render:foam": "remotion render src/index.ts FoamEdit out/foam.mp4 --codec h264 --crf 18 --audio-bitrate 192k --timeout 120000",
     "render:otms": "remotion render src/index.ts OtmsEdit out/otms.mp4 --codec h264 --crf 18 --audio-bitrate 192k --timeout 120000",
     "render:otms-beige": "remotion render src/index.ts OtmsBeige out/otms-beige.mp4 --codec h264 --crf 17 --audio-bitrate 192k --timeout 120000",
-    "render:skintalks": "remotion render src/index.ts SkinTalksEp01 out/skintalks-ep01.mp4 --codec h264 --crf 18 --audio-bitrate 192k --timeout 120000"
+    "render:skintalks": "remotion render src/index.ts SkinTalksEp01 out/skintalks-ep01.mp4 --codec h264 --crf 18 --audio-bitrate 192k --timeout 120000",
+    "render:booih-a": "remotion render src/index.ts BooihWhimsyA out/SKINCAREHOUSE_WHIMSICAL_ORIGINAL_raw.mp4 --codec h264 --crf 17 --audio-bitrate 192k --timeout 120000",
+    "render:booih-b": "remotion render src/index.ts BooihWhimsyB out/SKINCAREHOUSE_WHIMSICAL_AESTHETIC_raw.mp4 --codec h264 --crf 17 --audio-bitrate 192k --timeout 120000"
   },
   "dependencies": {
     "@remotion/cli": "4.0.290",
