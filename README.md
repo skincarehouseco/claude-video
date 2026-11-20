@@ -22,6 +22,16 @@ python3 scripts/skin_captions.py
 npm run render
 ```
 
+## OtmsEdit – "OTMS ni boleh mix dengan apa?" (24 s, `npm run render:otms` -> `out/otms.mp4`)
+Yello Oatmeal Turmeric Mask & Scrub pairings. Wording/spelling follows the creator's draft (Jelita KL, Cyanara Essence,
+Blumé Bright Toner Mist, Bulaney Essence); timing from Whisper large-v3 word timings of the voice.
+- `src/otms/OtmsEdit.tsx` – speech-synced text (each word appears as spoken): bubbly hook question, "OTMS + product" cards
+  that grow word by word, butter-yellow benefit pills with cute icons, sparkle burst / cloud poof on the stop-motion product
+  changes, "+" bubble, zoom onto each pair, jelly cuts, heart wipe into "selamat mencuba!"; voice + light cute SFX
+- Footage cleaned for clarity: `hqdn3d, eq=brightness=0.045:contrast=1.09:saturation=1.16:gamma=1.03, unsharp=5:5:0.95` -> `public/otms/main.mp4`;
+  voice: highpass + afftdn + compressor + loudnorm -> `public/otms/voice.wav`
+- Final loudness: `ffmpeg -i out/otms.mp4 -t 24 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -c:a aac -b:a 192k out/otms-final.mp4`
+
 ## FoamEdit – booih Fun Foam Cleanser "mainan ke sabun?!" (24 s, `npm run render:foam` -> `out/foam.mp4`)
 No speech in the source clips, so captions are short playful lines timed to the action (Malay–English mix).
 Face-first: opens on the girl holding the cans (hook), her spray/squish shots carry the edit, foam-ball shots are short cutaways, and it ends back on the cans (answer: sabun).

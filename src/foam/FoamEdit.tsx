@@ -80,7 +80,7 @@ const Footage: React.FC = () => (
 const SHADOW = '0 2px 0 rgba(74,58,78,0.3), 0 6px 18px rgba(40,25,35,0.4)';
 
 /** bubbly rounded word with white outline (like the "boring…" / "what's that edit" references) */
-const Bubbly: React.FC<{text: string; size: number; fill: string; stroke?: string; style?: React.CSSProperties}> = ({text, size, fill, stroke = '#fff', style}) => (
+export const Bubbly: React.FC<{text: string; size: number; fill: string; stroke?: string; style?: React.CSSProperties}> = ({text, size, fill, stroke = '#fff', style}) => (
   <span
     style={{
       fontFamily: roundFont,
@@ -100,7 +100,7 @@ const Bubbly: React.FC<{text: string; size: number; fill: string; stroke?: strin
 );
 
 /** onomatopoeia sticker that pops, wobbles and pops away */
-const Sfx: React.FC<{text: string; at: number; dur: number; x: number; y: number; rot?: number; fill?: string; size?: number}> = ({text, at, dur, x, y, rot = 0, fill = C.rose, size = 78}) => {
+export const Sfx: React.FC<{text: string; at: number; dur: number; x: number; y: number; rot?: number; fill?: string; size?: number}> = ({text, at, dur, x, y, rot = 0, fill = C.rose, size = 78}) => {
   const f = useCurrentFrame();
   if (f < sec(at) || f > sec(at + dur)) return null;
   const p = pop(f, at, FPS, 260, 9);
@@ -128,7 +128,7 @@ const Sfx: React.FC<{text: string; at: number; dur: number; x: number; y: number
   );
 };
 
-const HeartDoodle: React.FC<{x: number; y: number; s: number; at: number; end: number; color: string; rot?: number}> = ({x, y, s, at, end, color, rot = 0}) => {
+export const HeartDoodle: React.FC<{x: number; y: number; s: number; at: number; end: number; color: string; rot?: number}> = ({x, y, s, at, end, color, rot = 0}) => {
   const f = useCurrentFrame();
   const p = pop(f, at, FPS, 240, 9);
   const out = exitAt(f, end - 0.2, 0.2);
@@ -158,7 +158,7 @@ const TossArc: React.FC<{at: number; dur: number; flip?: boolean}> = ({at, dur, 
 };
 
 /** soft translucent bubbles drifting up (ambient, subtle) */
-const Bubbles: React.FC<{from: number; to: number}> = ({from, to}) => {
+export const Bubbles: React.FC<{from: number; to: number}> = ({from, to}) => {
   const f = useCurrentFrame();
   if (f < sec(from) || f > sec(to)) return null;
   return (
@@ -201,7 +201,7 @@ const BubbleWipe: React.FC<{at: number}> = ({at}) => {
 };
 
 /** quick soft flash + sparkles on a cut */
-const SparkleCut: React.FC<{at: number; x?: number; y?: number}> = ({at, x = 540, y = 900}) => {
+export const SparkleCut: React.FC<{at: number; x?: number; y?: number}> = ({at, x = 540, y = 900}) => {
   const f = useCurrentFrame();
   const k = f - sec(at) + 2;
   if (k < 0 || k > 18) return null;
@@ -221,8 +221,8 @@ const SparkleCut: React.FC<{at: number; x?: number; y?: number}> = ({at, x = 540
 };
 
 /** heart-shaped iris wipe: closes on the old shot, opens on the new one */
-const HEART_D = 'M0 34 C-30 12 -50 -6 -44 -26 C-38 -46 -12 -46 0 -26 C12 -46 38 -46 44 -26 C50 -6 30 12 0 34Z';
-const HeartWipe: React.FC<{at: number; color: string}> = ({at, color}) => {
+export const HEART_D = 'M0 34 C-30 12 -50 -6 -44 -26 C-38 -46 -12 -46 0 -26 C12 -46 38 -46 44 -26 C50 -6 30 12 0 34Z';
+export const HeartWipe: React.FC<{at: number; color: string}> = ({at, color}) => {
   const f = useCurrentFrame();
   const k = f - sec(at);
   if (k < -9 || k > 11) return null;
@@ -280,7 +280,7 @@ const KawaiiHeart: React.FC = () => {
 };
 
 /** little hearts floating up (soft, sparse) */
-const FloatHearts: React.FC<{from: number; to: number}> = ({from, to}) => {
+export const FloatHearts: React.FC<{from: number; to: number}> = ({from, to}) => {
   const f = useCurrentFrame();
   if (f < sec(from) || f > sec(to)) return null;
   const cols = [C.rose, C.blush, C.lavender, C.butterDeep, '#9FE3C8'];
@@ -302,7 +302,7 @@ const FloatHearts: React.FC<{from: number; to: number}> = ({from, to}) => {
 };
 
 /** letters that pop in one by one with a jelly squash, then keep a gentle wave */
-const BouncyWord: React.FC<{text: string; at: number; size: number; colors: string[]; gap?: number}> = ({text, at, size, colors, gap = 0}) => {
+export const BouncyWord: React.FC<{text: string; at: number; size: number; colors: string[]; gap?: number}> = ({text, at, size, colors, gap = 0}) => {
   const f = useCurrentFrame();
   return (
     <div style={{display: 'flex', justifyContent: 'center', gap}}>
