@@ -8,31 +8,33 @@ import {bob, C, captionFont, clamp01, exitAt, FPS, italicFont, pop, roundFont, S
    (inspo structure: satisfying foam play first, product reveal at the end)
    ============================================================================================ */
 
-export const FOAM_DURATION = 517; // ~17.2 s @ 30 fps
+export const FOAM_DURATION = 600; // 20 s @ 30 fps
 const XF = 2; // frames of soft dissolve into every shot
 
-// Camera watermark in some girl shots sits at x 60-490, y 200-250: those shots zoom around it and the
-// product label sticker (fixed, top-left) covers it.
-const WM_ORIGIN = '25.5% 11.7%';
+// Camera watermark in three girl shots sits at x 60-490, y 200-250: those shots zoom in from the bottom edge
+// (origin 50% 100%, scale >= 1.18) so the watermark is pushed out of the top of the frame.
+const WM_CROP = '50% 100%';
 type Shot = {at: number; dur: number; src: string; from: number; rate: number; z: [number, number]; origin?: string};
 // at/dur in output seconds; from = start inside the source file (s). All shots are moving video (no freeze frames);
 // *_slow files are smooth slow-motion made with ffmpeg minterpolate. Original audio is not used.
 const G = 'foam/girl.mp4';
 const SHOTS: Shot[] = [
-  {at: 0.0, dur: 1.9, src: 'foam/cans_slow.mp4', from: 0, rate: 1, z: [1.0, 1.06], origin: '50% 45%'}, // hook: holding the 3 cans (slow-mo)
-  {at: 1.9, dur: 2.27, src: G, from: 0.53, rate: 1.0, z: [1.06, 1.0]}, // spray foam
-  {at: 4.17, dur: 0.49, src: G, from: 2.8, rate: 0.75, z: [1.0, 1.03]}, // foam close to face
-  {at: 4.66, dur: 0.6, src: G, from: 3.17, rate: 0.77, z: [1.0, 1.03], origin: WM_ORIGIN}, // wide, holding foam
-  {at: 5.26, dur: 1.44, src: 'foam/b1.mp4', from: 0.4, rate: 1.2, z: [1.1, 1.0]}, // cutaway: foam heart
-  {at: 6.7, dur: 1.63, src: G, from: 3.63, rate: 1.15, z: [1.0, 1.05]}, // hands squish
-  {at: 8.33, dur: 0.5, src: G, from: 5.5, rate: 0.75, z: [1.0, 1.02], origin: WM_ORIGIN}, // wide hands
-  {at: 8.83, dur: 1.43, src: 'foam/face_slow.mp4', from: 0, rate: 1, z: [1.02, 1.05], origin: WM_ORIGIN}, // foam on face, laughing (slow-mo)
-  {at: 10.26, dur: 0.9, src: 'foam/b4.mp4', from: 0.4, rate: 1.0, z: [1.0, 1.06]}, // cutaway: toss
-  {at: 11.16, dur: 0.9, src: 'foam/b5.mp4', from: 0.5, rate: 1.0, z: [1.06, 1.0]}, // cutaway: catch
-  {at: 12.06, dur: 2.63, src: 'foam/squish_slow.mp4', from: 0, rate: 1, z: [1.0, 1.08]}, // close squish near face (slow-mo)
-  {at: 14.69, dur: 2.54, src: 'foam/cans_slow.mp4', from: 0, rate: 0.75, z: [1.0, 1.1], origin: '50% 55%'}, // reveal: the cans again
+  {at: 0.0, dur: 2.53, src: 'foam/cans_slow.mp4', from: 0, rate: 0.75, z: [1.0, 1.06], origin: '50% 45%'}, // hook: holding the 3 cans (slow-mo)
+  {at: 2.53, dur: 2.27, src: G, from: 0.53, rate: 1.0, z: [1.06, 1.0]}, // spray foam
+  {at: 4.8, dur: 0.49, src: G, from: 2.8, rate: 0.75, z: [1.0, 1.03]}, // foam close to face
+  {at: 5.29, dur: 0.6, src: G, from: 3.17, rate: 0.77, z: [1.18, 1.2], origin: WM_CROP}, // wide, holding foam
+  {at: 5.89, dur: 1.44, src: 'foam/b1.mp4', from: 0.4, rate: 1.2, z: [1.1, 1.0]}, // cutaway: foam heart
+  {at: 7.33, dur: 1.0, src: 'foam/b2.mp4', from: 0.1, rate: 2.0, z: [1.0, 1.06]}, // cutaway: squish the heart
+  {at: 8.33, dur: 1.63, src: G, from: 3.63, rate: 1.15, z: [1.0, 1.05]}, // hands squish
+  {at: 9.96, dur: 0.5, src: G, from: 5.5, rate: 0.75, z: [1.18, 1.2], origin: WM_CROP}, // wide hands
+  {at: 10.46, dur: 1.43, src: 'foam/face_slow.mp4', from: 0, rate: 1, z: [1.18, 1.21], origin: WM_CROP}, // foam on face, laughing (slow-mo)
+  {at: 11.89, dur: 0.9, src: 'foam/b4.mp4', from: 0.4, rate: 1.0, z: [1.0, 1.06]}, // cutaway: toss
+  {at: 12.79, dur: 0.9, src: 'foam/b5.mp4', from: 0.5, rate: 1.0, z: [1.06, 1.0]}, // cutaway: catch
+  {at: 13.69, dur: 1.07, src: 'foam/b6.mp4', from: 1.1, rate: 1.5, z: [1.0, 1.06]}, // cutaway: two balls
+  {at: 14.76, dur: 2.63, src: 'foam/squish_slow.mp4', from: 0, rate: 1, z: [1.0, 1.08]}, // close squish near face (slow-mo)
+  {at: 17.39, dur: 2.61, src: 'foam/cans_slow.mp4', from: 0, rate: 0.73, z: [1.0, 1.1], origin: '50% 55%'}, // reveal: the cans again
 ];
-const ENDCARD_AT = 14.69;
+const ENDCARD_AT = 17.39;
 
 const easeIO = Easing.inOut(Easing.cubic);
 
@@ -297,54 +299,48 @@ const FloatHearts: React.FC<{from: number; to: number}> = ({from, to}) => {
   );
 };
 
-/** small product label kept on screen during the foam play (like the inspo's product tag) */
-const ProductTag: React.FC = () => {
+/** letters that pop in one by one with a jelly squash, then keep a gentle wave */
+const BouncyWord: React.FC<{text: string; at: number; size: number; colors: string[]; gap?: number}> = ({text, at, size, colors, gap = 0}) => {
   const f = useCurrentFrame();
-  if (f < sec(1.9) || f > sec(ENDCARD_AT)) return null;
-  const p = pop(f, 1.95, FPS, 180, 12);
-  const out = exitAt(f, ENDCARD_AT - 0.2, 0.2);
   return (
-    <div style={{position: 'absolute', top: 180, left: 40, opacity: out, transform: `scale(${0.7 + 0.3 * p})`, transformOrigin: '50% 50%'}}>
-      <div
-        style={{
-          width: 476,
-          height: 88,
-          boxSizing: 'border-box',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          whiteSpace: 'nowrap',
-          gap: 10,
-          background: '#FFFBF0',
-          border: `4px solid ${C.mint}`,
-          borderRadius: 40,
-          padding: '8px 24px 10px',
-          boxShadow: '0 8px 20px rgba(40,25,35,0.22)',
-        }}
-      >
-        <svg width={30} height={30} viewBox="0 0 30 30">
-          <circle cx={11} cy={17} r={9} fill={C.sky} stroke={C.ink} strokeWidth={2.5} />
-          <circle cx={21} cy={10} r={6} fill={C.blush} stroke={C.ink} strokeWidth={2.5} />
-        </svg>
-        <span style={{fontFamily: roundFont, fontWeight: 500, fontSize: 38, color: C.ink}}>Booo</span>
-        <span style={{fontFamily: italicFont, fontStyle: 'italic', fontSize: 36, color: C.ink}}>Fun Foam Cleanser</span>
-      </div>
+    <div style={{display: 'flex', justifyContent: 'center', gap}}>
+      {text.split('').map((ch, i) => {
+        const t0 = at + i * 0.06;
+        const p = pop(f, t0, FPS, 280, 8);
+        const k = f - sec(t0);
+        const st = k > 0 ? 0.22 * Math.sin(k * 0.75) * Math.exp(-k * 0.14) : 0;
+        const wave = Math.sin((f - i * 4) / 5) * 6;
+        return ch === ' ' ? (
+          <span key={i} style={{width: size * 0.3}} />
+        ) : (
+          <span key={i} style={{display: 'inline-block', transform: `translateY(${(1 - p) * 50 + wave}px) scale(${p * (1 + st)}, ${p * (1 - st)}) rotate(${Math.sin((f + i * 9) / 9) * 4}deg)`, transformOrigin: '50% 90%'}}>
+            <Bubbly text={ch} size={size} fill={colors[i % colors.length]} />
+          </span>
+        );
+      })}
     </div>
   );
 };
 
 const Hook: React.FC = () => {
   const f = useCurrentFrame();
-  if (f > sec(1.9)) return null;
-  const p1 = pop(f, 0.15, FPS, 170, 11);
-  const p2 = pop(f, 0.45, FPS, 220, 8);
-  const out = exitAt(f, 1.72, 0.18);
+  if (f > sec(2.53)) return null;
+  const out = exitAt(f, 2.33, 0.2);
+  const sp = clamp01((f - sec(0.6)) / 8);
   return (
-    <div style={{position: 'absolute', top: 190, left: SAFE.left, width: SAFE.right - SAFE.left, textAlign: 'center', opacity: out}}>
-      <div style={{fontFamily: italicFont, fontStyle: 'italic', fontSize: 64, color: '#fff', textShadow: SHADOW, opacity: clamp01(p1), transform: `translateY(${(1 - p1) * 20}px)`}}>mainan ke</div>
-      <div style={{transform: `scale(${p2}) rotate(${-4 + Math.sin(f / 6) * 2}deg)`, marginTop: 4}}>
-        <Bubbly text="SABUN?!" size={140} fill={C.coral} />
+    <div style={{position: 'absolute', top: 175, left: SAFE.left, width: SAFE.right - SAFE.left, textAlign: 'center', opacity: out, transform: `scale(${0.9 + 0.1 * out})`}}>
+      <BouncyWord text="mainan ke" at={0.12} size={92} colors={[C.lavender, '#9FE3C8', C.butterDeep, C.sky]} />
+      <div style={{marginTop: 2}}>
+        <BouncyWord text="SABUN?!" at={0.5} size={176} colors={[C.coral, '#FF9EB5', C.coral, '#FF9EB5', C.coral, C.butterDeep, C.butterDeep]} />
       </div>
+      <svg width={SAFE.right - SAFE.left} height={360} style={{position: 'absolute', left: 0, top: -20, opacity: sp, pointerEvents: 'none'}}>
+        <Star x={40} y={60} s={2.4} t={f} color={C.butter} />
+        <Star x={790} y={40} s={2} t={f} phase={20} />
+        <Star x={30} y={300} s={1.6} t={f} phase={40} />
+        <Star x={800} y={290} s={2.2} t={f} color={C.butter} phase={60} />
+        <path d={HEART_D} transform={`translate(${735 + Math.sin(f / 7) * 4} ${150}) scale(0.55) rotate(${12 + Math.sin(f / 6) * 10})`} fill={C.rose} stroke="#fff" strokeWidth={6} />
+        <path d={HEART_D} transform={`translate(${95 + Math.sin(f / 8) * 4} ${170}) scale(0.42) rotate(${-14 + Math.sin(f / 5) * 10})`} fill="#9FE3C8" stroke="#fff" strokeWidth={6} />
+      </svg>
     </div>
   );
 };
@@ -380,14 +376,15 @@ const EndCard: React.FC = () => {
 
 /* ============================== captions (butter yellow, regular weight) ============================== */
 const LINES: [number, number, string][] = [
-  [0.2, 1.85, 'korang rasa ni mainan ke sabun?'],
-  [1.95, 4.12, 'spray je terus jadi foam'],
-  [4.2, 5.2, 'lembut macam marshmallow'],
-  [5.3, 6.65, 'boleh bentuk jadi love pulak'],
-  [6.75, 10.2, 'squishy & satisfying gila'],
-  [10.3, 12.0, 'boleh main baling-baling'],
-  [12.1, 14.6, 'tapi sebenarnya…'],
-  [14.75, 17.1, 'sabun rupanya! mandi jadi fun'],
+  [0.25, 2.45, 'korang rasa yang mana satu?'],
+  [2.58, 4.75, 'spray je terus jadi foam'],
+  [4.83, 5.83, 'lembut macam marshmallow'],
+  [5.93, 7.28, 'boleh bentuk jadi love pulak'],
+  [7.38, 8.28, 'squish squish~'],
+  [8.38, 11.83, 'squishy & satisfying gila'],
+  [11.93, 14.7, 'boleh main baling-baling'],
+  [14.8, 17.3, 'tapi sebenarnya…'],
+  [17.45, 19.85, 'sabun rupanya! mandi jadi fun'],
 ];
 const CaptionLine: React.FC = () => {
   const f = useCurrentFrame();
@@ -438,33 +435,35 @@ const CaptionLine: React.FC = () => {
 
 const Overlays: React.FC = () => (
   <AbsoluteFill style={{pointerEvents: 'none'}}>
-    <Bubbles from={0} to={17.3} />
-    <ProductTag />
+    <Bubbles from={0} to={20} />
     <Hook />
     {/* foam heart cutaway: kawaii face + hearts */}
     <KawaiiHeart />
-    <HeartDoodle x={110} y={600} s={1.2} at={5.45} end={6.7} color={C.rose} rot={-14} />
-    <HeartDoodle x={820} y={640} s={0.9} at={5.6} end={6.7} color={C.blush} rot={12} />
-    <HeartDoodle x={140} y={1180} s={0.8} at={5.75} end={6.7} color={C.lavender} rot={8} />
-    <HeartDoodle x={820} y={1150} s={1.1} at={5.9} end={6.7} color={C.coral} rot={-6} />
-    <FloatHearts from={6.75} to={8.3} />
-    <FloatHearts from={12.1} to={14.6} />
+    <HeartDoodle x={110} y={600} s={1.2} at={6.08} end={7.33} color={C.rose} rot={-14} />
+    <HeartDoodle x={820} y={640} s={0.9} at={6.23} end={7.33} color={C.blush} rot={12} />
+    <HeartDoodle x={140} y={1180} s={0.8} at={6.38} end={7.33} color={C.lavender} rot={8} />
+    <HeartDoodle x={820} y={1150} s={1.1} at={6.53} end={7.33} color={C.coral} rot={-6} />
+    <FloatHearts from={8.38} to={9.93} />
+    <FloatHearts from={14.8} to={17.3} />
 
-    <Sfx text="psshh~" at={2.1} dur={1.4} x={220} y={820} rot={-8} fill={C.rose} />
-    <Sfx text="soft!" at={6.85} dur={1.1} x={290} y={560} rot={-8} fill={C.butterDeep} />
-    <Sfx text="hehe~" at={9.0} dur={1.1} x={250} y={1170} rot={-6} fill={C.lavender} size={74} />
-    <TossArc at={10.26} dur={0.9} />
-    <Sfx text="boing!" at={10.35} dur={0.8} x={300} y={560} rot={-10} fill={C.butterDeep} />
-    <Sfx text="catch!" at={11.3} dur={0.75} x={720} y={600} rot={8} fill={C.coral} />
-    <Sfx text="squishy~" at={12.4} dur={1.6} x={720} y={1140} rot={-4} fill="#7FD8B4" size={72} />
+    <Sfx text="psshh~" at={2.73} dur={1.4} x={220} y={820} rot={-8} fill={C.rose} />
+    <Sfx text="squish!" at={7.45} dur={0.8} x={300} y={600} rot={-8} fill="#FF9EB5" />
+    <Sfx text="soft!" at={8.48} dur={1.1} x={290} y={560} rot={-8} fill={C.butterDeep} />
+    <Sfx text="hehe~" at={10.63} dur={1.1} x={250} y={1170} rot={-6} fill={C.lavender} size={74} />
+    <TossArc at={11.89} dur={0.9} />
+    <Sfx text="boing!" at={11.98} dur={0.8} x={300} y={560} rot={-10} fill={C.butterDeep} />
+    <Sfx text="catch!" at={12.93} dur={0.75} x={720} y={600} rot={8} fill={C.coral} />
+    <TossArc at={13.69} dur={1.0} flip />
+    <Sfx text="wheee~" at={13.8} dur={0.9} x={720} y={520} rot={6} fill="#7FD8B4" />
+    <Sfx text="squishy~" at={15.1} dur={1.6} x={720} y={1140} rot={-4} fill="#7FD8B4" size={72} />
 
-    <SparkleCut at={1.9} x={540} y={900} />
-    <SparkleCut at={10.26} x={540} y={800} />
-    <SparkleCut at={12.06} x={540} y={900} />
-    <HeartWipe at={5.26} color={C.blush} />
+    <SparkleCut at={2.53} x={540} y={900} />
+    <SparkleCut at={11.89} x={540} y={800} />
+    <SparkleCut at={14.76} x={540} y={900} />
+    <HeartWipe at={5.89} color={C.blush} />
     <HeartWipe at={ENDCARD_AT} color={C.mint} />
     <EndCard />
-    <Sfx text="sabun!" at={15.3} dur={1.8} x={540} y={1150} rot={-6} fill="#5FCFC0" size={96} />
+    <Sfx text="sabun!" at={18.0} dur={1.8} x={540} y={1150} rot={-6} fill="#5FCFC0" size={96} />
     <CaptionLine />
   </AbsoluteFill>
 );
@@ -473,45 +472,53 @@ const Overlays: React.FC = () => (
 type Sx = [number, string, number];
 const SFX: Sx[] = [
   [0.05, 'twinkle', 0.16],
-  [0.15, 'plink', 0.14],
-  [0.3, 'bubbles', 0.12],
-  [0.45, 'boing2', 0.15],
-  [1.85, 'twinkle', 0.1],
-  [2.0, 'psst', 0.22],
-  [2.1, 'bubble_pop', 0.16],
-  [2.6, 'bubbles', 0.11],
-  [3.3, 'poof', 0.15],
-  [4.17, 'bubble_pop', 0.12],
-  [4.66, 'bubble_pop', 0.12],
-  [5.0, 'slide_up', 0.1],
-  [5.3, 'heart', 0.16],
-  [5.45, 'bubble_pop', 0.11],
-  [5.6, 'bubble_pop', 0.11],
-  [5.75, 'bubble_pop', 0.11],
-  [5.9, 'bubble_pop', 0.11],
-  [6.1, 'squeak', 0.11],
-  [6.75, 'squish2', 0.18],
-  [6.85, 'bubble_pop', 0.14],
-  [7.3, 'squish2', 0.15],
-  [7.85, 'squish2', 0.14],
-  [8.4, 'poof', 0.12],
-  [9.0, 'squeak', 0.14],
-  [9.6, 'bubbles', 0.1],
-  [10.28, 'slide_up', 0.16],
-  [10.35, 'boing2', 0.12],
-  [10.85, 'slide_down', 0.12],
-  [11.3, 'bubble_pop', 0.16],
-  [11.35, 'plink', 0.12],
-  [12.1, 'squish2', 0.16],
-  [12.4, 'squeak', 0.12],
-  [12.9, 'squish2', 0.14],
-  [13.6, 'squish2', 0.14],
-  [14.2, 'squish2', 0.12],
-  [14.42, 'slide_up', 0.12],
-  [14.7, 'tada', 0.2],
-  [15.3, 'boing2', 0.14],
-  [15.35, 'bubble_pop', 0.14],
-  [16.2, 'twinkle', 0.12],
+  [0.12, 'plink', 0.14],
+  [0.5, 'bubbles', 0.14],
+  [0.75, 'boing2', 0.15],
+  [1.0, 'bubble_pop', 0.12],
+  [2.48, 'twinkle', 0.1],
+  [2.63, 'psst', 0.22],
+  [2.73, 'bubble_pop', 0.16],
+  [3.23, 'bubbles', 0.11],
+  [3.93, 'poof', 0.15],
+  [4.8, 'bubble_pop', 0.12],
+  [5.29, 'bubble_pop', 0.12],
+  [5.63, 'slide_up', 0.1],
+  [5.93, 'heart', 0.16],
+  [6.08, 'bubble_pop', 0.11],
+  [6.23, 'bubble_pop', 0.11],
+  [6.38, 'bubble_pop', 0.11],
+  [6.53, 'bubble_pop', 0.11],
+  [6.73, 'squeak', 0.11],
+  [7.35, 'squish2', 0.18],
+  [7.45, 'bubble_pop', 0.14],
+  [7.85, 'squish2', 0.15],
+  [8.38, 'squish2', 0.18],
+  [8.48, 'bubble_pop', 0.14],
+  [8.93, 'squish2', 0.15],
+  [9.48, 'squish2', 0.14],
+  [10.03, 'poof', 0.12],
+  [10.63, 'squeak', 0.14],
+  [11.23, 'bubbles', 0.1],
+  [11.91, 'slide_up', 0.16],
+  [11.98, 'boing2', 0.12],
+  [12.48, 'slide_down', 0.12],
+  [12.93, 'bubble_pop', 0.16],
+  [12.98, 'plink', 0.12],
+  [13.72, 'slide_up', 0.14],
+  [13.8, 'bubble_pop', 0.12],
+  [14.25, 'slide_down', 0.12],
+  [14.5, 'boing', 0.1],
+  [14.8, 'squish2', 0.16],
+  [15.1, 'squeak', 0.12],
+  [15.6, 'squish2', 0.14],
+  [16.3, 'squish2', 0.14],
+  [16.9, 'squish2', 0.12],
+  [17.12, 'slide_up', 0.12],
+  [17.4, 'tada', 0.2],
+  [18.0, 'boing2', 0.14],
+  [18.05, 'bubble_pop', 0.14],
+  [18.9, 'twinkle', 0.12],
 ];
 const AudioMix: React.FC = () => (
   <>
