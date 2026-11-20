@@ -108,10 +108,10 @@ const PhraseView: React.FC<{p: Phrase}> = ({p}) => {
 };
 
 /** hookPlace: where the hook question is shown — 'title' (drawn by the hook layer), 'low' (normal caption) or 'none' */
-export const Captions: React.FC<{hookPlace?: 'title' | 'low' | 'none'}> = ({hookPlace = 'title'}) => (
+export const Captions: React.FC<{hookPlace?: 'title' | 'low' | 'none'; hide?: string[]}> = ({hookPlace = 'title', hide = []}) => (
   <AbsoluteFill style={{pointerEvents: 'none'}}>
     {PHRASES.map((p) => (p.place === 'title' ? (hookPlace === 'low' ? {...p, place: 'low' as const, end: 2.1} : null) : p))
-      .filter((p): p is Phrase => p !== null)
+      .filter((p): p is Phrase => p !== null && !hide.includes(p.id))
       .map((p) => (
         <PhraseView key={p.id} p={p} />
       ))}

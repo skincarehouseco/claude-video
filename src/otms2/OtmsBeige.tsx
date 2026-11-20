@@ -70,7 +70,7 @@ export const OtmsBeige: React.FC<{hook?: HookId}> = ({hook = 'A'}) => (
     <EndDoodles />
     <LightLeak at={CUT_SHELF} />
     <LightLeak at={CUT_END} />
-    <Captions hookPlace={HOOK_CAPTION_PLACE[hook]} />
+    <Captions hookPlace={HOOK_CAPTION_PLACE[hook]} hide={hook === 'F' ? ['jom'] : []} />
     <Fades />
     <Sound />
   </AbsoluteFill>

@@ -2,11 +2,12 @@ import React from 'react';
 import {AbsoluteFill, Easing, interpolate, useCurrentFrame} from 'remotion';
 import {CUT_SHELF, DISPLAY, P, PHRASES, ROUND, SAFE, SAFE_CX, SANS, sec, SERIF, Word} from './data';
 import {c01, HookSpark, HookTitle, leave, sp} from './Hook';
+import {HookCanva} from './HookCanva';
 
 /* Five typographic treatments of the same spoken hook "OTMS ni boleh mix dengan apa?".
    Every word still appears only when it is spoken; only the font / layout / animation style changes. */
 
-export type HookId = 'A' | 'B' | 'C' | 'D' | 'E';
+export type HookId = 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
 const lines = () => PHRASES.find((p) => p.id === 'hook')!.lines;
 const STAR = 'M0 -22 C3 -6 6 -3 22 0 C6 3 3 6 0 22 C-3 6 -6 3 -22 0 C-6 -3 -3 -6 0 -22Z';
 const GLOW = '0 0 22px rgba(255,250,243,0.95), 0 0 8px rgba(255,250,243,0.95), 0 0 2px rgba(255,250,243,1)';
@@ -190,7 +191,7 @@ const HookKinetic: React.FC = () => {
 };
 
 /** where the spoken question is shown: always as the hook title in these variants */
-export const HOOK_CAPTION_PLACE: Record<HookId, 'title' | 'low' | 'none'> = {A: 'title', B: 'title', C: 'title', D: 'title', E: 'title'};
+export const HOOK_CAPTION_PLACE: Record<HookId, 'title' | 'low' | 'none'> = {A: 'title', B: 'title', C: 'title', D: 'title', E: 'title', F: 'title'};
 
 export const HookLayer: React.FC<{id: HookId}> = ({id}) => (
   <AbsoluteFill style={{pointerEvents: 'none'}}>
@@ -199,6 +200,7 @@ export const HookLayer: React.FC<{id: HookId}> = ({id}) => (
     {id === 'C' && <HookBubbly />}
     {id === 'D' && <HookBoxes />}
     {id === 'E' && <HookKinetic />}
-    <HookSpark />
+    {id === 'F' && <HookCanva />}
+    {id !== 'F' && <HookSpark />}
   </AbsoluteFill>
 );
