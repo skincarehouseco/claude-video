@@ -1,6 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, Easing, Freeze, interpolate, OffthreadVideo, staticFile, useCurrentFrame} from 'remotion';
-import {CUTS, LASH_DURATION, SECTION_CUTS} from './timeline';
+import {CUTS, EXTEND, LASH_DURATION, SECTION_CUTS} from './timeline';
 
 const ease = Easing.inOut(Easing.cubic);
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
@@ -50,6 +50,11 @@ const punch = (frame: number) => {
 };
 
 export const cameraFor = (frame: number) => {
+  // 20 s extension: hold the last frame and keep the final push-in going very slowly (1.12 -> 1.30)
+  if (frame >= LASH_DURATION) {
+    const u = interpolate(frame - LASH_DURATION, [0, EXTEND], [0, 1], clamp);
+    return {scale: 1.12 * (1 + 0.16 * Easing.inOut(Easing.sin)(u)), origin: '50% 50%'};
+  }
   const i = shotIndex(frame);
   const [s0, s1, ox, oy] = SHOT_MOVES[Math.min(i, SHOT_MOVES.length - 1)];
   const u = interpolate(frame, [EDGES[i], EDGES[i + 1]], [0, 1], clamp);
@@ -68,7 +73,13 @@ const Shot: React.FC<{frame: number; extraScale?: number}> = ({frame, extraScale
   const {scale, origin} = cameraFor(frame);
   return (
     <AbsoluteFill style={{transform: `scale(${(scale * extraScale).toFixed(5)})`, transformOrigin: origin}}>
-      <OffthreadVideo src={staticFile('lash/footage.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+      {frame >= LASH_DURATION ? (
+        <Freeze frame={LASH_DURATION - 1}>
+          <OffthreadVideo src={staticFile('lash/footage.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+        </Freeze>
+      ) : (
+        <OffthreadVideo src={staticFile('lash/footage.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+      )}
     </AbsoluteFill>
   );
 };

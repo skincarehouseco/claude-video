@@ -6,7 +6,9 @@ import {continueRender, delayRender, staticFile} from 'remotion';
  * original audio (the "You got two choices… yes or yes" track) stays untouched.
  */
 export const LASH_FPS = 30;
-export const LASH_DURATION = 437; // 14.567 s
+export const LASH_DURATION = 437; // 14.567 s of source footage / original sound
+export const EXTEND = 600; // +20 s: final eye close-up held with a slow zoom, original sound looped
+export const LASH_TOTAL = LASH_DURATION + EXTEND; // 1037 frames = 34.57 s
 export const f = (s: number) => Math.round(s * LASH_FPS);
 
 // Extra fonts for this edit (SIL OFL, bundled in public/fonts)
@@ -59,7 +61,7 @@ export const BEATS: Beat[] = [
   {id: 'jelly', from: 216, to: 298}, // peace sign + red tube
   {id: 'hydrate', from: 298, to: 359}, // applying jelly lash oil
   {id: 'worry', from: 359, to: 410}, // with the mirror
-  {id: 'cta', from: 410, to: LASH_DURATION}, // eye close-up
+  {id: 'cta', from: 410, to: LASH_TOTAL}, // eye close-up, held through the 20 s extension
 ];
 // cuts that start a new text beat get the bigger zoom-through transition
 export const SECTION_CUTS = BEATS.slice(1).map((b) => b.from);

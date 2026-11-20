@@ -3,13 +3,18 @@ import {AbsoluteFill, Audio, interpolate, Sequence, spring, staticFile, useCurre
 import {C, SAFE, SAFE_CENTER_X} from '../theme';
 import {LashCamera} from './Camera';
 import {LashGraphics, PixelSparkle} from './Graphics';
-import {f, LASH_FPS, LYRICS, sansFont, SECTION_CUTS} from './timeline';
+import {f, LASH_DURATION, LASH_FPS, LASH_TOTAL, LYRICS, sansFont, SECTION_CUTS} from './timeline';
 
 /* ------------ word-synced lyric captions (soft butter yellow, regular weight) ------------ */
 const CAPTION_Y = 1340; // lower-middle, well above TikTok's caption/UI area (safe bottom = 1490)
 const LyricCaptions: React.FC = () => {
-  const frame = useCurrentFrame();
+  const globalFrame = useCurrentFrame();
   const {fps} = useVideoConfig();
+  // the looped sound repeats the lyric, so the captions repeat with it
+  const looped = globalFrame >= LASH_DURATION;
+  const frame = looped ? (globalFrame - LASH_DURATION) % LASH_DURATION : globalFrame;
+  // during the extension sit a little lower so they never touch the held "WAJIB CUBA NI!"
+  const captionY = looped ? 1440 : CAPTION_Y;
   const t = frame / LASH_FPS;
   const chunk = LYRICS.find((c) => t >= c.start && t < c.end);
   if (!chunk) return null;
@@ -36,7 +41,7 @@ const LyricCaptions: React.FC = () => {
         position: 'absolute',
         left: SAFE.left,
         width: SAFE.right - SAFE.left,
-        top: CAPTION_Y - 50,
+        top: captionY - 50,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -100,6 +105,15 @@ const AudioMix: React.FC = () => (
   <>
     {/* the creator's original sound, full level */}
     <Audio src={staticFile('lash/original.wav')} volume={1} />
+    {/* 20 s extension: loop the same sound, fading out over the last 1.5 s */}
+    {[LASH_DURATION, LASH_DURATION * 2].map((at) => (
+      <Sequence key={at} from={at} durationInFrames={Math.min(LASH_DURATION, LASH_TOTAL - at)} layout="none">
+        <Audio
+          src={staticFile('lash/original.wav')}
+          volume={(lf) => interpolate(at + lf, [LASH_TOTAL - 45, LASH_TOTAL], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}
+        />
+      </Sequence>
+    ))}
     {SFX.map(([at, name, v], i) => (
       <Sequence key={i} from={Math.max(0, at)} durationInFrames={45} layout="none">
         <Audio src={staticFile(`audio/${name}.wav`)} volume={v} />

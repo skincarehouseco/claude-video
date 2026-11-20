@@ -30,13 +30,14 @@ npm run render   # -> out/final.mp4
 
 ---
 
-# Lash serum edit (`LashEdit`, 14.6 s)
+# Lash serum edit (`LashEdit`, 34.6 s)
 
 Follows the reference clip's on-screen text beat for beat (same wording, same order), re-timed to this footage's shots.
 
 - `src/lash/timeline.ts` – shot cuts, text beats, lyric captions (Whisper large-v3, then corrected against the spectrogram)
 - `src/lash/Camera.tsx` – per-shot push-ins/pull-backs, punch zooms on the sung "Yes"/"yes", zoom-through blur transitions between text beats
 - `src/lash/Graphics.tsx` – comment bubble, word-by-word text, pixel sparkles, sprout, jelly drops, water drops, bouncy CTA
+- Ending extended by 20 s: final eye close-up held with a slow push-in, original sound looped (fades out over the last 1.5 s), lyric captions repeat with it
 - `src/lash/LashEdit.tsx` – lyric captions (Poppins Regular, 62px, `#FFF0A6`), original audio at full level + quiet SFX
 - Typography follows four style references, one recipe per beat: clean sans + highlight pill (Poppins), editorial serif mix (Playfair Display + Yellowtail brush), Y2K bubbly outlined letters (Comfortaa), chrome-star / yellow-sparkle stickers, speed lines
 - Fonts: Poppins, Playfair Display, Comfortaa, Swanky and Moo Moo, Pinyon Script (SIL OFL); Yellowtail (Apache 2.0)
