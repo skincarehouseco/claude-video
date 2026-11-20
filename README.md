@@ -27,3 +27,21 @@ python3 scripts/make_audio.py public/audio
 python3 scripts/build_captions.py
 npm run render   # -> out/final.mp4
 ```
+
+---
+
+# Lash serum edit (`LashEdit`, 14.6 s)
+
+Follows the reference clip's on-screen text beat for beat (same wording, same order), re-timed to this footage's shots.
+
+- `src/lash/timeline.ts` – shot cuts, text beats, lyric captions (Whisper large-v3, then corrected against the spectrogram)
+- `src/lash/Camera.tsx` – per-shot push-ins/pull-backs, punch zooms on the sung "Yes"/"yes", zoom-through blur transitions between text beats
+- `src/lash/Graphics.tsx` – comment bubble, word-by-word text, pixel sparkles, sprout, jelly drops, water drops, bouncy CTA
+- `src/lash/LashEdit.tsx` – lyric captions (Patrick Hand regular, 70px, `#FFF0A6`), original audio at full level + quiet SFX
+- Fonts added: Swanky and Moo Moo (handwritten), Pinyon Script (calligraphy) – SIL OFL
+
+```bash
+ffmpeg -i source.mov -c:v libx264 -crf 16 -pix_fmt yuv420p -r 30 -an public/lash/footage.mp4
+ffmpeg -i source.mov -vn -ar 48000 -ac 2 public/lash/original.wav
+npm run render:lash   # -> out/lash_final.mp4
+```
