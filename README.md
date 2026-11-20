@@ -27,6 +27,9 @@ npm run render
 (subject is coloured, original wall is neutral grey), small-hole fill, temporal smoothing, soft DOF on the new
 background, contact shadow, warm colour match and light wrap. Used for the booih foam highlights -> `out/foam-studio-bg.mp4`
 (segments cut from the foam clip, original sound kept, loudnorm -16 LUFS).
+Generated-background version: `scripts/gen_background.py` (Realistic Vision 5.1 + LCM-LoRA, CPU, seed 201, white desk /
+cabinet / creator-room prompt) -> `public/backgrounds/creator_desk_gen.png`, composited with
+`BG_BLUR=5.5 GRAIN=2.5 BG_WARM=1` (stronger DOF, matching grain, edge decontamination) -> `out/foam-studio-gen.mp4`.
 
 ## OtmsBeige – bright airy beige whimsy version of the OTMS video (24 s, `npm run render:otms-beige` -> `out/otms-beige.mp4`)
 - `src/otms2/` – `data.ts` (word-level transcript, palette, safe zone, scene times), `Camera.tsx` (camera + background treatment,

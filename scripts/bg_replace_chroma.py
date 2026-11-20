@@ -6,7 +6,7 @@ morphological closing, border-aware hole filling, small-blob removal and light t
 so it is stable and does not flicker. Then: soft depth-of-field on the new background, a soft contact
 shadow, warm colour match and a light wrap on the edges.
 
-usage: python bg_replace_chroma.py <in.mp4> <background.png> <out.mp4> [bg_offset_x=0.5]
+usage: [BG_BLUR=2.2] [GRAIN=0] [BG_WARM=0|1] python bg_replace_chroma.py <in.mp4> <background.png> <out.mp4> [bg_offset_x=0.5]
 (needs numpy, opencv-python-headless; ffmpeg on PATH; audio is copied from the input)
 """
 import subprocess, sys
@@ -22,7 +22,14 @@ s = max(W / bg.shape[1], H / bg.shape[0])
 bg = cv2.resize(bg, (round(bg.shape[1] * s), round(bg.shape[0] * s)), interpolation=cv2.INTER_LANCZOS4)
 x0 = int((bg.shape[1] - W) * offx); y0 = (bg.shape[0] - H) // 2
 bg = bg[y0:y0 + H, x0:x0 + W]
-bg = cv2.GaussianBlur(bg, (0, 0), 2.2)
+import os
+BG_BLUR = float(os.environ.get('BG_BLUR', '2.2'))  # stronger = subject closer to camera
+GRAIN = float(os.environ.get('GRAIN', '0'))  # per-frame film grain on the new background, to match the footage
+WARM = os.environ.get('BG_WARM', '0') == '1'
+bg = cv2.GaussianBlur(bg, (0, 0), BG_BLUR)
+if WARM:
+    bg = np.clip(bg * np.array([1.03, 1.0, 0.975]) + 3, 0, 255)
+rng = np.random.default_rng(7)
 bg_wrap = cv2.GaussianBlur(bg, (0, 0), 18)
 
 K_CLOSE = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (11, 11))  # small: closes noise, keeps gaps between fingers open
@@ -70,10 +77,19 @@ while True:
         a = 0.78 * a + 0.22 * prev  # light temporal smoothing (stable edges without ghosting fast tosses)
     prev = a
     fg = f.astype(np.float32)
+    # edge decontamination: semi-transparent edge pixels still carry the old dark/grey wall colour, so replace their
+    # colour with the colour pushed outward from the solid interior (removes dark outlines/ghost fringes)
+    core = (a > 0.92).astype(np.float32)
+    cb = cv2.GaussianBlur(core, (0, 0), 5)[..., None]
+    fgx = cv2.GaussianBlur(fg * core[..., None], (0, 0), 5) / np.maximum(cb, 1e-3)
+    wgt = np.clip((a[..., None] - 0.55) / 0.4, 0, 1) ** 2
+    fg = np.where(cb > 0.02, fg * wgt + fgx * (1 - wgt), fg)
     fg = np.clip(fg * np.array([1.035, 1.01, 0.97]) * 1.04 + 4, 0, 255)  # warm/bright match to the studio light
     # soft shadow of the subject on the background (offset down-right, warm-dark)
     sh = cv2.GaussianBlur(np.roll(np.roll(a, 22, 0), 14, 1), (0, 0), 24)
     b = bg * (1 - 0.2 * sh[..., None]) + np.array([90, 60, 50]) * 0.2 * sh[..., None] * 0.15
+    if GRAIN > 0:
+        b = b + rng.normal(0, GRAIN, (H, W, 1)).astype(np.float32)
     A = a[..., None]
     comp = fg * A + b * (1 - A)
     # light wrap: let the bright background bleed slightly onto the subject's edges
