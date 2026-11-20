@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill, Audio, Easing, Freeze, interpolate, OffthreadVideo, random, Sequence, staticFile, useCurrentFrame, useVideoConfig, spring} from 'remotion';
+import {AbsoluteFill, Audio, Easing, interpolate, OffthreadVideo, random, Sequence, staticFile, useCurrentFrame, useVideoConfig, spring} from 'remotion';
 import {Star} from '../skin/Art';
 import {bob, C, captionFont, clamp01, exitAt, FPS, italicFont, pop, roundFont, SAFE, SAFE_CENTER_X, sec} from '../skin/theme';
 
@@ -8,64 +8,55 @@ import {bob, C, captionFont, clamp01, exitAt, FPS, italicFont, pop, roundFont, S
    (inspo structure: satisfying foam play first, product reveal at the end)
    ============================================================================================ */
 
-export const FOAM_DURATION = 558; // 18.6 s @ 30 fps
-const XF = 3; // frames of soft dissolve into every shot
+export const FOAM_DURATION = 517; // ~17.2 s @ 30 fps
+const XF = 2; // frames of soft dissolve into every shot
 
 // Camera watermark in some girl shots sits at x 60-490, y 200-250: those shots zoom around it and the
 // product label sticker (fixed, top-left) covers it.
 const WM_ORIGIN = '25.5% 11.7%';
-type Shot = {at: number; dur: number; src: string; from: number; rate: number; z: [number, number]; audio: boolean; origin?: string; freezeAt?: number};
-// at/dur in output seconds; from = start inside the source file (s); freezeAt = output-local second to hold the frame
+type Shot = {at: number; dur: number; src: string; from: number; rate: number; z: [number, number]; origin?: string};
+// at/dur in output seconds; from = start inside the source file (s). All shots are moving video (no freeze frames);
+// *_slow files are smooth slow-motion made with ffmpeg minterpolate. Original audio is not used.
 const G = 'foam/girl.mp4';
 const SHOTS: Shot[] = [
-  {at: 0.0, dur: 2.5, src: G, from: 0.0, rate: 0.5, z: [1.0, 1.08], audio: false, origin: '50% 45%', freezeAt: 1.0}, // hook: holding the 3 cans
-  {at: 2.5, dur: 2.27, src: G, from: 0.53, rate: 1.0, z: [1.08, 1.0], audio: false}, // spray foam
-  {at: 4.77, dur: 0.49, src: G, from: 2.8, rate: 0.75, z: [1.0, 1.03], audio: false}, // foam close to face
-  {at: 5.26, dur: 0.6, src: G, from: 3.17, rate: 0.77, z: [1.0, 1.03], audio: false, origin: WM_ORIGIN}, // wide, holding foam
-  {at: 5.86, dur: 1.44, src: 'foam/b1.mp4', from: 0.4, rate: 1.2, z: [1.1, 1.0], audio: true}, // cutaway: foam heart
-  {at: 7.3, dur: 1.63, src: G, from: 3.63, rate: 1.15, z: [1.0, 1.05], audio: false}, // hands squish
-  {at: 8.93, dur: 0.5, src: G, from: 5.5, rate: 0.75, z: [1.0, 1.02], audio: false, origin: WM_ORIGIN}, // wide hands
-  {at: 9.43, dur: 1.2, src: G, from: 5.87, rate: 0.5, z: [1.02, 1.05], audio: false, origin: WM_ORIGIN}, // foam on face, laughing
-  {at: 10.63, dur: 0.9, src: 'foam/b4.mp4', from: 0.4, rate: 1.0, z: [1.0, 1.06], audio: true}, // cutaway: toss
-  {at: 11.53, dur: 0.9, src: 'foam/b5.mp4', from: 0.5, rate: 1.0, z: [1.06, 1.0], audio: true}, // cutaway: catch
-  {at: 12.43, dur: 2.77, src: G, from: 6.47, rate: 0.6, z: [1.0, 1.08], audio: false}, // close squish near face
+  {at: 0.0, dur: 1.9, src: 'foam/cans_slow.mp4', from: 0, rate: 1, z: [1.0, 1.06], origin: '50% 45%'}, // hook: holding the 3 cans (slow-mo)
+  {at: 1.9, dur: 2.27, src: G, from: 0.53, rate: 1.0, z: [1.06, 1.0]}, // spray foam
+  {at: 4.17, dur: 0.49, src: G, from: 2.8, rate: 0.75, z: [1.0, 1.03]}, // foam close to face
+  {at: 4.66, dur: 0.6, src: G, from: 3.17, rate: 0.77, z: [1.0, 1.03], origin: WM_ORIGIN}, // wide, holding foam
+  {at: 5.26, dur: 1.44, src: 'foam/b1.mp4', from: 0.4, rate: 1.2, z: [1.1, 1.0]}, // cutaway: foam heart
+  {at: 6.7, dur: 1.63, src: G, from: 3.63, rate: 1.15, z: [1.0, 1.05]}, // hands squish
+  {at: 8.33, dur: 0.5, src: G, from: 5.5, rate: 0.75, z: [1.0, 1.02], origin: WM_ORIGIN}, // wide hands
+  {at: 8.83, dur: 1.43, src: 'foam/face_slow.mp4', from: 0, rate: 1, z: [1.02, 1.05], origin: WM_ORIGIN}, // foam on face, laughing (slow-mo)
+  {at: 10.26, dur: 0.9, src: 'foam/b4.mp4', from: 0.4, rate: 1.0, z: [1.0, 1.06]}, // cutaway: toss
+  {at: 11.16, dur: 0.9, src: 'foam/b5.mp4', from: 0.5, rate: 1.0, z: [1.06, 1.0]}, // cutaway: catch
+  {at: 12.06, dur: 2.63, src: 'foam/squish_slow.mp4', from: 0, rate: 1, z: [1.0, 1.08]}, // close squish near face (slow-mo)
+  {at: 14.69, dur: 2.54, src: 'foam/cans_slow.mp4', from: 0, rate: 0.75, z: [1.0, 1.1], origin: '50% 55%'}, // reveal: the cans again
 ];
-const ENDCARD_AT = 15.2;
+const ENDCARD_AT = 14.69;
 
 const easeIO = Easing.inOut(Easing.cubic);
 
+/** total scale of a shot at local frame f (slow drift + springy "jelly" landing on the cut) */
+const shotZoom = (s: Shot, f: number) => {
+  const drift = interpolate(f, [XF, sec(s.dur) + XF], s.z, {easing: easeIO, extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  if (s.at === 0) return drift;
+  const sp = spring({frame: f, fps: FPS, config: {damping: 9, stiffness: 170, mass: 0.6}});
+  return drift * (1 + 0.07 * (1 - sp));
+};
+
 const ShotView: React.FC<{s: Shot}> = ({s}) => {
   const f = useCurrentFrame(); // local to the sequence (starts XF frames early)
-  const total = sec(s.dur) + XF;
-  const z = interpolate(f, [XF, total], s.z, {easing: easeIO, extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const o = interpolate(f, [0, XF], [0, 1], {extrapolateRight: 'clamp'});
   return (
     <AbsoluteFill style={{opacity: s.at === 0 ? 1 : o, overflow: 'hidden'}}>
-      <AbsoluteFill style={{transform: `scale(${z})`, transformOrigin: s.origin ?? '50% 50%'}}>
-        <Freeze frame={s.freezeAt === undefined ? 0 : sec(s.freezeAt)} active={s.freezeAt !== undefined && f >= sec(s.freezeAt)}>
-          <OffthreadVideo
-            src={staticFile(s.src)}
-            startFrom={Math.max(0, Math.round(s.from * FPS) - (s.at === 0 ? 0 : Math.round(XF * s.rate)))}
-            playbackRate={s.rate}
-            muted={!s.audio}
-            volume={s.audio ? 0.85 : 0}
-            style={{width: '100%', height: '100%', objectFit: 'cover'}}
-          />
-        </Freeze>
-      </AbsoluteFill>
-    </AbsoluteFill>
-  );
-};
-
-const EndCardFootage: React.FC = () => {
-  const f = useCurrentFrame();
-  const z = interpolate(f, [0, sec(3.4)], [1.0, 1.1], {easing: Easing.out(Easing.cubic), extrapolateRight: 'clamp'});
-  return (
-    <AbsoluteFill style={{overflow: 'hidden', opacity: interpolate(f, [0, XF], [0, 1], {extrapolateRight: 'clamp'})}}>
-      <AbsoluteFill style={{transform: `scale(${z})`, transformOrigin: '50% 60%'}}>
-        <Freeze frame={9}>
-          <OffthreadVideo src={staticFile('foam/girl.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-        </Freeze>
+      <AbsoluteFill style={{transform: `scale(${shotZoom(s, f)})`, transformOrigin: s.origin ?? '50% 50%'}}>
+        <OffthreadVideo
+          src={staticFile(s.src)}
+          startFrom={Math.max(0, Math.round(s.from * FPS) - (s.at === 0 ? 0 : Math.round(XF * s.rate)))}
+          playbackRate={s.rate}
+          muted
+          style={{width: '100%', height: '100%', objectFit: 'cover'}}
+        />
       </AbsoluteFill>
     </AbsoluteFill>
   );
@@ -74,13 +65,10 @@ const EndCardFootage: React.FC = () => {
 const Footage: React.FC = () => (
   <AbsoluteFill style={{backgroundColor: '#000'}}>
     {SHOTS.map((s, i) => (
-      <Sequence key={i} from={Math.max(0, sec(s.at) - (s.at === 0 ? 0 : XF))} durationInFrames={sec(s.dur) + (s.at === 0 ? 0 : XF)}>
+      <Sequence key={i} from={Math.max(0, sec(s.at) - (s.at === 0 ? 0 : XF))} durationInFrames={sec(s.dur) + (s.at === 0 ? 0 : XF) + 1}>
         <ShotView s={s} />
       </Sequence>
     ))}
-    <Sequence from={sec(ENDCARD_AT) - XF}>
-      <EndCardFootage />
-    </Sequence>
   </AbsoluteFill>
 );
 
@@ -113,9 +101,25 @@ const Sfx: React.FC<{text: string; at: number; dur: number; x: number; y: number
   if (f < sec(at) || f > sec(at + dur)) return null;
   const p = pop(f, at, FPS, 260, 9);
   const out = exitAt(f, at + dur - 0.2, 0.2);
+  const k = f - sec(at);
+  const st = 0.2 * Math.sin(k * 0.7) * Math.exp(-k * 0.13); // jelly squash & stretch
+  const burst = clamp01(k / 7);
   return (
-    <div style={{position: 'absolute', left: x, top: y, transform: `translate(-50%,-50%) scale(${p * out}) rotate(${rot + Math.sin(f / 4) * 3}deg)`}}>
-      <Bubbly text={text} size={size} fill={fill} />
+    <div style={{position: 'absolute', left: x, top: y, transform: `translate(-50%,-50%) rotate(${rot + Math.sin(f / 4) * 3}deg)`}}>
+      {k < 12 && (
+        <svg width={size * 5} height={size * 3} style={{position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', opacity: 1 - k / 12}}>
+          {[0, 1, 2, 3, 4, 5].map((i) => {
+            const a = (i / 6) * Math.PI * 2 + 0.3;
+            const r0 = size * (0.9 + burst * 0.9);
+            const cx = size * 2.5;
+            const cy = size * 1.5;
+            return <line key={i} x1={cx + Math.cos(a) * r0 * 1.4} y1={cy + Math.sin(a) * r0 * 0.75} x2={cx + Math.cos(a) * (r0 * 1.4 + size * 0.35)} y2={cy + Math.sin(a) * (r0 * 0.75 + size * 0.2)} stroke={fill} strokeWidth={6} strokeLinecap="round" />;
+          })}
+        </svg>
+      )}
+      <div style={{transform: `scale(${p * out * (1 + st)}, ${p * out * (1 - st)})`}}>
+        <Bubbly text={text} size={size} fill={fill} />
+      </div>
     </div>
   );
 };
@@ -212,11 +216,92 @@ const SparkleCut: React.FC<{at: number; x?: number; y?: number}> = ({at, x = 540
   );
 };
 
+/** heart-shaped iris wipe: closes on the old shot, opens on the new one */
+const HEART_D = 'M0 34 C-30 12 -50 -6 -44 -26 C-38 -46 -12 -46 0 -26 C12 -46 38 -46 44 -26 C50 -6 30 12 0 34Z';
+const HeartWipe: React.FC<{at: number; color: string}> = ({at, color}) => {
+  const f = useCurrentFrame();
+  const k = f - sec(at);
+  if (k < -9 || k > 11) return null;
+  const hole = k < 0 ? 80 * Easing.in(Easing.cubic)(clamp01(-k / 9)) : 80 * Easing.in(Easing.quad)(clamp01(k / 11));
+  const id = `hw${Math.round(at * 100)}`;
+  return (
+    <svg width={1080} height={1920} style={{position: 'absolute'}}>
+      <defs>
+        <mask id={id}>
+          <rect width={1080} height={1920} fill="#fff" />
+          <path d={HEART_D} transform={`translate(540 880) scale(${hole})`} fill="#000" />
+        </mask>
+      </defs>
+      <rect width={1080} height={1920} fill={color} mask={`url(#${id})`} />
+      <path d={HEART_D} transform={`translate(540 880) scale(${hole})`} fill="none" stroke="#fff" strokeWidth={6 / Math.max(hole, 0.5)} />
+      {k > -3 && k < 6 && <Star x={540} y={880} s={3 * (1 - Math.abs(k) / 6)} t={f} color="#fff" />}
+    </svg>
+  );
+};
+
+/** kawaii face riding on the foam heart (keyframed to the heart's position in foam/b1.mp4) */
+const HEART_TRACK: [number, number, number][] = [
+  // source time (s) in b1.mp4, x, y (px, unzoomed)
+  [0.4, 575, 1060],
+  [0.9, 487, 985],
+  [1.4, 427, 1085],
+  [1.9, 652, 1125],
+  [2.2, 525, 1165],
+];
+const KawaiiHeart: React.FC = () => {
+  const f = useCurrentFrame();
+  const shot = SHOTS[4];
+  if (f < sec(shot.at) + 4 || f > sec(shot.at + shot.dur) - 2) return null;
+  const local = f - (sec(shot.at) - XF);
+  const src = shot.from + ((f - sec(shot.at)) / FPS) * shot.rate;
+  const ts = HEART_TRACK.map((h) => h[0]);
+  const x0 = interpolate(src, ts, HEART_TRACK.map((h) => h[1]), {easing: easeIO, extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const y0 = interpolate(src, ts, HEART_TRACK.map((h) => h[2]), {easing: easeIO, extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const z = shotZoom(shot, local);
+  const x = 540 + (x0 - 540) * z;
+  const y = 960 + (y0 - 960) * z;
+  const p = pop(f, shot.at + 0.15, FPS, 220, 10);
+  const blink = (f - sec(shot.at)) % 26 > 22 ? 0.15 : 1;
+  return (
+    <svg width={220} height={140} viewBox="-110 -70 220 140" style={{position: 'absolute', left: x - 110, top: y - 70, transform: `scale(${p * z * 1.6})`}}>
+      <ellipse cx={-40} cy={-8} rx={11} ry={15 * blink} fill="#3E2C4A" />
+      <ellipse cx={40} cy={-8} rx={11} ry={15 * blink} fill="#3E2C4A" />
+      {blink > 0.5 && <circle cx={-36} cy={-14} r={4} fill="#fff" />}
+      {blink > 0.5 && <circle cx={44} cy={-14} r={4} fill="#fff" />}
+      <ellipse cx={-66} cy={18} rx={18} ry={10} fill="#FF9EB5" opacity={0.75} />
+      <ellipse cx={66} cy={18} rx={18} ry={10} fill="#FF9EB5" opacity={0.75} />
+      <path d="M-14 14 q7 9 14 0 q7 9 14 0" fill="none" stroke="#3E2C4A" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+};
+
+/** little hearts floating up (soft, sparse) */
+const FloatHearts: React.FC<{from: number; to: number}> = ({from, to}) => {
+  const f = useCurrentFrame();
+  if (f < sec(from) || f > sec(to)) return null;
+  const cols = [C.rose, C.blush, C.lavender, C.butterDeep, '#9FE3C8'];
+  return (
+    <svg width={1080} height={1920} style={{position: 'absolute'}}>
+      {Array.from({length: 6}).map((_, i) => {
+        const start = sec(from) + i * 7;
+        const k = f - start;
+        if (k < 0) return null;
+        const life = 46;
+        const u = (k % life) / life;
+        const x = 120 + random(`fh${from}${i}`) * 780 + Math.sin(k / 6 + i) * 18;
+        const y = 1250 - u * 700;
+        const sc = 0.5 + random(`fs${from}${i}`) * 0.4;
+        return <path key={i} d={HEART_D} transform={`translate(${x} ${y}) scale(${sc * Math.min(1, u * 5)}) rotate(${Math.sin(k / 8) * 15})`} fill={cols[i % cols.length]} stroke="#fff" strokeWidth={5} opacity={1 - u} />;
+      })}
+    </svg>
+  );
+};
+
 /** small product label kept on screen during the foam play (like the inspo's product tag) */
 const ProductTag: React.FC = () => {
   const f = useCurrentFrame();
-  if (f < sec(2.5) || f > sec(ENDCARD_AT)) return null;
-  const p = pop(f, 2.55, FPS, 180, 12);
+  if (f < sec(1.9) || f > sec(ENDCARD_AT)) return null;
+  const p = pop(f, 1.95, FPS, 180, 12);
   const out = exitAt(f, ENDCARD_AT - 0.2, 0.2);
   return (
     <div style={{position: 'absolute', top: 180, left: 40, opacity: out, transform: `scale(${0.7 + 0.3 * p})`, transformOrigin: '50% 50%'}}>
@@ -250,10 +335,10 @@ const ProductTag: React.FC = () => {
 
 const Hook: React.FC = () => {
   const f = useCurrentFrame();
-  if (f > sec(2.5)) return null;
-  const p1 = pop(f, 0.35, FPS, 170, 11);
-  const p2 = pop(f, 0.8, FPS, 220, 8);
-  const out = exitAt(f, 2.3, 0.2);
+  if (f > sec(1.9)) return null;
+  const p1 = pop(f, 0.15, FPS, 170, 11);
+  const p2 = pop(f, 0.45, FPS, 220, 8);
+  const out = exitAt(f, 1.72, 0.18);
   return (
     <div style={{position: 'absolute', top: 190, left: SAFE.left, width: SAFE.right - SAFE.left, textAlign: 'center', opacity: out}}>
       <div style={{fontFamily: italicFont, fontStyle: 'italic', fontSize: 64, color: '#fff', textShadow: SHADOW, opacity: clamp01(p1), transform: `translateY(${(1 - p1) * 20}px)`}}>mainan ke</div>
@@ -295,14 +380,14 @@ const EndCard: React.FC = () => {
 
 /* ============================== captions (butter yellow, regular weight) ============================== */
 const LINES: [number, number, string][] = [
-  [0.3, 2.45, 'korang rasa ni mainan ke sabun?'],
-  [2.55, 4.7, 'spray je terus jadi foam'],
-  [4.8, 5.84, 'lembut macam marshmallow'],
-  [5.9, 7.25, 'boleh bentuk jadi love pulak'],
-  [7.35, 10.55, 'squishy & satisfying gila'],
-  [10.65, 12.38, 'boleh main baling-baling'],
-  [12.48, 15.1, 'tapi sebenarnya…'],
-  [15.25, 18.5, 'sabun rupanya! mandi jadi fun'],
+  [0.2, 1.85, 'korang rasa ni mainan ke sabun?'],
+  [1.95, 4.12, 'spray je terus jadi foam'],
+  [4.2, 5.2, 'lembut macam marshmallow'],
+  [5.3, 6.65, 'boleh bentuk jadi love pulak'],
+  [6.75, 10.2, 'squishy & satisfying gila'],
+  [10.3, 12.0, 'boleh main baling-baling'],
+  [12.1, 14.6, 'tapi sebenarnya…'],
+  [14.75, 17.1, 'sabun rupanya! mandi jadi fun'],
 ];
 const CaptionLine: React.FC = () => {
   const f = useCurrentFrame();
@@ -338,36 +423,48 @@ const CaptionLine: React.FC = () => {
           </span>
         );
       })}
+      {(() => {
+        const at = a + words.length * per + 0.05;
+        const k = spring({frame: f - sec(at), fps, config: {damping: 9, stiffness: 220, mass: 0.5}});
+        return f >= sec(at) ? (
+          <svg width={40} height={40} style={{alignSelf: 'center', transform: `scale(${k}) rotate(${f * 3}deg)`}}>
+            <Star x={20} y={20} s={1.7} t={f} color={C.butter} />
+          </svg>
+        ) : null;
+      })()}
     </div>
   );
 };
 
 const Overlays: React.FC = () => (
   <AbsoluteFill style={{pointerEvents: 'none'}}>
-    <Bubbles from={0} to={18.6} />
+    <Bubbles from={0} to={17.3} />
     <ProductTag />
     <Hook />
-    {/* hearts around the foam heart cutaway */}
-    <HeartDoodle x={120} y={640} s={1.2} at={6.0} end={7.3} color={C.rose} rot={-14} />
-    <HeartDoodle x={800} y={700} s={0.9} at={6.15} end={7.3} color={C.blush} rot={12} />
-    <HeartDoodle x={150} y={1120} s={0.8} at={6.3} end={7.3} color={C.lavender} rot={8} />
-    <HeartDoodle x={790} y={1080} s={1.1} at={6.45} end={7.3} color={C.coral} rot={-6} />
+    {/* foam heart cutaway: kawaii face + hearts */}
+    <KawaiiHeart />
+    <HeartDoodle x={110} y={600} s={1.2} at={5.45} end={6.7} color={C.rose} rot={-14} />
+    <HeartDoodle x={820} y={640} s={0.9} at={5.6} end={6.7} color={C.blush} rot={12} />
+    <HeartDoodle x={140} y={1180} s={0.8} at={5.75} end={6.7} color={C.lavender} rot={8} />
+    <HeartDoodle x={820} y={1150} s={1.1} at={5.9} end={6.7} color={C.coral} rot={-6} />
+    <FloatHearts from={6.75} to={8.3} />
+    <FloatHearts from={12.1} to={14.6} />
 
-    <Sfx text="psshh~" at={2.7} dur={1.4} x={220} y={820} rot={-8} fill={C.rose} />
-    <Sfx text="soft!" at={7.45} dur={1.1} x={290} y={560} rot={-8} fill={C.butterDeep} />
-    <Sfx text="hehe~" at={9.5} dur={1.1} x={250} y={1170} rot={-6} fill={C.lavender} size={74} />
-    <TossArc at={10.63} dur={0.9} />
-    <Sfx text="boing!" at={10.7} dur={0.8} x={300} y={560} rot={-10} fill={C.butterDeep} />
-    <Sfx text="catch!" at={11.6} dur={0.8} x={720} y={600} rot={8} fill={C.coral} />
-    <Sfx text="squishy~" at={12.7} dur={1.4} x={720} y={1140} rot={-4} fill="#7FD8B4" size={72} />
+    <Sfx text="psshh~" at={2.1} dur={1.4} x={220} y={820} rot={-8} fill={C.rose} />
+    <Sfx text="soft!" at={6.85} dur={1.1} x={290} y={560} rot={-8} fill={C.butterDeep} />
+    <Sfx text="hehe~" at={9.0} dur={1.1} x={250} y={1170} rot={-6} fill={C.lavender} size={74} />
+    <TossArc at={10.26} dur={0.9} />
+    <Sfx text="boing!" at={10.35} dur={0.8} x={300} y={560} rot={-10} fill={C.butterDeep} />
+    <Sfx text="catch!" at={11.3} dur={0.75} x={720} y={600} rot={8} fill={C.coral} />
+    <Sfx text="squishy~" at={12.4} dur={1.6} x={720} y={1140} rot={-4} fill="#7FD8B4" size={72} />
 
-    <SparkleCut at={2.5} x={540} y={900} />
-    <SparkleCut at={5.86} x={540} y={900} />
-    <SparkleCut at={10.63} x={540} y={800} />
-    <SparkleCut at={12.43} x={540} y={900} />
-    <BubbleWipe at={ENDCARD_AT} />
+    <SparkleCut at={1.9} x={540} y={900} />
+    <SparkleCut at={10.26} x={540} y={800} />
+    <SparkleCut at={12.06} x={540} y={900} />
+    <HeartWipe at={5.26} color={C.blush} />
+    <HeartWipe at={ENDCARD_AT} color={C.mint} />
     <EndCard />
-    <Sfx text="sabun!" at={15.9} dur={2.4} x={540} y={1150} rot={-6} fill="#5FCFC0" size={96} />
+    <Sfx text="sabun!" at={15.3} dur={1.8} x={540} y={1150} rot={-6} fill="#5FCFC0" size={96} />
     <CaptionLine />
   </AbsoluteFill>
 );
@@ -375,28 +472,52 @@ const Overlays: React.FC = () => (
 /* ============================== audio ============================== */
 type Sx = [number, string, number];
 const SFX: Sx[] = [
-  [0.35, 'pop', 0.14],
-  [0.8, 'boing', 0.12],
-  [2.5, 'sparkle', 0.1],
-  [2.7, 'whoosh', 0.1],
-  [5.86, 'sparkle', 0.1],
-  [7.45, 'pop', 0.13],
-  [7.7, 'squish', 0.16],
-  [9.5, 'pop', 0.13],
-  [10.7, 'boing', 0.13],
-  [11.6, 'pop', 0.15],
-  [12.7, 'squish', 0.16],
-  [13.8, 'squish', 0.13],
-  [14.9, 'whoosh', 0.12],
-  [15.3, 'sparkle', 0.16],
-  [15.4, 'ding', 0.12],
-  [15.9, 'boing', 0.12],
+  [0.05, 'twinkle', 0.16],
+  [0.15, 'plink', 0.14],
+  [0.3, 'bubbles', 0.12],
+  [0.45, 'boing2', 0.15],
+  [1.85, 'twinkle', 0.1],
+  [2.0, 'psst', 0.22],
+  [2.1, 'bubble_pop', 0.16],
+  [2.6, 'bubbles', 0.11],
+  [3.3, 'poof', 0.15],
+  [4.17, 'bubble_pop', 0.12],
+  [4.66, 'bubble_pop', 0.12],
+  [5.0, 'slide_up', 0.1],
+  [5.3, 'heart', 0.16],
+  [5.45, 'bubble_pop', 0.11],
+  [5.6, 'bubble_pop', 0.11],
+  [5.75, 'bubble_pop', 0.11],
+  [5.9, 'bubble_pop', 0.11],
+  [6.1, 'squeak', 0.11],
+  [6.75, 'squish2', 0.18],
+  [6.85, 'bubble_pop', 0.14],
+  [7.3, 'squish2', 0.15],
+  [7.85, 'squish2', 0.14],
+  [8.4, 'poof', 0.12],
+  [9.0, 'squeak', 0.14],
+  [9.6, 'bubbles', 0.1],
+  [10.28, 'slide_up', 0.16],
+  [10.35, 'boing2', 0.12],
+  [10.85, 'slide_down', 0.12],
+  [11.3, 'bubble_pop', 0.16],
+  [11.35, 'plink', 0.12],
+  [12.1, 'squish2', 0.16],
+  [12.4, 'squeak', 0.12],
+  [12.9, 'squish2', 0.14],
+  [13.6, 'squish2', 0.14],
+  [14.2, 'squish2', 0.12],
+  [14.42, 'slide_up', 0.12],
+  [14.7, 'tada', 0.2],
+  [15.3, 'boing2', 0.14],
+  [15.35, 'bubble_pop', 0.14],
+  [16.2, 'twinkle', 0.12],
 ];
 const AudioMix: React.FC = () => (
   <>
     <Audio
       src={staticFile('audio/foam_music.wav')}
-      volume={(f) => interpolate(f, [0, 6, FOAM_DURATION - 30, FOAM_DURATION], [0, 0.4, 0.4, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}
+      volume={(f) => interpolate(f, [0, 6, FOAM_DURATION - 30, FOAM_DURATION], [0, 0.36, 0.36, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}
     />
     {SFX.map(([at, name, v], i) => (
       <Sequence key={i} from={sec(at)} durationInFrames={40} layout="none">

@@ -22,12 +22,13 @@ python3 scripts/skin_captions.py
 npm run render
 ```
 
-## FoamEdit – Booo Fun Foam Cleanser "mainan ke sabun?!" (~18.6 s, `npm run render:foam` -> `out/foam.mp4`)
+## FoamEdit – Booo Fun Foam Cleanser "mainan ke sabun?!" (~17.3 s, `npm run render:foam` -> `out/foam.mp4`)
 No speech in the source clips, so captions are short playful lines timed to the action (Malay–English mix).
 Face-first: opens on the girl holding the cans (hook), her spray/squish shots carry the edit, foam-ball shots are short cutaways, and it ends back on the cans (answer: sabun).
 - The camera watermark (x 60-490, y 200-250) in three girl shots is covered by the fixed product-label sticker; those shots zoom around it.
 - `src/foam/FoamEdit.tsx` – shot list (speed, zoom per shot, 3-frame dissolves), bubbly onomatopoeia stickers, toss arcs, floating bubbles, bubble wipes, end card, captions, audio mix
-- `scripts/make_foam_music.py` – original 120 BPM cute music bed + squish SFX
+- `scripts/make_foam_music.py` – original 120 BPM cute music bed; `scripts/make_cute_sfx.py` – whimsy SFX pack (bubble pops, twinkle, slide whistle, squeak, poof, psst, tada…)
+- No original audio is used; every cut is moving video (no freeze frames). Slow-mo shots `public/foam/{cans,face,squish}_slow.mp4` are made with ffmpeg `minterpolate` (mci) from the girl clip
 - Media: cut segments from the foam clip into `public/foam/b1..b7.mp4` (+14 dB foam sounds) and the girl clip into `public/foam/girl.mp4` (see shot list for source times); shots avoid the camera watermark
 - Final loudness: `ffmpeg -i out/foam.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -c:a aac -b:a 192k out/foam-final.mp4`
 
