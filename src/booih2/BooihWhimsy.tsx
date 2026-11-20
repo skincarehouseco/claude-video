@@ -226,7 +226,7 @@ const ProductTag: React.FC = () => {
   );
 };
 
-/* ---------------- sound: original foam sounds (cleaned) + soft SFX ---------------- */
+/* ---------------- sound: soft SFX only (original audio removed) ---------------- */
 const SFX: [number, string, number][] = [
   [0.25, 'twinkle', 0.07], [0.75, 'boing2', 0.07], [0.35, 'psst', 0.1], [1.6, 'bubble_pop', 0.08],
   [4.0, 'whoosh', 0.05], [4.2, 'bubble_pop', 0.07], [4.65, 'bubble_pop', 0.07], [5.1, 'bubble_pop', 0.07],
@@ -240,7 +240,7 @@ const SFX: [number, string, number][] = [
 ];
 const Sound: React.FC = () => (
   <>
-    <Audio src={staticFile('booih2/foam_audio.wav')} volume={(fr) => interpolate(fr, [BW_DURATION - 15, BW_DURATION], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})} />
+    {/* original clip audio removed at the creator's request: sound effects only */}
     {SFX.map(([at, name, v], i) => (
       <Sequence key={i} from={sec(at)} durationInFrames={45} layout="none">
         <Audio src={staticFile(`audio/${name}.wav`)} volume={v} />
