@@ -27,3 +27,21 @@ python3 scripts/make_audio.py public/audio
 python3 scripts/build_captions.py
 npm run render   # -> out/final.mp4
 ```
+
+---
+
+# Lash tonic vs jelly oil edit (`LashEdit` composition)
+
+A 12.7 s 9:16 edit that follows the structure of the reference video: a comment-reply hook, a **Tonic** card, a **Jelly Oil** card, then "Guna both for faster result!".
+
+- The audio is the original song (no spoken voiceover; a Whisper large-v3 transcription found only lyrics), so the on-screen info text is the caption track. It uses soft butter yellow `#FFF0A6`, Fredoka regular weight.
+- `src/lash/timeline.ts` holds the shot cuts (from ffmpeg scene detection) and the section windows.
+- `src/lash/camera.ts` adds a slow zoom in or out on each shot, zoom-through transitions (blur + pastel flash) at section changes, and soft punch-ins on the smaller cuts.
+- `src/lash/Graphics.tsx` has the comment bubble, the title, the info cards (pop-in bullets, sparkles, a squiggle underline, small tube illustrations), the outro, googly eyes on the bottles and lash twinkles.
+- All text stays inside the TikTok safe zone. Sound effects sit quietly under the song.
+
+```bash
+ffmpeg -i source.mov -c:v libx264 -crf 15 -pix_fmt yuv420p -r 30 -an public/lash/main.mp4
+ffmpeg -i source.mov -vn -ar 48000 -ac 2 public/lash/song.wav
+npm run render:lash   # -> out/lash_final.mp4
+```
