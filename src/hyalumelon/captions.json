@@ -1,0 +1,1051 @@
+[
+ {
+  "start": 0.05,
+  "end": 0.9,
+  "words": [
+   {
+    "text": "I",
+    "start": 0.05,
+    "end": 0.28
+   },
+   {
+    "text": "tak",
+    "start": 0.28,
+    "end": 0.48
+   },
+   {
+    "text": "tahu",
+    "start": 0.48,
+    "end": 0.64
+   },
+   {
+    "text": "kenapa",
+    "start": 0.64,
+    "end": 0.9
+   }
+  ]
+ },
+ {
+  "start": 0.9,
+  "end": 1.56,
+  "words": [
+   {
+    "text": "tapi",
+    "start": 0.9,
+    "end": 1.08
+   },
+   {
+    "text": "sekarang",
+    "start": 1.08,
+    "end": 1.34
+   },
+   {
+    "text": "ni",
+    "start": 1.34,
+    "end": 1.48
+   },
+   {
+    "text": "I",
+    "start": 1.48,
+    "end": 1.56
+   }
+  ]
+ },
+ {
+  "start": 1.56,
+  "end": 2.68,
+  "words": [
+   {
+    "text": "makin",
+    "start": 1.56,
+    "end": 1.86
+   },
+   {
+    "text": "suka",
+    "start": 1.86,
+    "end": 2.2
+   },
+   {
+    "text": "dengan",
+    "start": 2.2,
+    "end": 2.4
+   },
+   {
+    "text": "benda",
+    "start": 2.4,
+    "end": 2.68
+   }
+  ]
+ },
+ {
+  "start": 2.68,
+  "end": 3.66,
+  "words": [
+   {
+    "text": "yang",
+    "start": 2.68,
+    "end": 2.8
+   },
+   {
+    "text": "simple",
+    "start": 2.8,
+    "end": 3.24
+   },
+   {
+    "text": "je,",
+    "start": 3.24,
+    "end": 3.58
+   }
+  ]
+ },
+ {
+  "start": 3.66,
+  "end": 4.24,
+  "words": [
+   {
+    "text": "bukan",
+    "start": 3.66,
+    "end": 3.86
+   },
+   {
+    "text": "sebab",
+    "start": 3.86,
+    "end": 4.1
+   },
+   {
+    "text": "I",
+    "start": 4.1,
+    "end": 4.2
+   },
+   {
+    "text": "tak",
+    "start": 4.2,
+    "end": 4.24
+   }
+  ]
+ },
+ {
+  "start": 4.24,
+  "end": 4.94,
+  "words": [
+   {
+    "text": "nak",
+    "start": 4.24,
+    "end": 4.34
+   },
+   {
+    "text": "pakai",
+    "start": 4.34,
+    "end": 4.48
+   },
+   {
+    "text": "skincare,",
+    "start": 4.48,
+    "end": 4.72
+   }
+  ]
+ },
+ {
+  "start": 4.94,
+  "end": 6.9,
+  "words": [
+   {
+    "text": "tapi",
+    "start": 4.94,
+    "end": 5.42
+   },
+   {
+    "text": "sebab",
+    "start": 5.42,
+    "end": 5.88
+   },
+   {
+    "text": "banyak",
+    "start": 5.88,
+    "end": 6.24
+   },
+   {
+    "text": "sangat",
+    "start": 6.24,
+    "end": 6.48
+   },
+   {
+    "text": "step,",
+    "start": 6.48,
+    "end": 6.76
+   }
+  ]
+ },
+ {
+  "start": 6.9,
+  "end": 7.6,
+  "words": [
+   {
+    "text": "so",
+    "start": 6.9,
+    "end": 7.0
+   },
+   {
+    "text": "I",
+    "start": 7.0,
+    "end": 7.22
+   },
+   {
+    "text": "dah",
+    "start": 7.22,
+    "end": 7.36
+   },
+   {
+    "text": "hilang",
+    "start": 7.36,
+    "end": 7.6
+   }
+  ]
+ },
+ {
+  "start": 7.6,
+  "end": 8.64,
+  "words": [
+   {
+    "text": "semangat",
+    "start": 7.6,
+    "end": 8.08
+   },
+   {
+    "text": "nak",
+    "start": 8.08,
+    "end": 8.18
+   },
+   {
+    "text": "pakai,",
+    "start": 8.18,
+    "end": 8.56
+   }
+  ]
+ },
+ {
+  "start": 8.64,
+  "end": 9.66,
+  "words": [
+   {
+    "text": "nak",
+    "start": 8.64,
+    "end": 8.72
+   },
+   {
+    "text": "apply",
+    "start": 8.72,
+    "end": 9.0
+   },
+   {
+    "text": "banyak",
+    "start": 9.0,
+    "end": 9.2
+   },
+   {
+    "text": "kali.",
+    "start": 9.2,
+    "end": 9.44
+   }
+  ]
+ },
+ {
+  "start": 9.66,
+  "end": 10.76,
+  "words": [
+   {
+    "text": "Nak-nak",
+    "start": 9.66,
+    "end": 10.12
+   },
+   {
+    "text": "pula",
+    "start": 10.12,
+    "end": 10.34
+   },
+   {
+    "text": "sekarang",
+    "start": 10.34,
+    "end": 10.52
+   },
+   {
+    "text": "ni",
+    "start": 10.52,
+    "end": 10.76
+   }
+  ]
+ },
+ {
+  "start": 10.76,
+  "end": 12.06,
+  "words": [
+   {
+    "text": "cuaca",
+    "start": 10.76,
+    "end": 11.0
+   },
+   {
+    "text": "tengah",
+    "start": 11.0,
+    "end": 11.26
+   },
+   {
+    "text": "tak",
+    "start": 11.26,
+    "end": 11.38
+   },
+   {
+    "text": "menentu,",
+    "start": 11.44,
+    "end": 12.04
+   }
+  ]
+ },
+ {
+  "start": 12.06,
+  "end": 12.8,
+  "words": [
+   {
+    "text": "kejap",
+    "start": 12.06,
+    "end": 12.34
+   },
+   {
+    "text": "panas,",
+    "start": 12.34,
+    "end": 12.8
+   }
+  ]
+ },
+ {
+  "start": 12.8,
+  "end": 13.56,
+  "words": [
+   {
+    "text": "kejap",
+    "start": 12.8,
+    "end": 13.1
+   },
+   {
+    "text": "kita",
+    "start": 13.1,
+    "end": 13.26
+   },
+   {
+    "text": "duduk",
+    "start": 13.26,
+    "end": 13.46
+   },
+   {
+    "text": "kat",
+    "start": 13.46,
+    "end": 13.56
+   }
+  ]
+ },
+ {
+  "start": 13.56,
+  "end": 14.26,
+  "words": [
+   {
+    "text": "dalam",
+    "start": 13.56,
+    "end": 13.7
+   },
+   {
+    "text": "aircon,",
+    "start": 13.7,
+    "end": 14.18
+   }
+  ]
+ },
+ {
+  "start": 14.26,
+  "end": 15.1,
+  "words": [
+   {
+    "text": "sampai",
+    "start": 14.26,
+    "end": 14.4
+   },
+   {
+    "text": "kulit",
+    "start": 14.4,
+    "end": 14.84
+   },
+   {
+    "text": "kita",
+    "start": 14.84,
+    "end": 14.96
+   },
+   {
+    "text": "ni",
+    "start": 14.96,
+    "end": 15.1
+   }
+  ]
+ },
+ {
+  "start": 15.1,
+  "end": 15.94,
+  "words": [
+   {
+    "text": "pun",
+    "start": 15.1,
+    "end": 15.16
+   },
+   {
+    "text": "kan",
+    "start": 15.16,
+    "end": 15.36
+   },
+   {
+    "text": "kadang-kadang",
+    "start": 15.36,
+    "end": 15.72
+   },
+   {
+    "text": "rasa",
+    "start": 15.72,
+    "end": 15.94
+   }
+  ]
+ },
+ {
+  "start": 15.94,
+  "end": 17.18,
+  "words": [
+   {
+    "text": "macam",
+    "start": 15.94,
+    "end": 16.1
+   },
+   {
+    "text": "kering",
+    "start": 16.1,
+    "end": 16.7
+   },
+   {
+    "text": "sangat.",
+    "start": 16.7,
+    "end": 16.88
+   }
+  ]
+ },
+ {
+  "start": 17.18,
+  "end": 18.08,
+  "words": [
+   {
+    "text": "So",
+    "start": 17.18,
+    "end": 17.56
+   },
+   {
+    "text": "I",
+    "start": 17.56,
+    "end": 17.74
+   },
+   {
+    "text": "rasa",
+    "start": 17.74,
+    "end": 17.94
+   },
+   {
+    "text": "ni",
+    "start": 17.94,
+    "end": 18.08
+   }
+  ]
+ },
+ {
+  "start": 18.08,
+  "end": 19.14,
+  "words": [
+   {
+    "text": "adalah",
+    "start": 18.08,
+    "end": 18.22
+   },
+   {
+    "text": "antara",
+    "start": 18.22,
+    "end": 18.64
+   },
+   {
+    "text": "benda",
+    "start": 18.64,
+    "end": 19.02
+   },
+   {
+    "text": "yang",
+    "start": 19.02,
+    "end": 19.14
+   }
+  ]
+ },
+ {
+  "start": 19.14,
+  "end": 20.34,
+  "words": [
+   {
+    "text": "korang",
+    "start": 19.14,
+    "end": 19.48
+   },
+   {
+    "text": "kena",
+    "start": 19.48,
+    "end": 19.64
+   },
+   {
+    "text": "jadikan",
+    "start": 19.64,
+    "end": 20.14
+   },
+   {
+    "text": "dia",
+    "start": 20.14,
+    "end": 20.34
+   }
+  ]
+ },
+ {
+  "start": 20.34,
+  "end": 21.54,
+  "words": [
+   {
+    "text": "sebagai",
+    "start": 20.34,
+    "end": 20.6
+   },
+   {
+    "text": "penyelamat",
+    "start": 20.6,
+    "end": 21.08
+   },
+   {
+    "text": "korang.",
+    "start": 21.08,
+    "end": 21.4
+   }
+  ]
+ },
+ {
+  "start": 21.54,
+  "end": 22.43,
+  "words": [
+   {
+    "text": "So",
+    "start": 21.54,
+    "end": 21.7
+   },
+   {
+    "text": "ni",
+    "start": 21.7,
+    "end": 21.82
+   },
+   {
+    "text": "adalah",
+    "start": 21.82,
+    "end": 21.98
+   }
+  ]
+ },
+ {
+  "start": 22.52,
+  "end": 23.62,
+  "words": [
+   {
+    "text": "Hyalumelon",
+    "start": 22.52,
+    "end": 23.02
+   },
+   {
+    "text": "Mist",
+    "start": 23.02,
+    "end": 23.18
+   },
+   {
+    "text": "Toner,",
+    "start": 23.18,
+    "end": 23.58
+   }
+  ]
+ },
+ {
+  "start": 23.62,
+  "end": 24.34,
+  "words": [
+   {
+    "text": "kalau",
+    "start": 23.62,
+    "end": 23.78
+   },
+   {
+    "text": "korang",
+    "start": 23.78,
+    "end": 23.98
+   },
+   {
+    "text": "tengok",
+    "start": 23.98,
+    "end": 24.12
+   },
+   {
+    "text": "spray",
+    "start": 24.12,
+    "end": 24.34
+   }
+  ]
+ },
+ {
+  "start": 24.34,
+  "end": 24.72,
+  "words": [
+   {
+    "text": "dia",
+    "start": 24.34,
+    "end": 24.48
+   },
+   {
+    "text": "kan,",
+    "start": 24.48,
+    "end": 24.64
+   }
+  ]
+ },
+ {
+  "start": 24.72,
+  "end": 26.02,
+  "words": [
+   {
+    "text": "mist",
+    "start": 24.72,
+    "end": 24.92
+   },
+   {
+    "text": "dia",
+    "start": 24.92,
+    "end": 25.1
+   },
+   {
+    "text": "ni",
+    "start": 25.1,
+    "end": 25.22
+   },
+   {
+    "text": "halus",
+    "start": 25.22,
+    "end": 25.68
+   },
+   {
+    "text": "je.",
+    "start": 25.68,
+    "end": 25.84
+   }
+  ]
+ },
+ {
+  "start": 26.02,
+  "end": 27.4,
+  "words": [
+   {
+    "text": "Bila",
+    "start": 26.02,
+    "end": 26.42
+   },
+   {
+    "text": "spray",
+    "start": 26.42,
+    "end": 26.76
+   },
+   {
+    "text": "dekat",
+    "start": 26.76,
+    "end": 27.0
+   },
+   {
+    "text": "kulit,",
+    "start": 27.0,
+    "end": 27.38
+   }
+  ]
+ },
+ {
+  "start": 27.4,
+  "end": 28.14,
+  "words": [
+   {
+    "text": "kulit",
+    "start": 27.4,
+    "end": 27.68
+   },
+   {
+    "text": "kita",
+    "start": 27.68,
+    "end": 27.8
+   },
+   {
+    "text": "akan",
+    "start": 27.8,
+    "end": 27.94
+   },
+   {
+    "text": "rasa",
+    "start": 27.94,
+    "end": 28.14
+   }
+  ]
+ },
+ {
+  "start": 28.14,
+  "end": 29.1,
+  "words": [
+   {
+    "text": "fresh",
+    "start": 28.14,
+    "end": 28.48
+   },
+   {
+    "text": "and",
+    "start": 28.48,
+    "end": 28.68
+   },
+   {
+    "text": "lightweight.",
+    "start": 28.68,
+    "end": 28.94
+   }
+  ]
+ },
+ {
+  "start": 29.1,
+  "end": 31.0,
+  "words": [
+   {
+    "text": "Dia",
+    "start": 29.1,
+    "end": 29.44
+   },
+   {
+    "text": "bantu",
+    "start": 29.62,
+    "end": 30.22
+   },
+   {
+    "text": "untuk",
+    "start": 30.22,
+    "end": 30.44
+   },
+   {
+    "text": "hydrate,",
+    "start": 30.44,
+    "end": 30.98
+   }
+  ]
+ },
+ {
+  "start": 31.0,
+  "end": 32.08,
+  "words": [
+   {
+    "text": "refresh",
+    "start": 31.0,
+    "end": 31.3
+   },
+   {
+    "text": "and",
+    "start": 31.3,
+    "end": 31.58
+   },
+   {
+    "text": "soothe-kan",
+    "start": 31.58,
+    "end": 32.08
+   }
+  ]
+ },
+ {
+  "start": 32.08,
+  "end": 32.78,
+  "words": [
+   {
+    "text": "skin",
+    "start": 32.08,
+    "end": 32.26
+   },
+   {
+    "text": "kita.",
+    "start": 32.26,
+    "end": 32.64
+   }
+  ]
+ },
+ {
+  "start": 32.78,
+  "end": 34.52,
+  "words": [
+   {
+    "text": "Siap",
+    "start": 32.78,
+    "end": 33.22
+   },
+   {
+    "text": "ada",
+    "start": 33.22,
+    "end": 33.4
+   },
+   {
+    "text": "hyaluronic",
+    "start": 33.54,
+    "end": 34.14
+   },
+   {
+    "text": "acid",
+    "start": 34.14,
+    "end": 34.52
+   }
+  ]
+ },
+ {
+  "start": 34.52,
+  "end": 36.68,
+  "words": [
+   {
+    "text": "dengan",
+    "start": 34.52,
+    "end": 34.98
+   },
+   {
+    "text": "watermelon",
+    "start": 34.98,
+    "end": 35.4
+   },
+   {
+    "text": "extract",
+    "start": 35.52,
+    "end": 36.12
+   },
+   {
+    "text": "tau.",
+    "start": 36.12,
+    "end": 36.46
+   }
+  ]
+ },
+ {
+  "start": 36.68,
+  "end": 37.94,
+  "words": [
+   {
+    "text": "And",
+    "start": 36.68,
+    "end": 37.16
+   },
+   {
+    "text": "honestly,",
+    "start": 37.16,
+    "end": 37.74
+   }
+  ]
+ },
+ {
+  "start": 37.94,
+  "end": 38.82,
+  "words": [
+   {
+    "text": "I",
+    "start": 37.94,
+    "end": 38.14
+   },
+   {
+    "text": "suka",
+    "start": 38.14,
+    "end": 38.44
+   },
+   {
+    "text": "sangat",
+    "start": 38.44,
+    "end": 38.72
+   },
+   {
+    "text": "dengan",
+    "start": 38.72,
+    "end": 38.82
+   }
+  ]
+ },
+ {
+  "start": 38.82,
+  "end": 39.8,
+  "words": [
+   {
+    "text": "benda-benda",
+    "start": 38.82,
+    "end": 39.1
+   },
+   {
+    "text": "macam",
+    "start": 39.1,
+    "end": 39.26
+   },
+   {
+    "text": "ni",
+    "start": 39.26,
+    "end": 39.5
+   },
+   {
+    "text": "sebab",
+    "start": 39.5,
+    "end": 39.8
+   }
+  ]
+ },
+ {
+  "start": 39.8,
+  "end": 40.34,
+  "words": [
+   {
+    "text": "dah",
+    "start": 39.8,
+    "end": 39.92
+   },
+   {
+    "text": "tak",
+    "start": 39.92,
+    "end": 40.04
+   },
+   {
+    "text": "perlu",
+    "start": 40.04,
+    "end": 40.24
+   },
+   {
+    "text": "nak",
+    "start": 40.24,
+    "end": 40.34
+   }
+  ]
+ },
+ {
+  "start": 40.34,
+  "end": 41.32,
+  "words": [
+   {
+    "text": "complicated",
+    "start": 40.34,
+    "end": 40.72
+   },
+   {
+    "text": "dah.",
+    "start": 40.72,
+    "end": 41.16
+   }
+  ]
+ },
+ {
+  "start": 41.32,
+  "end": 42.06,
+  "words": [
+   {
+    "text": "So",
+    "start": 41.32,
+    "end": 41.5
+   },
+   {
+    "text": "untuk",
+    "start": 41.5,
+    "end": 41.74
+   },
+   {
+    "text": "korang",
+    "start": 41.74,
+    "end": 42.0
+   },
+   {
+    "text": "yang",
+    "start": 42.0,
+    "end": 42.06
+   }
+  ]
+ },
+ {
+  "start": 42.06,
+  "end": 42.98,
+  "words": [
+   {
+    "text": "malas",
+    "start": 42.06,
+    "end": 42.34
+   },
+   {
+    "text": "nak",
+    "start": 42.34,
+    "end": 42.38
+   },
+   {
+    "text": "pakai",
+    "start": 42.38,
+    "end": 42.56
+   },
+   {
+    "text": "skincare,",
+    "start": 42.56,
+    "end": 42.88
+   }
+  ]
+ },
+ {
+  "start": 42.98,
+  "end": 43.9,
+  "words": [
+   {
+    "text": "berlayer-layer",
+    "start": 42.98,
+    "end": 43.56
+   },
+   {
+    "text": "tu",
+    "start": 43.56,
+    "end": 43.66
+   },
+   {
+    "text": "korang",
+    "start": 43.66,
+    "end": 43.9
+   }
+  ]
+ },
+ {
+  "start": 43.9,
+  "end": 45.48,
+  "words": [
+   {
+    "text": "boleh",
+    "start": 43.9,
+    "end": 44.02
+   },
+   {
+    "text": "consider",
+    "start": 44.02,
+    "end": 44.3
+   },
+   {
+    "text": "dengan",
+    "start": 44.3,
+    "end": 44.58
+   },
+   {
+    "text": "this",
+    "start": 44.58,
+    "end": 44.8
+   },
+   {
+    "text": "one.",
+    "start": 44.8,
+    "end": 44.88
+   }
+  ]
+ }
+]
