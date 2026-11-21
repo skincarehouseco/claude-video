@@ -27,3 +27,25 @@ python3 scripts/make_audio.py public/audio
 python3 scripts/build_captions.py
 npm run render   # -> out/final.mp4
 ```
+
+---
+
+# Hyalumelon Mist Toner edit (`MistToner` composition)
+
+12.5 s 9:16 whimsy edit of the hydrating mist toner clip (`src/toner/`).
+
+- The clip has no voice-over (audio is a music track; Whisper large-v3 found only song lyrics), so the
+  captions carry the product info, each timed to the shot that shows it (`src/toner/Captions.tsx`).
+- Captions: Quicksand regular/medium (no bold), 52px, soft butter yellow `#FFF0A6` on a frosted pill.
+- Accent type follows the style refs: Great Vibes script, Playfair Display italic, Chewy bubble stickers, Pixelify Sans.
+- `Camera.tsx`: per-shot smooth zoom in/out, soft dissolves on quick cuts, zoom-through + blur + light flash on topic changes.
+- `Graphics.tsx`: title, mist bursts, "milky texture"/"cepat meresap" stickers, absorbing droplets, cheek twinkles,
+  hydration meter, benefits checklist, sign-off. All inside the TikTok safe zone.
+- Audio: the clip's own soundtrack is kept, with quiet SFX underneath.
+
+```bash
+mkdir -p public/toner
+ffmpeg -i source.mov -c:v libx264 -crf 15 -pix_fmt yuv420p -r 30 -an public/toner/main.mp4
+ffmpeg -i source.mov -vn -ar 48000 -ac 2 public/toner/music.wav
+npx remotion render src/index.ts MistToner out/hyalumelon_mist_toner.mp4 --codec h264 --crf 17
+```
