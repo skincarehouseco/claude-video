@@ -400,7 +400,7 @@ const Stickers: React.FC<{layer: 'main' | 'end'}> = ({layer}) => {
     </svg>
   );
 };
-const STICKER_SFX = ['sticker', 'cute_pop', 'bloop', 'blip_up', 'plink', 'bubble_pop'];
+const STICKER_SFX = ['k3_tok', 'k3_kalimba_one', 'k3_snap', 'k3_waterdrop', 'k3_uke_pluck', 'k3_glass'];
 
 /** scrapbook sticky note "cara main" */
 const StickyNote: React.FC<{at: number; end: number}> = ({at, end}) => {
@@ -471,18 +471,18 @@ const EndCard: React.FC<{at: number}> = ({at}) => {
 
 /* ---------------- sound: dense SFX, no original audio, no music ---------------- */
 const SFX: [number, string, number][] = [
-  [0.0, 'twinkle', 0.35], [0.35, 'psst', 0.3], [T(0, 1.1), 'blip_up', 0.4], [T(0, 1.6), 'xylo_up', 0.45], [T(0, 1.62), 'boing2', 0.3],
-  [T(0, 2.7), 'bloop', 0.4],
-  [T(1) - 0.13, 'whoosh', 0.22], [T(1, 0.05), 'chime', 0.3], [T(1, 0.3), 'bubble_pop', 0.35], [T(1, 0.6), 'bubble_pop', 0.35], [T(1, 0.9), 'bubble_pop', 0.35], [T(1, 1.0), 'blip_up', 0.35],
-  [T(2) - 0.13, 'whoosh', 0.22], [T(2, 0.6), 'slide_up', 0.4], [T(2, 0.62), 'wink', 0.35],
-  [T(3) - 0.13, 'whoosh', 0.25], [T(3, 0.15), 'xylo_up', 0.45], [T(3, 0.2), 'heart', 0.45], [T(3, 1.4), 'bloop', 0.4], [T(3, 2.4), 'sparkle', 0.3],
-  [T(4) - 0.13, 'whoosh', 0.22], [T(4, 0.1), 'squish2', 0.5], [T(4, 0.15), 'toy_squeak', 0.4], [T(4, 0.5), 'squish', 0.45], [T(4, 0.9), 'toy_squeak', 0.4], [T(4, 1.0), 'squeak', 0.3],
-  [T(5) - 0.13, 'whoosh', 0.22], [T(5, 0.15), 'boing', 0.5], [T(5, 1.2), 'slide_down', 0.35], [T(5, 2.1), 'boing2', 0.45], [T(5, 2.15), 'wink', 0.3],
-  [T(6), 'glitch', 0.4], [T(6, 0.25), 'oops', 0.35],
-  [T(7) - 0.13, 'whoosh', 0.25], [T(7, 0.15), 'xylo_up', 0.45], [T(7, 0.2), 'ding', 0.35], [T(7, 1.3), 'bloop', 0.4],
-  [T(8) - 0.13, 'whoosh', 0.22], [T(8, 0.1), 'squish2', 0.45], [T(8, 0.2), 'toy_squeak', 0.35], [T(8, 0.8), 'squish', 0.4], [T(8, 1.6), 'cute_pop', 0.4], [T(8, 2.1), 'toy_squeak', 0.35], [T(8, 2.2), 'sparkle', 0.3],
-  [T(9) - 0.13, 'whoosh', 0.22], [T(9, 0.2), 'psst', 0.2], [T(9, 1.4), 'xylo_up', 0.45], [T(9, 1.45), 'tada', 0.35], [T(9, 2.2), 'chime', 0.3],
-  [T(10) - 0.13, 'whoosh', 0.25], [T(10, 0.15), 'shutter', 0.55], [T(10, 0.45), 'boing2', 0.45], [T(10, 0.8), 'xylo_down', 0.35], [T(10, 1.0), 'twinkle', 0.3],
+  [0.0, 'k3_fairy', 0.35], [0.35, 'k3_spritz', 0.3], [T(0, 1.1), 'k3_uke_pluck', 0.4], [T(0, 1.6), 'k3_kalimba_up', 0.45], [T(0, 1.62), 'k3_spring_small', 0.3],
+  [T(0, 2.7), 'k3_waterdrop', 0.4],
+  [T(1) - 0.13, 'k3_swish', 0.22], [T(1, 0.05), 'k3_glass', 0.3], [T(1, 0.3), 'k3_bubblewrap', 0.35], [T(1, 0.6), 'k3_bubblewrap', 0.35], [T(1, 0.9), 'k3_bubblewrap', 0.35], [T(1, 1.0), 'k3_uke_pluck', 0.35],
+  [T(2) - 0.13, 'k3_swish', 0.22], [T(2, 0.6), 'k3_whistle_up', 0.4], [T(2, 0.62), 'k3_whistle_wiggle', 0.35],
+  [T(3) - 0.13, 'k3_swish', 0.25], [T(3, 0.15), 'k3_kalimba_up', 0.45], [T(3, 0.2), 'k3_toypiano', 0.45], [T(3, 1.4), 'k3_waterdrop', 0.4], [T(3, 2.4), 'k3_triangle', 0.3],
+  [T(4) - 0.13, 'k3_swish', 0.22], [T(4, 0.1), 'k3_squelch', 0.5], [T(4, 0.15), 'k3_toktok', 0.4], [T(4, 0.5), 'k3_squelch2', 0.45], [T(4, 0.9), 'k3_toktok', 0.4], [T(4, 1.0), 'k3_snap', 0.3],
+  [T(5) - 0.13, 'k3_swish', 0.22], [T(5, 0.15), 'k3_spring', 0.5], [T(5, 1.2), 'k3_whistle_down', 0.35], [T(5, 2.1), 'k3_spring_small', 0.45], [T(5, 2.15), 'k3_whistle_wiggle', 0.3],
+  [T(6), 'glitch', 0.4], [T(6, 0.25), 'k3_womp', 0.35],
+  [T(7) - 0.13, 'k3_swish', 0.25], [T(7, 0.15), 'k3_kalimba_up', 0.45], [T(7, 0.2), 'k3_triangle', 0.35], [T(7, 1.3), 'k3_waterdrop', 0.4],
+  [T(8) - 0.13, 'k3_swish', 0.22], [T(8, 0.1), 'k3_squelch', 0.45], [T(8, 0.2), 'k3_toktok', 0.35], [T(8, 0.8), 'k3_squelch2', 0.4], [T(8, 1.6), 'k3_cork', 0.4], [T(8, 2.1), 'k3_toktok', 0.35], [T(8, 2.2), 'k3_triangle', 0.3],
+  [T(9) - 0.13, 'k3_swish', 0.22], [T(9, 0.2), 'k3_spritz', 0.2], [T(9, 1.4), 'k3_kalimba_up', 0.45], [T(9, 1.45), 'k3_kalimba_fanfare', 0.35], [T(9, 2.2), 'k3_glass', 0.3],
+  [T(10) - 0.13, 'k3_swish', 0.25], [T(10, 0.15), 'shutter', 0.55], [T(10, 0.45), 'k3_spring_small', 0.45], [T(10, 0.8), 'k3_kalimba_down', 0.35], [T(10, 1.0), 'k3_fairy', 0.3],
   // every sticker lands with a tiny cute sound
   ...THINGS.map((th, i): [number, string, number] => [th.at, STICKER_SFX[i % STICKER_SFX.length], 0.2]),
 ];
