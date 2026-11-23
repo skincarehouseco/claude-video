@@ -1,0 +1,15 @@
+{
+  "title": "Yellow mask demo — original Malay script (creator's own voice-over)",
+  "note": "Original script written for the creator. It follows the reference only in timing/actions; no lines, captions or claims are copied. No medical claims: texture, routine and personal feel only.",
+  "lines": [
+    {"id": "c01", "speaker": "maya", "shot": "C01", "slot": [0.15, 3.1], "text": "Okay, dah siap campur. Tengok tekstur dia, pekat macam ni."},
+    {"id": "c02", "speaker": "maya", "shot": "C02", "slot": [3.4, 11.8], "text": "Mask ni I memang pakai selalu. Lepas mandi, terus sapu, sebab I suka rasa muka lepas pakai."},
+    {"id": "c03", "speaker": "maya", "shot": "C03", "slot": [12.1, 21.2], "text": "Ramai tanya macam mana I pakai. So harini I tunjuk step by step. Sapu tebal sikit, jangan kedekut tau."},
+    {"id": "c04", "speaker": "maya", "shot": "C04", "slot": [21.5, 25.0], "text": "Hidung pun sapu, rata-rata."},
+    {"id": "c05", "speaker": "maya", "shot": "C05", "slot": [25.3, 30.1], "text": "Bawah mata boleh, tapi hati-hati, jangan kena mata ya."},
+    {"id": "c06", "speaker": "maya", "shot": "C06", "slot": [30.4, 37.5], "text": "Dahi, pipi sebelah lagi. Haa, dah kuning satu muka!"},
+    {"id": "c07", "speaker": "maya", "shot": "C07", "slot": [37.8, 45.5], "text": "Bau dia lembut je. Kalau rasa pedih atau tak selesa, terus bilas ya. Kulit sensitif, buat patch test dulu."},
+    {"id": "c08", "speaker": "maya", "shot": "C08", "slot": [45.8, 50.1], "text": "Biar sepuluh ke lima belas minit, lepas tu bilas dengan air suam.", "display": "Biar 10 ke 15 minit, lepas tu bilas dengan air suam."},
+    {"id": "c10", "speaker": "maya", "shot": "C10", "slot": [51.4, 54.9], "text": "Haa, dah bilas. Muka rasa segar dan lembut sangat!"}
+  ]
+}

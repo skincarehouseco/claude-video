@@ -165,4 +165,21 @@ save("swish", lp(x, 9000) * np.sin(np.pi * u) ** 2)
 d = 0.16; tt = t(d)
 spr = hp(noise(d), 3500) * np.minimum(tt / 0.005, 1) * np.exp(-tt / 0.07)
 save("spritz", mix([(spr, 0), (0.8 * spr, 0.19)], 0.38))
+# soft real-world mask sounds (for the face-demo videos): spatula scoop, spread/scrape, bowl tap
+def scoop(d=0.4, seed=11):
+    r = np.random.default_rng(seed); n = int(d * SR); tt = np.arange(n) / SR
+    x = bp(r.normal(0, 1, n), 250, 1800) * np.sin(np.pi * np.clip(tt / (d * 0.8), 0, 1)) ** 1.5
+    for k in range(4):  # small wet clicks
+        a = r.uniform(0.05, d * 0.8); L = int(0.02 * SR); i = int(a * SR)
+        x[i:i + L] += 1.5 * bp(r.normal(0, 1, L), 600, 2500)[:max(0, min(L, n - i))] * np.hanning(L)[:max(0, min(L, n - i))]
+    return x
+save("scoop", scoop())
+def spread(d=0.9, seed=12):
+    r = np.random.default_rng(seed); n = int(d * SR); tt = np.arange(n) / SR
+    am = 0.55 + 0.45 * np.sin(2 * np.pi * 3.2 * tt + 1) ** 2  # back-and-forth strokes
+    return bp(r.normal(0, 1, n), 400, 2600) * am * np.sin(np.pi * tt / d) ** 0.8
+save("spread", spread())
+save("spread_short", spread(0.5, 13))
+tt = t(0.25)
+save("bowl_tap", (np.sin(2 * np.pi * 520 * tt) + 0.5 * np.sin(2 * np.pi * 1390 * tt)) * env(len(tt), 0.0008, 0.05) + 0.3 * bp(noise(0.25), 800, 4000) * env(len(tt), 0.0005, 0.006))
 print("ok")
