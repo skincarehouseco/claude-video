@@ -30,7 +30,7 @@ def lp(x, a):  # one-pole lowpass
     return y
 
 # ---------------- music bed ----------------
-BPM = 96; beat = 60 / BPM; bars = 34  # ~85 s
+BPM = 96; beat = 60 / BPM; bars = int(sys.argv[2]) if len(sys.argv) > 2 else 34  # 34 bars ~85 s
 L = int(bars * 4 * beat * SR) + SR * 3
 mL = np.zeros(L); mR = np.zeros(L)
 def add(buf, s, at):

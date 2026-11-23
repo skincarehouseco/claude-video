@@ -27,3 +27,27 @@ python3 scripts/make_audio.py public/audio
 python3 scripts/build_captions.py
 npm run render   # -> out/final.mp4
 ```
+
+---
+
+# Pestana tinted lash serum edit (`LashEdit`)
+
+9:16 whimsy edit of the tinted lash serum tutorial, cut to the voiceover and styled after the reference edit
+(title pill, handwritten "Mascara-like effect" arrows, serif + italic step titles 1–5, the "tak 100%" note).
+
+- `scripts/lash/words.json` – word-level transcript (Whisper large-v3, Malay/English, hand-corrected)
+- `scripts/lash/build.py` – tightens dead-air pauses in the voiceover (no words removed), cleans + normalises it to -14 LUFS,
+  remaps word timings, writes the cut list (`src/lash/edit.json`) and transcodes the footage. The source video goes
+  black after 60.5 s while the voiceover runs ~87 s, so shots are re-timed (gentle slow-motion) and a few are re-used with different crops.
+- `src/lash/LashEdit.tsx` – shots, soft dissolves, smooth zooms + emphasis punch-ins, audio mix (voice, ducked music, low SFX)
+- `src/lash/Captions.tsx` – word-synced captions, Poppins Regular, soft butter yellow `#FFF1A8`, keywords in italic serif
+- `src/lash/Graphics.tsx` – motion graphics (all inside the TikTok safe zone)
+- Fonts: Poppins, Playfair Display, Caveat (SIL OFL) in `public/fonts`
+
+## Rebuild
+```bash
+npm install
+python3 scripts/lash/build.py path/to/source.mov
+python3 scripts/make_audio.py public/lash/audio 36   # music bed (SFX are reused from public/audio)
+npm run render:lash   # -> out/lash-serum-edit.mp4
+```

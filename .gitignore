@@ -7,3 +7,7 @@ public/audio/music.wav
 public/audio/voice.wav
 public/main_graded.mp4
 public/subject/
+# lash serum edit: generated media (rebuild with scripts/lash/build.py + scripts/make_audio.py; see README)
+public/lash/footage.mp4
+public/lash/voice.wav
+public/lash/audio/music.wav
