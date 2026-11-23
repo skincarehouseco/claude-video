@@ -1,0 +1,64 @@
+[
+ {
+  "id": "c01",
+  "speaker": "maya",
+  "text": "Okay, dah siap campur. Tengok tekstur dia, pekat macam ni.",
+  "display": "Okay, dah siap campur. Tengok tekstur dia, pekat macam ni.",
+  "duration": 2.671,
+  "asr": "Okey dah siap campur. Tengok tekstur dia pekat macam ni.",
+  "score": 0.981,
+  "take": 0,
+  "words": [
+   {
+    "w": "Okey",
+    "s": 0.05,
+    "e": 0.21000000000000002
+   },
+   {
+    "w": "dah",
+    "s": 0.21000000000000002,
+    "e": 0.37
+   },
+   {
+    "w": "siap",
+    "s": 0.37,
+    "e": 0.6100000000000001
+   },
+   {
+    "w": "campur.",
+    "s": 0.6100000000000001,
+    "e": 0.9700000000000001
+   },
+   {
+    "w": "Tengok",
+    "s": 0.99,
+    "e": 1.37
+   },
+   {
+    "w": "tekstur",
+    "s": 1.37,
+    "e": 1.69
+   },
+   {
+    "w": "dia",
+    "s": 1.69,
+    "e": 1.83
+   },
+   {
+    "w": "pekat",
+    "s": 1.83,
+    "e": 2.09
+   },
+   {
+    "w": "macam",
+    "s": 2.09,
+    "e": 2.21
+   },
+   {
+    "w": "ni.",
+    "s": 2.21,
+    "e": 2.4499999999999997
+   }
+  ]
+ }
+]
