@@ -1,0 +1,836 @@
+[
+{
+"i": 0,
+"text": "Kalau",
+"start": 0.124,
+"end": 0.22
+},
+{
+"i": 1,
+"text": "saya",
+"start": 0.22,
+"end": 0.48
+},
+{
+"i": 2,
+"text": "pakai",
+"start": 0.48,
+"end": 0.76
+},
+{
+"i": 3,
+"text": "Pestana",
+"start": 0.76,
+"end": 1.1
+},
+{
+"i": 4,
+"text": "Tinted",
+"start": 1.1,
+"end": 1.48
+},
+{
+"i": 5,
+"text": "Serum,",
+"start": 1.48,
+"end": 1.92
+},
+{
+"i": 6,
+"text": "perlu",
+"start": 1.94,
+"end": 2.18
+},
+{
+"i": 7,
+"text": "tak",
+"start": 2.18,
+"end": 2.4
+},
+{
+"i": 8,
+"text": "saya",
+"start": 2.4,
+"end": 2.6
+},
+{
+"i": 9,
+"text": "pakai",
+"start": 2.6,
+"end": 2.84
+},
+{
+"i": 10,
+"text": "Pestana",
+"start": 2.84,
+"end": 3.2
+},
+{
+"i": 11,
+"text": "Tonic",
+"start": 3.2,
+"end": 3.62
+},
+{
+"i": 12,
+"text": "ataupun",
+"start": 3.62,
+"end": 4.24
+},
+{
+"i": 13,
+"text": "Pestana",
+"start": 4.24,
+"end": 4.66
+},
+{
+"i": 14,
+"text": "Jelly",
+"start": 4.66,
+"end": 4.94
+},
+{
+"i": 15,
+"text": "Oil",
+"start": 4.94,
+"end": 5.18
+},
+{
+"i": 16,
+"text": "lagi?",
+"start": 5.18,
+"end": 5.42
+},
+{
+"i": 17,
+"text": "Jawapannya,",
+"start": 5.796,
+"end": 6.337
+},
+{
+"i": 18,
+"text": "it",
+"start": 6.457,
+"end": 6.657
+},
+{
+"i": 19,
+"text": "depends",
+"start": 6.657,
+"end": 6.917
+},
+{
+"i": 20,
+"text": "on",
+"start": 6.917,
+"end": 7.137
+},
+{
+"i": 21,
+"text": "your",
+"start": 7.137,
+"end": 7.297
+},
+{
+"i": 22,
+"text": "budget",
+"start": 7.297,
+"end": 7.617
+},
+{
+"i": 23,
+"text": "and",
+"start": 7.617,
+"end": 7.946
+},
+{
+"i": 24,
+"text": "apa",
+"start": 7.946,
+"end": 8.326
+},
+{
+"i": 25,
+"text": "juga",
+"start": 8.326,
+"end": 8.586
+},
+{
+"i": 26,
+"text": "result",
+"start": 8.586,
+"end": 8.986
+},
+{
+"i": 27,
+"text": "yang",
+"start": 8.986,
+"end": 9.346
+},
+{
+"i": 28,
+"text": "you",
+"start": 9.346,
+"end": 9.546
+},
+{
+"i": 29,
+"text": "nak",
+"start": 9.546,
+"end": 9.726
+},
+{
+"i": 30,
+"text": "achieve.",
+"start": 9.726,
+"end": 10.006
+},
+{
+"i": 31,
+"text": "Pestana",
+"start": 10.278,
+"end": 10.52
+},
+{
+"i": 32,
+"text": "Tinted",
+"start": 10.52,
+"end": 11.0
+},
+{
+"i": 33,
+"text": "Serum",
+"start": 11.0,
+"end": 11.42
+},
+{
+"i": 34,
+"text": "boleh",
+"start": 11.42,
+"end": 11.74
+},
+{
+"i": 35,
+"text": "support",
+"start": 11.74,
+"end": 12.0
+},
+{
+"i": 36,
+"text": "your",
+"start": 12.0,
+"end": 12.28
+},
+{
+"i": 37,
+"text": "lash",
+"start": 12.28,
+"end": 12.58
+},
+{
+"i": 38,
+"text": "growth",
+"start": 12.58,
+"end": 12.88
+},
+{
+"i": 39,
+"text": "and",
+"start": 12.88,
+"end": 13.36
+},
+{
+"i": 40,
+"text": "panjangkan",
+"start": 13.36,
+"end": 14.08
+},
+{
+"i": 41,
+"text": "bulu",
+"start": 14.08,
+"end": 14.3
+},
+{
+"i": 42,
+"text": "mata.",
+"start": 14.3,
+"end": 14.5
+},
+{
+"i": 43,
+"text": "At",
+"start": 14.926,
+"end": 14.987
+},
+{
+"i": 44,
+"text": "the",
+"start": 14.987,
+"end": 15.087
+},
+{
+"i": 45,
+"text": "same",
+"start": 15.087,
+"end": 15.307
+},
+{
+"i": 46,
+"text": "time,",
+"start": 15.307,
+"end": 15.687
+},
+{
+"i": 47,
+"text": "dia",
+"start": 15.687,
+"end": 15.807
+},
+{
+"i": 48,
+"text": "akan",
+"start": 15.807,
+"end": 16.007
+},
+{
+"i": 49,
+"text": "bagi",
+"start": 16.007,
+"end": 16.347
+},
+{
+"i": 50,
+"text": "efek",
+"start": 16.347,
+"end": 16.667
+},
+{
+"i": 51,
+"text": "macam",
+"start": 16.667,
+"end": 16.887
+},
+{
+"i": 52,
+"text": "pakai",
+"start": 16.887,
+"end": 17.287
+},
+{
+"i": 53,
+"text": "mascara.",
+"start": 17.287,
+"end": 17.607
+},
+{
+"i": 54,
+"text": "Tapi,",
+"start": 18.133,
+"end": 18.415
+},
+{
+"i": 55,
+"text": "kalau",
+"start": 18.535,
+"end": 18.935
+},
+{
+"i": 56,
+"text": "you",
+"start": 18.935,
+"end": 19.215
+},
+{
+"i": 57,
+"text": "nak",
+"start": 19.215,
+"end": 19.355
+},
+{
+"i": 58,
+"text": "a",
+"start": 19.355,
+"end": 19.495
+},
+{
+"i": 59,
+"text": "more",
+"start": 19.495,
+"end": 19.815
+},
+{
+"i": 60,
+"text": "dramatic",
+"start": 19.815,
+"end": 20.215
+},
+{
+"i": 61,
+"text": "and",
+"start": 20.215,
+"end": 20.755
+},
+{
+"i": 62,
+"text": "juga",
+"start": 20.755,
+"end": 20.955
+},
+{
+"i": 63,
+"text": "nak",
+"start": 20.955,
+"end": 21.195
+},
+{
+"i": 64,
+"text": "intensive",
+"start": 21.195,
+"end": 21.755
+},
+{
+"i": 65,
+"text": "growth",
+"start": 21.755,
+"end": 22.135
+},
+{
+"i": 66,
+"text": "result,",
+"start": 22.135,
+"end": 22.495
+},
+{
+"i": 67,
+"text": "I",
+"start": 22.825,
+"end": 22.863
+},
+{
+"i": 68,
+"text": "can",
+"start": 22.863,
+"end": 23.103
+},
+{
+"i": 69,
+"text": "highly",
+"start": 23.103,
+"end": 23.383
+},
+{
+"i": 70,
+"text": "recommend",
+"start": 23.383,
+"end": 23.923
+},
+{
+"i": 71,
+"text": "untuk",
+"start": 23.923,
+"end": 24.383
+},
+{
+"i": 72,
+"text": "combine",
+"start": 24.383,
+"end": 24.843
+},
+{
+"i": 73,
+"text": "bersama",
+"start": 24.843,
+"end": 25.503
+},
+{
+"i": 74,
+"text": "Pestana",
+"start": 25.503,
+"end": 25.883
+},
+{
+"i": 75,
+"text": "Lash",
+"start": 25.883,
+"end": 26.323
+},
+{
+"i": 76,
+"text": "Tonic.",
+"start": 26.323,
+"end": 26.683
+},
+{
+"i": 77,
+"text": "It's",
+"start": 26.916,
+"end": 27.078
+},
+{
+"i": 78,
+"text": "because",
+"start": 27.078,
+"end": 27.338
+},
+{
+"i": 79,
+"text": "of",
+"start": 27.338,
+"end": 27.578
+},
+{
+"i": 80,
+"text": "the",
+"start": 27.578,
+"end": 27.718
+},
+{
+"i": 81,
+"text": "formula",
+"start": 27.718,
+"end": 28.178
+},
+{
+"i": 82,
+"text": "dan",
+"start": 28.178,
+"end": 28.577
+},
+{
+"i": 83,
+"text": "juga",
+"start": 28.615,
+"end": 28.877
+},
+{
+"i": 84,
+"text": "active",
+"start": 28.877,
+"end": 29.277
+},
+{
+"i": 85,
+"text": "ingredients.",
+"start": 29.277,
+"end": 29.777
+},
+{
+"i": 86,
+"text": "So,",
+"start": 30.265,
+"end": 30.382
+},
+{
+"i": 87,
+"text": "combining",
+"start": 30.502,
+"end": 30.962
+},
+{
+"i": 88,
+"text": "these",
+"start": 30.962,
+"end": 31.382
+},
+{
+"i": 89,
+"text": "two",
+"start": 31.382,
+"end": 31.582
+},
+{
+"i": 90,
+"text": "product",
+"start": 31.582,
+"end": 32.022
+},
+{
+"i": 91,
+"text": "will",
+"start": 32.022,
+"end": 32.402
+},
+{
+"i": 92,
+"text": "guarantee",
+"start": 32.402,
+"end": 32.802
+},
+{
+"i": 93,
+"text": "you",
+"start": 32.802,
+"end": 33.062
+},
+{
+"i": 94,
+"text": "a",
+"start": 33.062,
+"end": 33.282
+},
+{
+"i": 95,
+"text": "better",
+"start": 33.282,
+"end": 33.602
+},
+{
+"i": 96,
+"text": "result.",
+"start": 33.602,
+"end": 33.982
+},
+{
+"i": 97,
+"text": "But,",
+"start": 34.286,
+"end": 34.397
+},
+{
+"i": 98,
+"text": "how",
+"start": 34.437,
+"end": 34.617
+},
+{
+"i": 99,
+"text": "about",
+"start": 34.617,
+"end": 34.937
+},
+{
+"i": 100,
+"text": "Jelly",
+"start": 34.937,
+"end": 35.177
+},
+{
+"i": 101,
+"text": "Oil?",
+"start": 35.177,
+"end": 35.477
+},
+{
+"i": 102,
+"text": "Boleh",
+"start": 35.919,
+"end": 36.136
+},
+{
+"i": 103,
+"text": "juga",
+"start": 36.136,
+"end": 36.316
+},
+{
+"i": 104,
+"text": "ke",
+"start": 36.316,
+"end": 36.516
+},
+{
+"i": 105,
+"text": "combine",
+"start": 36.516,
+"end": 36.836
+},
+{
+"i": 106,
+"text": "dengan",
+"start": 36.836,
+"end": 37.136
+},
+{
+"i": 107,
+"text": "Tinted",
+"start": 37.136,
+"end": 37.556
+},
+{
+"i": 108,
+"text": "Serum?",
+"start": 37.556,
+"end": 37.936
+},
+{
+"i": 109,
+"text": "Of",
+"start": 38.358,
+"end": 38.421
+},
+{
+"i": 110,
+"text": "course",
+"start": 38.421,
+"end": 38.841
+},
+{
+"i": 111,
+"text": "boleh!",
+"start": 38.841,
+"end": 39.121
+},
+{
+"i": 112,
+"text": "Semua",
+"start": 39.381,
+"end": 40.021
+},
+{
+"i": 113,
+"text": "Lash",
+"start": 40.021,
+"end": 40.281
+},
+{
+"i": 114,
+"text": "Serum",
+"start": 40.281,
+"end": 40.741
+},
+{
+"i": 115,
+"text": "Pestana",
+"start": 40.741,
+"end": 41.121
+},
+{
+"i": 116,
+"text": "ni",
+"start": 41.121,
+"end": 41.401
+},
+{
+"i": 117,
+"text": "boleh",
+"start": 41.401,
+"end": 41.641
+},
+{
+"i": 118,
+"text": "dipakai",
+"start": 41.641,
+"end": 42.081
+},
+{
+"i": 119,
+"text": "secara",
+"start": 42.081,
+"end": 42.621
+},
+{
+"i": 120,
+"text": "combination.",
+"start": 42.621,
+"end": 43.141
+},
+{
+"i": 121,
+"text": "Ataupun,",
+"start": 43.761,
+"end": 44.401
+},
+{
+"i": 122,
+"text": "you",
+"start": 44.601,
+"end": 45.021
+},
+{
+"i": 123,
+"text": "can",
+"start": 45.021,
+"end": 45.221
+},
+{
+"i": 124,
+"text": "use",
+"start": 45.221,
+"end": 45.561
+},
+{
+"i": 125,
+"text": "it",
+"start": 45.561,
+"end": 45.741
+},
+{
+"i": 126,
+"text": "alone.",
+"start": 45.741,
+"end": 46.061
+},
+{
+"i": 127,
+"text": "So,",
+"start": 46.447,
+"end": 46.547
+},
+{
+"i": 128,
+"text": "untuk",
+"start": 46.667,
+"end": 46.987
+},
+{
+"i": 129,
+"text": "bantu",
+"start": 46.987,
+"end": 47.387
+},
+{
+"i": 130,
+"text": "you",
+"start": 47.387,
+"end": 47.507
+},
+{
+"i": 131,
+"text": "pilih,",
+"start": 47.507,
+"end": 47.947
+},
+{
+"i": 132,
+"text": "I",
+"start": 47.947,
+"end": 48.147
+},
+{
+"i": 133,
+"text": "akan",
+"start": 48.147,
+"end": 48.367
+},
+{
+"i": 134,
+"text": "letak",
+"start": 48.367,
+"end": 48.767
+},
+{
+"i": 135,
+"text": "more",
+"start": 48.767,
+"end": 49.067
+},
+{
+"i": 136,
+"text": "details",
+"start": 49.067,
+"end": 49.447
+},
+{
+"i": 137,
+"text": "dekat",
+"start": 49.447,
+"end": 49.827
+},
+{
+"i": 138,
+"text": "description.",
+"start": 49.827,
+"end": 50.247
+}
+]

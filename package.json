@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "scripts": {
     "studio": "remotion studio",
-    "render": "remotion render src/index.ts WhimsyEdit out/final.mp4 --codec h264 --crf 18 --audio-bitrate 192k --timeout 120000"
+    "render": "remotion render src/index.ts PestanaEdit out/pestana_final.mp4 --codec h264 --crf 17 --audio-bitrate 256k --timeout 120000",
+    "render:old": "remotion render src/index.ts WhimsyEdit out/final.mp4 --codec h264 --crf 18 --audio-bitrate 192k --timeout 120000"
   },
   "dependencies": {
     "@remotion/cli": "4.0.290",
