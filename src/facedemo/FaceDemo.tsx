@@ -4,7 +4,7 @@ import clipsJson from './clips.json';
 import voiceJson from '../../deliverables/facedemo/voice/manifest.json';
 import '../booih2/BooihWhimsy'; // BW* fonts
 
-/* Face-demo assembly: generated clips (public/facedemo/clips/Cxx.mp4, made with an image-to-video tool from the
+/* Face-demo assembly (default: SILENT demo, no speech; voice/captions are opt-in props): generated clips (public/facedemo/clips/Cxx.mp4, made with an image-to-video tool from the
    creator's own portrait) + original Malay voice-over + soft mask sounds + word-synced subtitles.
    A missing clip shows its pose-reference frame as an animatic placeholder so timing can be checked early. */
 
@@ -88,10 +88,11 @@ const SFX: [number, string, number][] = [
   [0.9, 'k3_scoop', 0.12], [3.6, 'k3_scoop', 0.14], [5.2, 'k3_spread', 0.1], [7.6, 'k3_spread', 0.1], [10.1, 'k3_spread_short', 0.09],
   [12.6, 'k3_spread', 0.1], [15.3, 'k3_spread', 0.09], [18.4, 'k3_spread_short', 0.09], [21.8, 'k3_spread_short', 0.1], [23.4, 'k3_spread_short', 0.09],
   [25.6, 'k3_scoop', 0.1], [26.8, 'k3_spread_short', 0.08], [30.6, 'k3_spread', 0.1], [33.2, 'k3_spread', 0.1], [35.6, 'k3_spread_short', 0.09],
-  [38.4, 'k3_bowl_tap', 0.1], [42.0, 'k3_scoop', 0.08], [50.0, 'k3_swish', 0.14], [50.25, 'k3_waterdrop', 0.08],
+  [38.4, 'k3_bowl_tap', 0.1], [40.6, 'k3_scoop', 0.08], [43.2, 'k3_spread_short', 0.07], [46.3, 'k3_bowl_tap', 0.08],
+  [50.0, 'k3_swish', 0.12], [50.25, 'k3_waterdrop', 0.07],
 ];
 
-export const FaceDemo: React.FC<{captions: boolean}> = ({captions}) => {
+export const FaceDemo: React.FC<{captions: boolean; voice: boolean}> = ({captions, voice}) => {
   const f = useCurrentFrame();
   // C08 -> C10: quick whip transition (the "rinse off" moment), no generated rinse shot needed
   const whip = interpolate(f, [sec(50.0), sec(50.17), sec(50.4)], [0, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
@@ -105,8 +106,8 @@ export const FaceDemo: React.FC<{captions: boolean}> = ({captions}) => {
         ))}
       </AbsoluteFill>
       <AbsoluteFill style={{background: '#fff', opacity: whip * 0.35}} />
-      {captions && <Subs />}
-      {LINES.map((l) =>
+      {captions && voice && <Subs />}
+      {voice && LINES.map((l) =>
         SLOT[l.id] === undefined ? null : (
           <Sequence key={l.id} from={sec(SLOT[l.id])} layout="none">
             <Audio src={staticFile(`facedemo/voice/${l.id}.wav`)} volume={1} />

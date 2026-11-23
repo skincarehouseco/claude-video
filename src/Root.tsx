@@ -18,7 +18,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="BooihWhimsyA" component={BooihWhimsy} defaultProps={{version: 'A' as const}} durationInFrames={BW_DURATION} fps={30} width={1080} height={1920} />
     <Composition id="BooihWhimsyB" component={BooihWhimsy} defaultProps={{version: 'B' as const}} durationInFrames={BW_DURATION} fps={30} width={1080} height={1920} />
     <Composition id="BooihKick" component={BooihKick} durationInFrames={BK_DURATION} fps={30} width={1080} height={1920} />
-    <Composition id="FaceDemo" component={FaceDemo} defaultProps={{captions: true}} durationInFrames={FD_DURATION} fps={30} width={1080} height={1920} />
+    <Composition id="FaceDemo" component={FaceDemo} defaultProps={{captions: false, voice: false}} durationInFrames={FD_DURATION} fps={30} width={1080} height={1920} />
     <Composition id="SkinTalksEp01" component={Episode} defaultProps={{ep: ep01 as unknown as EpisodeData}} durationInFrames={(ep01 as unknown as EpisodeData).durationInFrames} fps={30} width={1080} height={1920} />
     <Composition id="OtmsBeige" component={OtmsBeige} durationInFrames={OTMS_BEIGE_DURATION} fps={30} width={1080} height={1920} />
     <Composition id="OtmsHookA" component={OtmsBeige} defaultProps={{hook: 'A' as const}} durationInFrames={OTMS_BEIGE_DURATION} fps={30} width={1080} height={1920} />
