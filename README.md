@@ -21,7 +21,7 @@ ffmpeg -i source.mov -vn -af "highpass=f=75,afftdn=nf=-40,acompressor=threshold=
 python3 scripts/pestana/cut_voice.py voice_full.wav public/pestana/voice.wav src/pestana/voicemap.json
 python3 scripts/pestana/build_words.py
 python3 scripts/make_audio.py tmp && mv tmp/music.wav public/pestana/music.wav
-npm run render
+./scripts/pestana/render_chunks.sh   # memory-friendly chunked render (or: npm run render)
 ```
 
 ## WhimsyEdit (earlier skincare-ingredients video) — `npm run render:old`
