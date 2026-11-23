@@ -1,56 +1,66 @@
-"""Turn the raw Whisper word timings into corrected, chunked captions for Remotion."""
-import json, re
-d = json.load(open("scripts/transcript_raw.json"))
-words = [dict(w=x["w"].strip(), s=x["s"], e=x["e"]) for seg in d["segments"] for x in seg["words"]]
-out = []
-i = 0
-while i < len(words):
-    w = words[i]
-    # Merge "B" + "-cinnamide" -> "niacinamide" (mis-heard)
-    if w["w"] == "B" and i + 1 < len(words) and "cinnamide" in words[i+1]["w"]:
-        out.append(dict(w="niacinamide.", s=w["s"], e=words[i+1]["e"])); i += 2; continue
-    out.append(w); i += 1
-# Drop the duplicated (hallucinated) "Hyaluronic acid." and fix its timing from the re-check pass
-fixed = []
-seen_ha = False
-for w in out:
-    if w["w"].startswith("Hyaluronic"):
-        if seen_ha: continue
-        seen_ha = True; w = dict(w="Hyaluronic", s=55.88, e=56.40)
-    elif w["w"] == "acid.":
-        if any(f["w"] == "acid." for f in fixed): continue
-        w = dict(w="acid.", s=56.40, e=56.74)
-    fixed.append(w)
-words = fixed
-fix = {"Hi": (0.30, 0.90), "night.": None}
-for w in words:
-    if w["w"] == "Hi": w["s"] = 0.30
-    if w["w"] == "night.": w["w"] = "nights."
-    if w["w"] == "brighten": w["w"] = "brightens"
-    if w["w"] == "okay." and w["s"] > 42 and w["s"] < 44: w["w"] = "okay!"
-    # Whisper sometimes gives long first-word onsets; clamp each word to <= 0.6 s
-    if w["e"] - w["s"] > 0.6: w["s"] = round(w["e"] - 0.6, 2)
-# Chunking: break at punctuation, long gaps, or ~3-4 words / 20 chars
-chunks, cur = [], []
-def flush():
-    if cur: chunks.append(dict(start=cur[0]["s"], end=cur[-1]["e"], words=[dict(text=c["w"], start=c["s"], end=c["e"]) for c in cur]))
-for k, w in enumerate(words):
-    if cur:
-        gap = w["s"] - cur[-1]["e"]
-        txt = " ".join(c["w"] for c in cur + [w])
-        ends_sentence = re.search(r"[.!?]$", w["w"]) and len(txt) <= 26 and len(cur) < 5
-        if w["w"] == "C" and gap < 0.45:
-            pass  # never split "vitamin | C"
-        elif ends_sentence and gap < 0.45 and not re.search(r"[.,!?]$", cur[-1]["w"]):
-            pass  # keep a short sentence ending with its phrase
-        elif gap > 0.45 or len(txt) > 22 or len(cur) >= 4 or re.search(r"[.,!?]$", cur[-1]["w"]):
-            flush(); cur = []
+"""Build src/captions.json from Whisper large-v3 word timings (scripts/transcript_raw.json, language=ms)
+remapped onto the tightened voice-over (scripts/voice_map.json), with manual spelling fixes."""
+import json, re, wave
+import numpy as np
 
+raw = json.load(open("scripts/transcript_raw.json"))
+vmap = json.load(open("scripts/voice_map.json"))
+FIX = {"energen": "anagen", "kukur": "gugur", "konsisten": "consistency", "oh": "oh,", "telogen": "telogen,", "important": "important.", "nak": "nak,"}
+
+def remap(t):
+    for s, e, d in vmap:
+        if t < s: return d            # inside a removed pause -> snap to next kept speech
+        if t <= e: return d + (t - s)
+    s, e, d = vmap[-1]
+    return d + (e - s)
+
+words = []
+for seg in raw:
+    for w in seg["words"]:
+        txt = w["w"].strip()
+        txt = FIX.get(txt, txt)
+        words.append({"text": txt, "start": w["s"], "end": w["e"]})
+words[-1]["text"] = "result."
+for a, b in zip(words, words[1:]):
+    if a["text"] == "nak,": b["text"] = "tapi"
+# whisper starts words that follow a pause too early: clamp start into kept speech after remap
+for w in words:
+    w["start"], w["end"] = round(remap(w["start"]), 3), round(remap(w["end"]), 3)
+# snap word onsets to actual voice energy in the edited voice track (whisper starts post-pause words early)
+w_ = wave.open("public/audio/voice.wav"); SR = w_.getframerate()
+au = np.frombuffer(w_.readframes(w_.getnframes()), np.int16).reshape(-1, 2).mean(1) / 32768
+hop = SR // 100
+rms = np.sqrt(np.convolve(au ** 2, np.ones(hop) / hop, "same"))[::hop]
+thr = 10 ** (-38 / 20)
+for w in words:
+    a0, a1 = int(w["start"] * 100), int((w["end"] - 0.1) * 100)
+    quiet = [k for k in range(a0, max(a0, a1)) if rms[k] < thr]
+    # word really starts after the last real pause (>=80 ms of silence) in its window
+    runs, k = [], 0
+    while k < len(quiet):
+        j = k
+        while j + 1 < len(quiet) and quiet[j + 1] == quiet[j] + 1: j += 1
+        if j - k + 1 >= 8: runs.append(quiet[j])
+        k = j + 1
+    if runs: w["start"] = round((runs[-1] + 1) / 100, 3)
+for a, b in zip(words, words[1:]):
+    if b["start"] < a["end"]: a["end"] = b["start"]
+for w in words:
+    if w["end"] - w["start"] > 0.7: w["start"] = round(w["end"] - 0.55, 3)  # long leading gaps
+
+# short caption chunks (max 3 words / 18 chars), break after punctuation
+chunks, cur = [], []
+for w in words:
     cur.append(w)
-flush()
-# Hold each chunk until the next starts (max +0.5s) so captions don't flicker
-for a, b in zip(chunks, chunks[1:]):
-    a["end"] = round(min(b["start"], a["end"] + 0.5), 2)
-chunks[-1]["end"] = round(chunks[-1]["end"] + 0.5, 2)
-json.dump(chunks, open("src/captions.json", "w"), indent=1)
-for c in chunks: print(f'{c["start"]:6.2f}-{c["end"]:6.2f}  ' + " ".join(w["text"] for w in c["words"]))
+    n = sum(len(x["text"]) + 1 for x in cur)
+    if re.search(r"[,.?!]$", w["text"]) or len(cur) >= 3 or n > 18:
+        chunks.append(cur); cur = []
+if cur: chunks.append(cur)
+out = []
+for i, c in enumerate(chunks):
+    end = c[-1]["end"] + 0.12
+    if i + 1 < len(chunks): end = min(end, chunks[i + 1][0]["start"])
+    out.append({"start": c[0]["start"], "end": round(end, 3), "words": c})
+json.dump(out, open("src/captions.json", "w"), indent=1)
+print(len(out), "chunks")
+for c in out: print(f'{c["start"]:6.2f}-{c["end"]:6.2f}', " ".join(w["text"] for w in c["words"]))
