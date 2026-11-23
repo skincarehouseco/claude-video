@@ -60,5 +60,601 @@
     "e": 2.4499999999999997
    }
   ]
+ },
+ {
+  "id": "c02",
+  "speaker": "maya",
+  "text": "Mask ni I memang pakai selalu. Lepas mandi, terus sapu, sebab I suka rasa muka lepas pakai.",
+  "display": "Mask ni I memang pakai selalu. Lepas mandi, terus sapu, sebab I suka rasa muka lepas pakai.",
+  "duration": 5.156,
+  "asr": "Mas ni I memang pakai selalu. Lepas mandi, terus hapu sebab I suka rasa muka lepas pakai.",
+  "score": 0.983,
+  "take": 0,
+  "words": [
+   {
+    "w": "Mas",
+    "s": 0.05,
+    "e": 0.16999999999999998
+   },
+   {
+    "w": "ni",
+    "s": 0.16999999999999998,
+    "e": 0.35
+   },
+   {
+    "w": "I",
+    "s": 0.35,
+    "e": 0.49
+   },
+   {
+    "w": "memang",
+    "s": 0.49,
+    "e": 0.7300000000000001
+   },
+   {
+    "w": "pakai",
+    "s": 0.7300000000000001,
+    "e": 0.9700000000000001
+   },
+   {
+    "w": "selalu.",
+    "s": 0.9700000000000001,
+    "e": 1.37
+   },
+   {
+    "w": "Lepas",
+    "s": 1.75,
+    "e": 2.23
+   },
+   {
+    "w": "mandi,",
+    "s": 2.23,
+    "e": 2.61
+   },
+   {
+    "w": "terus",
+    "s": 2.61,
+    "e": 2.8299999999999996
+   },
+   {
+    "w": "hapu",
+    "s": 2.8299999999999996,
+    "e": 3.15
+   },
+   {
+    "w": "sebab",
+    "s": 3.15,
+    "e": 3.4099999999999997
+   },
+   {
+    "w": "I",
+    "s": 3.4099999999999997,
+    "e": 3.51
+   },
+   {
+    "w": "suka",
+    "s": 3.51,
+    "e": 3.69
+   },
+   {
+    "w": "rasa",
+    "s": 3.69,
+    "e": 3.9699999999999998
+   },
+   {
+    "w": "muka",
+    "s": 3.9699999999999998,
+    "e": 4.27
+   },
+   {
+    "w": "lepas",
+    "s": 4.27,
+    "e": 4.55
+   },
+   {
+    "w": "pakai.",
+    "s": 4.55,
+    "e": 4.7299999999999995
+   }
+  ]
+ },
+ {
+  "id": "c03",
+  "speaker": "maya",
+  "text": "Ramai tanya macam mana I pakai. So harini I tunjuk step by step. Sapu tebal sikit, jangan kedekut tau.",
+  "display": "Ramai tanya macam mana I pakai. So harini I tunjuk step by step. Sapu tebal sikit, jangan kedekut tau.",
+  "duration": 5.316,
+  "asr": "Ramai tanya macam mana air pakai. So hari ni air tunjuk step by step. Sapu tebal sikit, jangan kedekut tau.",
+  "score": 0.975,
+  "take": 0,
+  "words": [
+   {
+    "w": "Ramai",
+    "s": 0.05,
+    "e": 0.33
+   },
+   {
+    "w": "tanya",
+    "s": 0.33,
+    "e": 0.63
+   },
+   {
+    "w": "macam",
+    "s": 0.63,
+    "e": 0.79
+   },
+   {
+    "w": "mana",
+    "s": 0.79,
+    "e": 1.03
+   },
+   {
+    "w": "air",
+    "s": 1.03,
+    "e": 1.1700000000000002
+   },
+   {
+    "w": "pakai.",
+    "s": 1.1700000000000002,
+    "e": 1.4100000000000001
+   },
+   {
+    "w": "So",
+    "s": 1.6300000000000001,
+    "e": 1.81
+   },
+   {
+    "w": "hari",
+    "s": 1.81,
+    "e": 2.01
+   },
+   {
+    "w": "ni",
+    "s": 2.01,
+    "e": 2.25
+   },
+   {
+    "w": "air",
+    "s": 2.25,
+    "e": 2.3899999999999997
+   },
+   {
+    "w": "tunjuk",
+    "s": 2.3899999999999997,
+    "e": 2.71
+   },
+   {
+    "w": "step",
+    "s": 2.71,
+    "e": 2.8499999999999996
+   },
+   {
+    "w": "by",
+    "s": 2.8499999999999996,
+    "e": 3.03
+   },
+   {
+    "w": "step.",
+    "s": 3.03,
+    "e": 3.25
+   },
+   {
+    "w": "Sapu",
+    "s": 3.3299999999999996,
+    "e": 3.69
+   },
+   {
+    "w": "tebal",
+    "s": 3.69,
+    "e": 3.9299999999999997
+   },
+   {
+    "w": "sikit,",
+    "s": 3.9299999999999997,
+    "e": 4.1899999999999995
+   },
+   {
+    "w": "jangan",
+    "s": 4.21,
+    "e": 4.51
+   },
+   {
+    "w": "kedekut",
+    "s": 4.51,
+    "e": 4.99
+   },
+   {
+    "w": "tau.",
+    "s": 4.99,
+    "e": 5.09
+   }
+  ]
+ },
+ {
+  "id": "c04",
+  "speaker": "maya",
+  "text": "Hidung pun sapu, rata-rata.",
+  "display": "Hidung pun sapu, rata-rata.",
+  "duration": 1.903,
+  "asr": "Hidung pun sapu rata -rata.",
+  "score": 0.98,
+  "take": 0,
+  "words": [
+   {
+    "w": "Hidung",
+    "s": 0.05,
+    "e": 0.33
+   },
+   {
+    "w": "pun",
+    "s": 0.33,
+    "e": 0.45
+   },
+   {
+    "w": "sapu",
+    "s": 0.45,
+    "e": 0.9700000000000001
+   },
+   {
+    "w": "rata",
+    "s": 0.9700000000000001,
+    "e": 1.29
+   },
+   {
+    "w": "-rata.",
+    "s": 1.29,
+    "e": 1.61
+   }
+  ]
+ },
+ {
+  "id": "c05",
+  "speaker": "maya",
+  "text": "Bawah mata boleh, tapi hati-hati, jangan kena mata ya.",
+  "display": "Bawah mata boleh, tapi hati-hati, jangan kena mata ya.",
+  "duration": 3.353,
+  "asr": "Bawah mata boleh tapi hati -hati jangan kena mata ya.",
+  "score": 0.99,
+  "take": 0,
+  "words": [
+   {
+    "w": "Bawah",
+    "s": 0.05,
+    "e": 0.31
+   },
+   {
+    "w": "mata",
+    "s": 0.31,
+    "e": 0.47
+   },
+   {
+    "w": "boleh",
+    "s": 0.47,
+    "e": 0.77
+   },
+   {
+    "w": "tapi",
+    "s": 0.77,
+    "e": 1.11
+   },
+   {
+    "w": "hati",
+    "s": 1.11,
+    "e": 1.57
+   },
+   {
+    "w": "-hati",
+    "s": 1.57,
+    "e": 1.83
+   },
+   {
+    "w": "jangan",
+    "s": 1.83,
+    "e": 2.09
+   },
+   {
+    "w": "kena",
+    "s": 2.09,
+    "e": 2.3899999999999997
+   },
+   {
+    "w": "mata",
+    "s": 2.3899999999999997,
+    "e": 2.57
+   },
+   {
+    "w": "ya.",
+    "s": 2.57,
+    "e": 2.8099999999999996
+   }
+  ]
+ },
+ {
+  "id": "c06",
+  "speaker": "maya",
+  "text": "Dahi, pipi sebelah lagi. Haa, dah kuning satu muka!",
+  "display": "Dahi, pipi sebelah lagi. Haa, dah kuning satu muka!",
+  "duration": 3.673,
+  "asr": "Dahi, pipi sebelah lagi. Haa, dah kuning satu muka.",
+  "score": 1.0,
+  "take": 0,
+  "words": [
+   {
+    "w": "Dahi,",
+    "s": 0.05,
+    "e": 0.39
+   },
+   {
+    "w": "pipi",
+    "s": 0.43,
+    "e": 0.9500000000000001
+   },
+   {
+    "w": "sebelah",
+    "s": 0.9500000000000001,
+    "e": 1.29
+   },
+   {
+    "w": "lagi.",
+    "s": 1.29,
+    "e": 1.43
+   },
+   {
+    "w": "Haa,",
+    "s": 1.57,
+    "e": 2.01
+   },
+   {
+    "w": "dah",
+    "s": 2.15,
+    "e": 2.4099999999999997
+   },
+   {
+    "w": "kuning",
+    "s": 2.4099999999999997,
+    "e": 2.8099999999999996
+   },
+   {
+    "w": "satu",
+    "s": 2.8099999999999996,
+    "e": 2.9699999999999998
+   },
+   {
+    "w": "muka.",
+    "s": 2.9699999999999998,
+    "e": 3.3499999999999996
+   }
+  ]
+ },
+ {
+  "id": "c07",
+  "speaker": "maya",
+  "text": "Bau dia lembut je. Kalau rasa pedih atau tak selesa, terus bilas ya. Kulit sensitif, buat patch test dulu.",
+  "display": "Bau dia lembut je. Kalau rasa pedih atau tak selesa, terus bilas ya. Kulit sensitif, buat patch test dulu.",
+  "duration": 5.892,
+  "asr": "Bau dia lembut je. Kalau rasa pedih atau tak selesa, terus bilas ya. Kulit sensitif buat patch test dulu.",
+  "score": 1.0,
+  "take": 0,
+  "words": [
+   {
+    "w": "Bau",
+    "s": 0.05,
+    "e": 0.22999999999999998
+   },
+   {
+    "w": "dia",
+    "s": 0.22999999999999998,
+    "e": 0.43
+   },
+   {
+    "w": "lembut",
+    "s": 0.43,
+    "e": 0.8300000000000001
+   },
+   {
+    "w": "je.",
+    "s": 0.8300000000000001,
+    "e": 0.9500000000000001
+   },
+   {
+    "w": "Kalau",
+    "s": 1.07,
+    "e": 1.35
+   },
+   {
+    "w": "rasa",
+    "s": 1.35,
+    "e": 1.71
+   },
+   {
+    "w": "pedih",
+    "s": 1.71,
+    "e": 2.15
+   },
+   {
+    "w": "atau",
+    "s": 2.15,
+    "e": 2.27
+   },
+   {
+    "w": "tak",
+    "s": 2.27,
+    "e": 2.4899999999999998
+   },
+   {
+    "w": "selesa,",
+    "s": 2.4899999999999998,
+    "e": 2.9899999999999998
+   },
+   {
+    "w": "terus",
+    "s": 3.07,
+    "e": 3.3499999999999996
+   },
+   {
+    "w": "bilas",
+    "s": 3.3499999999999996,
+    "e": 3.79
+   },
+   {
+    "w": "ya.",
+    "s": 3.79,
+    "e": 3.9099999999999997
+   },
+   {
+    "w": "Kulit",
+    "s": 4.03,
+    "e": 4.41
+   },
+   {
+    "w": "sensitif",
+    "s": 4.41,
+    "e": 4.91
+   },
+   {
+    "w": "buat",
+    "s": 4.91,
+    "e": 5.05
+   },
+   {
+    "w": "patch",
+    "s": 5.05,
+    "e": 5.2299999999999995
+   },
+   {
+    "w": "test",
+    "s": 5.2299999999999995,
+    "e": 5.39
+   },
+   {
+    "w": "dulu.",
+    "s": 5.39,
+    "e": 5.55
+   }
+  ]
+ },
+ {
+  "id": "c08",
+  "speaker": "maya",
+  "text": "Biar sepuluh ke lima belas minit, lepas tu bilas dengan air suam.",
+  "display": "Biar 10 ke 15 minit, lepas tu bilas dengan air suam.",
+  "duration": 3.343,
+  "asr": "Biar 10 ke 15 minit, lepas tu bilas dengan air suam.",
+  "score": 1.0,
+  "take": 0,
+  "words": [
+   {
+    "w": "Biar",
+    "s": 0.05,
+    "e": 0.27
+   },
+   {
+    "w": "10",
+    "s": 0.27,
+    "e": 0.5700000000000001
+   },
+   {
+    "w": "ke",
+    "s": 0.5700000000000001,
+    "e": 0.79
+   },
+   {
+    "w": "15",
+    "s": 0.79,
+    "e": 1.07
+   },
+   {
+    "w": "minit,",
+    "s": 1.07,
+    "e": 1.71
+   },
+   {
+    "w": "lepas",
+    "s": 1.71,
+    "e": 2.01
+   },
+   {
+    "w": "tu",
+    "s": 2.01,
+    "e": 2.13
+   },
+   {
+    "w": "bilas",
+    "s": 2.13,
+    "e": 2.51
+   },
+   {
+    "w": "dengan",
+    "s": 2.51,
+    "e": 2.63
+   },
+   {
+    "w": "air",
+    "s": 2.63,
+    "e": 2.8899999999999997
+   },
+   {
+    "w": "suam.",
+    "s": 2.8899999999999997,
+    "e": 3.15
+   }
+  ]
+ },
+ {
+  "id": "c10",
+  "speaker": "maya",
+  "text": "Haa, dah bilas. Muka rasa segar dan lembut sangat!",
+  "display": "Haa, dah bilas. Muka rasa segar dan lembut sangat!",
+  "duration": 3.087,
+  "asr": "Ha, dah bilas. Muka rasa segar dan lembut sangat.",
+  "score": 0.989,
+  "take": 0,
+  "words": [
+   {
+    "w": "Ha,",
+    "s": 0.05,
+    "e": 0.15000000000000002
+   },
+   {
+    "w": "dah",
+    "s": 0.19,
+    "e": 0.37
+   },
+   {
+    "w": "bilas.",
+    "s": 0.37,
+    "e": 0.79
+   },
+   {
+    "w": "Muka",
+    "s": 1.1300000000000001,
+    "e": 1.43
+   },
+   {
+    "w": "rasa",
+    "s": 1.43,
+    "e": 1.57
+   },
+   {
+    "w": "segar",
+    "s": 1.57,
+    "e": 2.07
+   },
+   {
+    "w": "dan",
+    "s": 2.07,
+    "e": 2.21
+   },
+   {
+    "w": "lembut",
+    "s": 2.21,
+    "e": 2.57
+   },
+   {
+    "w": "sangat.",
+    "s": 2.57,
+    "e": 2.73
+   }
+  ]
  }
 ]

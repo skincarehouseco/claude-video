@@ -40,7 +40,7 @@ const Shot: React.FC<{id: string; len: number}> = ({id, len}) => {
   }
   return (
     <AbsoluteFill style={{background: '#2a1f18'}}>
-      <Img src={staticFile(`facedemo/pose/${id}.jpg`)} style={{width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(1) brightness(0.55) blur(6px)'}} />
+      <Img src={staticFile(`facedemo/pose/${id}.jpg`)} style={{width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(1) brightness(0.5) blur(22px)'}} />
       <AbsoluteFill style={{justifyContent: 'center', alignItems: 'center', fontFamily: 'BWNunito', fontWeight: 900, color: '#fff', fontSize: 64, textAlign: 'center'}}>
         {id}
         <div style={{fontSize: 34, fontWeight: 700, opacity: 0.85, marginTop: 12}}>{SHOTS.find((s) => s.id === id)?.note}</div>
@@ -60,7 +60,15 @@ const Subs: React.FC = () => {
     const ws = l.words.map((w) => ({...w, s: w.s + at, e: w.e + at}));
     if (t < ws[0].s - 0.05 || t > ws[ws.length - 1].e + 0.5) continue;
     const chunks: (typeof ws)[] = [];
-    for (let i = 0; i < ws.length; i += 5) chunks.push(ws.slice(i, i + 5));
+    let cur: typeof ws = [];
+    for (const w of ws) {
+      cur.push(w);
+      if (cur.length >= 5 || /[.,!?]$/.test(w.w)) {
+        chunks.push(cur);
+        cur = [];
+      }
+    }
+    if (cur.length) chunks.push(cur);
     const ch = chunks.find((c, i) => t <= (chunks[i + 1] ? chunks[i + 1][0].s - 0.02 : c[c.length - 1].e + 0.5)) ?? chunks[chunks.length - 1];
     return (
       <div style={{position: 'absolute', top: 1260, left: 90, width: 900, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', columnGap: 12}}>
