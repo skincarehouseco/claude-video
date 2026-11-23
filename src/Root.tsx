@@ -11,6 +11,7 @@ import {Episode, EpisodeData} from './skintalks/Episode';
 import {BooihWhimsy, BW_DURATION} from './booih2/BooihWhimsy';
 import {BooihKick, BK_DURATION} from './booih2/BooihKick';
 import {FaceDemo, FD_DURATION} from './facedemo/FaceDemo';
+import {YelloAsmr, YA_DURATION} from './yello/YelloAsmr';
 import ep01 from './skintalks/episodes/ep01.json';
 
 export const RemotionRoot: React.FC = () => (
@@ -19,6 +20,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="BooihWhimsyB" component={BooihWhimsy} defaultProps={{version: 'B' as const}} durationInFrames={BW_DURATION} fps={30} width={1080} height={1920} />
     <Composition id="BooihKick" component={BooihKick} durationInFrames={BK_DURATION} fps={30} width={1080} height={1920} />
     <Composition id="FaceDemo" component={FaceDemo} defaultProps={{captions: false, voice: false}} durationInFrames={FD_DURATION} fps={30} width={1080} height={1920} />
+    <Composition id="YelloAsmr" component={YelloAsmr} durationInFrames={YA_DURATION} fps={30} width={1080} height={1920} />
     <Composition id="SkinTalksEp01" component={Episode} defaultProps={{ep: ep01 as unknown as EpisodeData}} durationInFrames={(ep01 as unknown as EpisodeData).durationInFrames} fps={30} width={1080} height={1920} />
     <Composition id="OtmsBeige" component={OtmsBeige} durationInFrames={OTMS_BEIGE_DURATION} fps={30} width={1080} height={1920} />
     <Composition id="OtmsHookA" component={OtmsBeige} defaultProps={{hook: 'A' as const}} durationInFrames={OTMS_BEIGE_DURATION} fps={30} width={1080} height={1920} />
