@@ -16,7 +16,7 @@ All text and graphics stay inside the TikTok safe zone (top 160px, bottom 430px,
 ### Rebuild
 ```bash
 npm install
-ffmpeg -i source.mov -an -c:v libx264 -crf 15 -pix_fmt yuv420p -r 30 public/pestana/footage.mp4
+ffmpeg -i source.mov -an -c:v libx264 -crf 17 -g 15 -pix_fmt yuv420p -r 30 public/pestana/footage.mp4
 ffmpeg -i source.mov -vn -af "highpass=f=75,afftdn=nf=-40,acompressor=threshold=-22dB:ratio=2.2:attack=10:release=150:makeup=1,loudnorm=I=-15:TP=-1.5:LRA=8" -ar 48000 -ac 2 voice_full.wav
 python3 scripts/pestana/cut_voice.py voice_full.wav public/pestana/voice.wav src/pestana/voicemap.json
 python3 scripts/pestana/build_words.py
