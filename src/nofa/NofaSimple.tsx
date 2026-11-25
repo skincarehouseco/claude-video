@@ -50,9 +50,9 @@ const toScreen = (t: number, x: number, y: number): [number, number] => {
 };
 
 const SHADES = [
-  {name: 'vanilla', at: 5.9, dx: -250},
-  {name: 'light', at: 8.3, dx: -240},
-  {name: 'natural', at: 9.35, dx: -190},
+  {name: 'Vanilla', at: 5.9, dx: -250},
+  {name: 'Light', at: 8.3, dx: -240},
+  {name: 'Natural', at: 9.35, dx: -190},
 ];
 
 /** small white label just left of each swatch's tip (never on the swatch); only on the first arm angle */
@@ -111,9 +111,9 @@ export const NofaSimple: React.FC = () => {
       {/* swatches */}
       <SwatchLabels t={t} frame={frame} />
       <Center t={t} a={10.4} b={14.9} small="three shades, side by side" y={200} />
-      <Center t={t} a={13.1} b={14.9} small="vanilla · light · natural" y={1300} />
+      <Center t={t} a={13.1} b={14.9} small="Vanilla · Light · Natural" y={1300} />
       {/* end */}
-      <Center t={t} a={22.6} b={25.5} small="which one is your perfect shade?" big="VANILLA, LIGHT OR NATURAL?" y={250} bigSize={78} />
+      <Center t={t} a={22.6} b={25.5} small="which one is your perfect shade?" big="Vanilla, Light or Natural?" y={250} bigSize={78} />
 
       <AbsoluteFill style={{background: '#fff', opacity: end}} />
       <Audio
