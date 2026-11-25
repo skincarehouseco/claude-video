@@ -3,7 +3,6 @@ out
 .DS_Store
 # large/generated media (regenerate with scripts; see README)
 public/main.mp4
+public/subject.webm
 public/audio/music.wav
 public/audio/voice.wav
-public/main_graded.mp4
-public/subject/

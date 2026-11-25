@@ -1,90 +1,66 @@
 import React from 'react';
-import {AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, useCurrentFrame} from 'remotion';
 import captions from './captions.json';
-import {C, captionFont, SAFE, SAFE_CENTER_X, sec, srcTime} from './theme';
+import {pop, ramp} from './anim';
+import {C, CX, FPS, SANS} from './theme';
 
-type Word = {text: string; start: number; end: number};
+type Word = {text: string; start: number; end: number; key: boolean};
 type Chunk = {start: number; end: number; words: Word[]};
 const CHUNKS = captions as Chunk[];
 
-// Caption box sits on the lower-middle of the frame, inside TikTok's safe zone.
-const CAPTION_CENTER_Y = 1330;
-const CAPTION_WIDTH = 820;
+// one-line captions sitting just above TikTok's bottom UI (safe bottom = 1490)
+const BASELINE_Y = 1405;
 
-export const Captions: React.FC = () => {
+export const Captions: React.FC<{hideFrom?: number}> = ({hideFrom = 999}) => {
   const frame = useCurrentFrame();
-  const {fps} = useVideoConfig();
-  const t = srcTime(frame);
-  const chunk = CHUNKS.find((c) => t >= c.start - 0.05 && t < c.end);
+  const t = frame / FPS;
+  if (t >= hideFrom) return null;
+  const chunk = CHUNKS.find((c) => t >= c.start - 0.04 && t < c.end);
   if (!chunk) return null;
-
-  const local = frame - sec(chunk.start - 0.05);
-  const enter = spring({frame: local, fps, config: {damping: 14, stiffness: 180, mass: 0.6}});
-  const outFrames = sec(chunk.end - t);
-  const exit = interpolate(outFrames, [0, 3], [0, 1], {extrapolateRight: 'clamp'});
-
+  const enter = pop(t, chunk.start - 0.04, 320, 16);
+  const exit = 1 - ramp(t, chunk.end - 0.07, 0.07);
   return (
     <AbsoluteFill style={{pointerEvents: 'none'}}>
       <div
         style={{
           position: 'absolute',
-          left: SAFE_CENTER_X - CAPTION_WIDTH / 2,
-          width: CAPTION_WIDTH,
-          top: CAPTION_CENTER_Y - 60,
-          minHeight: 120,
+          left: CX - 430,
+          width: 860,
+          top: BASELINE_Y - 50,
           display: 'flex',
-          flexWrap: 'wrap',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'flex-end',
           columnGap: 16,
-          rowGap: 0,
-          opacity: Math.min(enter, exit),
-          transform: `translateY(${(1 - enter) * 18}px) scale(${0.94 + enter * 0.06})`,
-          maxHeight: SAFE.bottom - (CAPTION_CENTER_Y - 60),
+          opacity: exit,
+          transform: `translateY(${(1 - enter) * 22}px) scale(${0.9 + 0.1 * enter})`,
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            columnGap: 16,
-            padding: '6px 30px 12px',
-            borderRadius: 30,
-            // soft frosted cocoa pill so the light butter yellow stays readable on bright clothing
-            background: 'rgba(72,50,56,0.52)',
-            backdropFilter: 'blur(8px)',
-            boxShadow: '0 6px 22px rgba(40,25,30,0.25), inset 0 0 0 2px rgba(255,240,166,0.18)',
-          }}
-        >
         {chunk.words.map((w, i) => {
-          const active = t >= w.start - 0.04 && t < w.end + 0.06;
-          const said = t >= w.start - 0.04;
-          const wf = frame - sec(w.start - 0.04);
-          const bump = active ? spring({frame: wf, fps, config: {damping: 10, stiffness: 260, mass: 0.4}}) : 0;
+          const active = t >= w.start - 0.03;
+          const p = pop(t, w.start - 0.03, 420, 14);
+          const big = w.key;
           return (
             <span
               key={i}
               style={{
-                fontFamily: captionFont,
-                fontWeight: 400,
-                fontSize: 70,
-                lineHeight: 1.15,
-                letterSpacing: 0.5,
-                color: active ? C.cream : C.butter,
-                opacity: said ? 1 : 0.82,
+                fontFamily: SANS,
+                fontWeight: 800,
+                fontSize: big ? 66 : 58,
+                lineHeight: 1,
+                letterSpacing: -0.5,
+                color: big ? C.yellow : C.white,
+                opacity: active ? 1 : 0.55,
                 display: 'inline-block',
-                transform: `translateY(${-bump * 4}px) scale(${1 + bump * 0.06})`,
-                // soft cocoa shadow keeps the light yellow readable without looking bold
-                textShadow:
-                  '0 2px 0 rgba(91,70,54,0.85), 0 -1px 0 rgba(91,70,54,0.5), 1px 0 0 rgba(91,70,54,0.5), -1px 0 0 rgba(91,70,54,0.5), 0 4px 14px rgba(40,25,30,0.55)',
+                transform: `translateY(${-(big ? 8 : 4) * Math.sin(Math.PI * Math.min(1, p))}px) scale(${active ? 0.92 + 0.08 * p : 0.92})`,
+                WebkitTextStroke: '10px #0B141A',
+                paintOrder: 'stroke fill',
+                textShadow: '0 6px 0 rgba(11,20,26,0.9), 0 10px 24px rgba(0,0,0,0.35)',
               }}
             >
               {w.text}
             </span>
           );
         })}
-        </div>
       </div>
     </AbsoluteFill>
   );

@@ -1,56 +1,64 @@
-"""Turn the raw Whisper word timings into corrected, chunked captions for Remotion."""
+"""Turn the Whisper large-v3 word timings (scripts/transcript_raw.json) into caption chunks
+(src/captions.json). Manual fixes are listed below; nothing is summarised or translated."""
 import json, re
-d = json.load(open("scripts/transcript_raw.json"))
-words = [dict(w=x["w"].strip(), s=x["s"], e=x["e"]) for seg in d["segments"] for x in seg["words"]]
-out = []
-i = 0
-while i < len(words):
-    w = words[i]
-    # Merge "B" + "-cinnamide" -> "niacinamide" (mis-heard)
-    if w["w"] == "B" and i + 1 < len(words) and "cinnamide" in words[i+1]["w"]:
-        out.append(dict(w="niacinamide.", s=w["s"], e=words[i+1]["e"])); i += 2; continue
-    out.append(w); i += 1
-# Drop the duplicated (hallucinated) "Hyaluronic acid." and fix its timing from the re-check pass
-fixed = []
-seen_ha = False
-for w in out:
-    if w["w"].startswith("Hyaluronic"):
-        if seen_ha: continue
-        seen_ha = True; w = dict(w="Hyaluronic", s=55.88, e=56.40)
-    elif w["w"] == "acid.":
-        if any(f["w"] == "acid." for f in fixed): continue
-        w = dict(w="acid.", s=56.40, e=56.74)
-    fixed.append(w)
-words = fixed
-fix = {"Hi": (0.30, 0.90), "night.": None}
-for w in words:
-    if w["w"] == "Hi": w["s"] = 0.30
-    if w["w"] == "night.": w["w"] = "nights."
-    if w["w"] == "brighten": w["w"] = "brightens"
-    if w["w"] == "okay." and w["s"] > 42 and w["s"] < 44: w["w"] = "okay!"
-    # Whisper sometimes gives long first-word onsets; clamp each word to <= 0.6 s
-    if w["e"] - w["s"] > 0.6: w["s"] = round(w["e"] - 0.6, 2)
-# Chunking: break at punctuation, long gaps, or ~3-4 words / 20 chars
-chunks, cur = [], []
-def flush():
-    if cur: chunks.append(dict(start=cur[0]["s"], end=cur[-1]["e"], words=[dict(text=c["w"], start=c["s"], end=c["e"]) for c in cur]))
-for k, w in enumerate(words):
-    if cur:
-        gap = w["s"] - cur[-1]["e"]
-        txt = " ".join(c["w"] for c in cur + [w])
-        ends_sentence = re.search(r"[.!?]$", w["w"]) and len(txt) <= 26 and len(cur) < 5
-        if w["w"] == "C" and gap < 0.45:
-            pass  # never split "vitamin | C"
-        elif ends_sentence and gap < 0.45 and not re.search(r"[.,!?]$", cur[-1]["w"]):
-            pass  # keep a short sentence ending with its phrase
-        elif gap > 0.45 or len(txt) > 22 or len(cur) >= 4 or re.search(r"[.,!?]$", cur[-1]["w"]):
-            flush(); cur = []
 
+raw = json.load(open("scripts/transcript_raw.json"))
+words = [dict(text=w["w"].strip(), start=w["s"], end=w["e"]) for s in raw for w in s["words"]]
+
+# Whisper hallucinated an outro on the silent tail of the clip -> drop it.
+words = [w for w in words if w["start"] < 87.0]
+
+# merge hyphen splits: "betul" "-betul" -> "betul-betul", "T" "-zone" -> "T-zone"
+merged = []
+for w in words:
+    if w["text"].startswith("-") and merged:
+        merged[-1]["text"] += w["text"]
+        merged[-1]["end"] = w["end"]
+    else:
+        merged.append(w)
+words = merged
+
+# listening fixes (Whisper misheard the fast Malay in 16.9-19.2s)
+FIX = {16.98: "Mulalah", 18.00: "yang", 18.90: "tak"}
+out = []
+for w in words:
+    k = round(w["start"], 2)
+    if k == 17.34:  # "dah" after "Mula" -> part of "Mulalah"
+        out[-1]["end"] = w["end"]
+        continue
+    if k in FIX:
+        w["text"] = FIX[k] + (w["text"][-1] if w["text"][-1] in ",.?!" else "")
+    out.append(w)
+words = out
+
+KEY = set("""toner moisturizer serum products product skincare skin type kenal ramai effect never ending problem prevent
+awal gentle cleanser 60 seconds rinse bilas air biasa tunggu 10 minutes kering paling penting tisu dab dahi pipi hidung
+dagu minyak t-zone combination dry normal oily dehydrated flaky garis-garis follow tips look closely bye""".split())
+
+def clean(t):
+    return re.sub(r"[,.?!]", "", t).lower()
+
+chunks, cur = [], []
+for i, w in enumerate(words):
     cur.append(w)
-flush()
-# Hold each chunk until the next starts (max +0.5s) so captions don't flicker
-for a, b in zip(chunks, chunks[1:]):
-    a["end"] = round(min(b["start"], a["end"] + 0.5), 2)
-chunks[-1]["end"] = round(chunks[-1]["end"] + 0.5, 2)
-json.dump(chunks, open("src/captions.json", "w"), indent=1)
-for c in chunks: print(f'{c["start"]:6.2f}-{c["end"]:6.2f}  ' + " ".join(w["text"] for w in c["words"]))
+    nxt = words[i + 1] if i + 1 < len(words) else None
+    text_len = sum(len(x["text"]) + 1 for x in cur)
+    end_punct = w["text"][-1] in ",.?!"
+    gap = nxt is not None and nxt["start"] - w["end"] > 0.35
+    conn = nxt is not None and clean(nxt["text"]) in {"before", "and", "tapi", "kalau", "sebab", "bila", "after", "maksudnya", "most"}
+    if nxt is None or end_punct or gap or conn or len(cur) >= 3 or text_len + len(nxt["text"]) > 20:
+        chunks.append(cur)
+        cur = []
+
+res = []
+for c in chunks:
+    ws = [dict(text=re.sub(r"[,.]$", "", w["text"]), start=round(w["start"], 2), end=round(w["end"], 2), key=clean(w["text"]) in KEY) for w in c]
+    res.append(dict(start=ws[0]["start"], end=ws[-1]["end"], words=ws))
+# keep each chunk on screen until the next one starts (max +0.6s) so captions don't flicker
+for a, b in zip(res, res[1:]):
+    a["end"] = round(min(b["start"], a["end"] + 0.6), 2)
+res[-1]["end"] = round(res[-1]["end"] + 0.4, 2)
+json.dump(res, open("src/captions.json", "w"), ensure_ascii=False, indent=1)
+print(len(res), "chunks")
+for c in res:
+    print(f'{c["start"]:6.2f} {" ".join(w["text"] for w in c["words"])}')
