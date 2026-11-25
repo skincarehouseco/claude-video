@@ -531,7 +531,7 @@ const FgProduct: React.FC<{t: number}> = ({t}) => {
       <div style={abs(70, 190)}>
         <StepTag t={t} at={10.9} n="03" color={C.coralDeep} label="Toner Mist" sub="proceed, babe ✦" />
       </div>
-      {/* real packaging cut out from the footage, on a glossy spotlight */}
+      {/* official Yello packshot (yelloskincare.com), on a glossy spotlight */}
       <div
         style={abs(30, 640, {
           width: 260,
@@ -541,7 +541,7 @@ const FgProduct: React.FC<{t: number}> = ({t}) => {
         })}
       >
         <div style={{position: 'absolute', left: -20, top: 20, width: 300, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 68%)'}} />
-        <Img src={staticFile('blume/product_toner.png')} style={{position: 'absolute', left: 62, top: 0, height: 520, filter: 'drop-shadow(0 26px 30px rgba(180,70,50,0.35))'}} />
+        <Img src={staticFile('blume/pack_toner.png')} style={{position: 'absolute', left: 58, top: 0, height: 520, filter: 'drop-shadow(0 26px 30px rgba(180,70,50,0.35))'}} />
         <Sparkle t={t} size={44} style={abs(190, 20)} />
         <Sparkle t={t} size={30} phase={3} color={C.butter} style={abs(20, 200)} />
       </div>
@@ -805,6 +805,7 @@ const FgFree: React.FC<{t: number}> = ({t}) => {
   const g = pop(t, 28.06);
   const serum = toScreen(t, 120, 760); // top of the yellow serum she holds up (28.6 – 30 s)
   const freeP = pop(t, 29.78, {damping: 10, stiffness: 220, mass: 0.55});
+  const serumP = pop(t, 28.72, {damping: 14, stiffness: 120, mass: 0.8});
   return (
     <>
       <div style={abs(70, 168, {display: 'flex', alignItems: 'center', gap: 18})}>
@@ -813,13 +814,20 @@ const FgFree: React.FC<{t: number}> = ({t}) => {
         </div>
         <div style={{opacity: g, transform: `translateX(${(1 - g) * -30}px)`}}>
           <div style={{fontFamily: SANS, fontWeight: 700, fontSize: 24, letterSpacing: 5, color: C.inkSoft}}>AKAN DAPAT</div>
-          <div style={{display: 'flex', alignItems: 'center', gap: 14}}>
-            <span style={{fontFamily: SERIF_I, fontStyle: 'italic', fontSize: 62, color: C.ink, lineHeight: 1.05}}>a serum</span>
-            <span style={{display: 'inline-block', padding: '2px 22px', borderRadius: 999, background: C.cherry, color: '#fff', fontFamily: SANS, fontWeight: 800, fontSize: 46, letterSpacing: 3, transform: `scale(${freeP}) rotate(-4deg)`}}>
+          <div style={{display: 'flex', alignItems: 'center', gap: 12}}>
+            <span style={{fontFamily: SERIF_I, fontStyle: 'italic', fontSize: 52, color: C.ink, lineHeight: 1.05, opacity: prog(t, 28.72, 28.95)}}>Snowmeric Serum</span>
+            <span style={{display: 'inline-block', padding: '2px 20px', borderRadius: 999, background: C.cherry, color: '#fff', fontFamily: SANS, fontWeight: 800, fontSize: 40, letterSpacing: 3, transform: `scale(${freeP}) rotate(-4deg)`}}>
               FREE!
             </span>
           </div>
         </div>
+      </div>
+      {/* official Snowmeric packshot rises beside her head as she names it, sparkles on "free" */}
+      <div style={abs(770, 290, {width: 120, height: 310, opacity: life(t, 28.72, 30.15), transform: `translateY(${(1 - serumP) * 120 + Math.sin(t * 2.4) * 8}px) rotate(${(1 - serumP) * 14 + 4}deg) scale(${0.7 + 0.3 * serumP})`})}>
+        <div style={{position: 'absolute', left: -70, top: 10, width: 260, height: 300, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,250,220,0.95) 0%, rgba(255,250,220,0) 68%)'}} />
+        <Img src={staticFile('blume/pack_serum.png')} style={{position: 'absolute', left: 24, top: 0, height: 290, filter: 'drop-shadow(0 20px 24px rgba(200,150,40,0.35))'}} />
+        <Sparkle t={t} size={36} color="#fff" style={abs(100, -10, {opacity: prog(t, 29.62, 29.8)})} />
+        <Sparkle t={t} size={28} phase={2} color={C.butterDeep} style={abs(-10, 150, {opacity: prog(t, 29.62, 29.8)})} />
       </div>
       {/* hand-drawn arrow down the left edge to the serum */}
       <div style={{opacity: life(t, 28.6, 30.15)}}>

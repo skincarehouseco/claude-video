@@ -15,6 +15,7 @@ while i < len(words):
         last = words[i+3]
         out.append(dict(w="Blumé Bright Toner Mist" + re.sub(r"[A-Za-z]", "", last["w"]), s=w["s"], e=last["e"])); i += 4; continue
     if w["w"] == "Hello": w["s"] = max(w["s"], 2.0)
+    if w["w"] == "Rumorik": w["w"] = "Snowmeric"  # Yello Snowmeric Hydra-Boost Brightening Serum (confirmed product name)
     out.append(w); i += 1
 words = out
 for w in words:
@@ -22,10 +23,10 @@ for w in words:
 
 # keywords that get the accent colour
 HL = {"blumé bright toner mist", "blumé", "bright", "toner", "mist", "gentle", "cleanser", "kering", "dua", "cara", "direct", "tangan",
-      "pat-pat", "lock", "moisturizer", "50", "terawal", "serum", "free", "grab", "yours", "now", "rumorik", "first"}
+      "pat-pat", "lock", "moisturizer", "50", "terawal", "serum", "free", "grab", "yours", "now", "snowmeric", "first"}
 # never split these pairs
 GLUE = {("Blumé", "Bright"), ("Bright", "Toner"), ("Toner", "Mist"), ("toner", "mist"), ("gentle", "cleanser"),
-        ("dua", "cara."), ("Rumorik", "Serum"), ("Serum", "for"), ("for", "free.")}
+        ("dua", "cara."), ("Snowmeric", "Serum"), ("Serum", "for"), ("for", "free.")}
 chunks, cur = [], []
 def flush():
     if cur:

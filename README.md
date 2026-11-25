@@ -44,7 +44,7 @@ Caveat handwritten notes (all SIL OFL, in `public/fonts`).
 - `src/blume/Captions.tsx` / `captions.json` – word-synced captions (Whisper large-v3, Malay-English kept as spoken)
 - `scripts/blume/make_subject.py` – merges u2net_human_seg + isnet masks into flicker-free cut-outs (`public/blume/subject/*.webp`)
 - `scripts/blume/make_audio.py` – original synthesized music bed + CapCut-style SFX (no third-party samples)
-- `public/blume/product_toner.png` – real packaging cut out of the footage (frame 440)
+- `public/blume/pack_toner.png`, `pack_serum.png` – official Yello packshots (yelloskincare.com), background removed with BiRefNet
 
 ## Rebuild
 ```bash
