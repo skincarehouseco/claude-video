@@ -244,9 +244,10 @@ const Timer60: React.FC<{t: number}> = ({t}) => {
 export const BakedTextCover: React.FC = () => {
   const frame = useCurrentFrame();
   const t = frame / FPS;
-  if (frame < 1092 || frame > 1278) return null;
+  // burned-in caption is on frames 1065-1276: cover from 1063 (full size on its first frame, settles from 108%)
+  if (frame < 1063 || frame > 1278) return null;
   const first = t < 37.94;
-  const p = pop(t, 36.4, 320, 14);
+  const p = 1 + 0.08 * (1 - pop(t, 35.43, 320, 14));
   const swap = pop(t, 37.94, 380, 12);
   return (
     <div
@@ -263,7 +264,7 @@ export const BakedTextCover: React.FC = () => {
         alignItems: 'center',
         justifyContent: 'center',
         gap: 20,
-        transform: `scale(${Math.max(0.0001, p) * (first ? 1 : 0.9 + 0.1 * swap)})`,
+        transform: `scale(${p * (first ? 1 : 0.9 + 0.1 * swap)})`,
       }}
     >
       {first ? (
@@ -271,12 +272,12 @@ export const BakedTextCover: React.FC = () => {
           <div style={{position: 'relative', width: 90, height: 90}}>
             <Products size={90} />
             <div style={{position: 'absolute', left: -6, top: -6}}>
-              <XMark size={100} progress={clamp01((t - 36.6) / 0.3)} />
+              <XMark size={100} progress={clamp01((t - 35.55) / 0.3)} />
             </div>
           </div>
           <div style={{fontFamily: DISPLAY, fontSize: 62, color: C.ink, lineHeight: 1}}>
             NO PRODUCT
-            <div style={{fontFamily: SANS, fontWeight: 800, fontSize: 30, color: C.mute}}>biar je muka macam tu</div>
+            <div style={{fontFamily: SANS, fontWeight: 800, fontSize: 30, color: C.mute}}>{t < 36.44 ? 'tak perlu pakai any product' : 'biar je muka macam tu'}</div>
           </div>
         </>
       ) : (
@@ -507,9 +508,6 @@ export const Front: React.FC = () => {
             </div>
           );
         })}
-      <Chip t={t} at={35.16} until={36.45} x={780} y={520} bg={C.red} color="#fff" size={40} rotate={3}>
-        tak perlu product
-      </Chip>
 
       {/* STEP 3 36.45-42.45 — big clock is in the background, label rides on the presenter */}
       <StepTag t={t} at={36.5} until={42.45} n={3} title="Tunggu" y={190} />

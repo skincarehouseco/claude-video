@@ -65,7 +65,7 @@ const SFX: Sfx[] = [
   [33.22, 'bubble', 0.28],
   [35.16, 'pop', 0.26],
   [35.35, 'buzzer', 0.12],
-  [36.4, 'pop', 0.28],
+  [35.43, 'pop', 0.28], //        NO PRODUCT label
   [36.45, 'whoosh', 0.24],
   [37.94, 'pop', 0.28],
   [38.0, 'tick', 0.22], //          clock spins 10 minutes

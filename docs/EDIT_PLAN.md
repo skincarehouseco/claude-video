@@ -14,7 +14,7 @@ timing, and the same 87.53 s length. Nothing was cut, sped up or re-ordered.
 | 22.5–26.5 s | camera-bob effect | left as-is (the cut-out moves naturally over a steady background) |
 | 27.53–28.07 s | blur/mirror glitch transition | covered by "JOM TEST · STEP 1" panel |
 | 30.20–32.80 s | the source's own bathroom-mirror composite (two of her) | kept as-is full-frame, with a 60 s timer graphic |
-| 36.5–42.5 s | caption "no need to wear anything and wait for 10 mins ⏱" | background replacement removes most of it; the part over the hijab is covered by a label locked to the presenter ("NO PRODUCT" → "TUNGGU 10 MINIT") |
+| 35.5–42.5 s | caption "no need to wear anything and wait for 10 mins ⏱" | background replacement removes most of it; the part over the hijab is covered by a label locked to the presenter ("NO PRODUCT" → "TUNGGU 10 MINIT") |
 | 87.37 s → end | black frames | Skincarehouse end card |
 
 ## Transcript (Whisper large-v3 + listening fixes) → visuals
