@@ -6,6 +6,7 @@ const FONTS: [string, string, string, string][] = [
   ['Poppins', 'fonts/Poppins-ExtraBold.ttf', '800', 'normal'],
   ['Poppins', 'fonts/Poppins-BlackItalic.ttf', '900', 'italic'],
   ['Lilita', 'fonts/LilitaOne-Regular.ttf', '400', 'normal'],
+  ['Sofia', 'fonts/SofiaSans-Variable.ttf', '100 900', 'normal'],
 ];
 if (typeof window !== 'undefined' && 'FontFace' in window) {
   const handle = delayRender('Loading fonts', {timeoutInMilliseconds: 120000, retries: 2});
