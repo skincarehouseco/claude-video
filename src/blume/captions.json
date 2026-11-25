@@ -1,0 +1,824 @@
+[
+ {
+  "start": 0.0,
+  "end": 0.76,
+  "words": [
+   {
+    "text": "Macam",
+    "start": 0.0,
+    "end": 0.32,
+    "hl": false
+   },
+   {
+    "text": "mana",
+    "start": 0.32,
+    "end": 0.46,
+    "hl": false
+   },
+   {
+    "text": "nak",
+    "start": 0.46,
+    "end": 0.56,
+    "hl": false
+   },
+   {
+    "text": "pakai",
+    "start": 0.56,
+    "end": 0.76,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 0.76,
+  "end": 1.6,
+  "words": [
+   {
+    "text": "Blumé Bright Toner Mist",
+    "start": 0.76,
+    "end": 1.6,
+    "hl": true
+   }
+  ]
+ },
+ {
+  "start": 1.6,
+  "end": 2.0,
+  "words": [
+   {
+    "text": "ni?",
+    "start": 1.6,
+    "end": 1.8,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 2.0,
+  "end": 2.68,
+  "words": [
+   {
+    "text": "Hello",
+    "start": 2.0,
+    "end": 2.28,
+    "hl": false
+   },
+   {
+    "text": "everyone,",
+    "start": 2.28,
+    "end": 2.54,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 2.68,
+  "end": 3.3,
+  "words": [
+   {
+    "text": "hari",
+    "start": 2.68,
+    "end": 2.84,
+    "hl": false
+   },
+   {
+    "text": "ni",
+    "start": 2.84,
+    "end": 3.02,
+    "hl": false
+   },
+   {
+    "text": "I",
+    "start": 3.02,
+    "end": 3.12,
+    "hl": false
+   },
+   {
+    "text": "nak",
+    "start": 3.12,
+    "end": 3.3,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 3.3,
+  "end": 4.2,
+  "words": [
+   {
+    "text": "share",
+    "start": 3.3,
+    "end": 3.56,
+    "hl": false
+   },
+   {
+    "text": "macam",
+    "start": 3.56,
+    "end": 3.8,
+    "hl": false
+   },
+   {
+    "text": "mana",
+    "start": 3.8,
+    "end": 4.06,
+    "hl": false
+   },
+   {
+    "text": "nak",
+    "start": 4.06,
+    "end": 4.2,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 4.2,
+  "end": 4.82,
+  "words": [
+   {
+    "text": "pakai",
+    "start": 4.2,
+    "end": 4.54,
+    "hl": false
+   },
+   {
+    "text": "this",
+    "start": 4.54,
+    "end": 4.82,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 4.82,
+  "end": 5.98,
+  "words": [
+   {
+    "text": "Blumé Bright Toner Mist.",
+    "start": 4.82,
+    "end": 5.76,
+    "hl": true
+   }
+  ]
+ },
+ {
+  "start": 5.98,
+  "end": 6.54,
+  "words": [
+   {
+    "text": "First,",
+    "start": 5.98,
+    "end": 6.4,
+    "hl": true
+   }
+  ]
+ },
+ {
+  "start": 6.54,
+  "end": 7.16,
+  "words": [
+   {
+    "text": "korang",
+    "start": 6.54,
+    "end": 6.74,
+    "hl": false
+   },
+   {
+    "text": "cuci",
+    "start": 6.74,
+    "end": 7.04,
+    "hl": false
+   },
+   {
+    "text": "dulu",
+    "start": 7.04,
+    "end": 7.16,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 7.16,
+  "end": 8.12,
+  "words": [
+   {
+    "text": "muka",
+    "start": 7.16,
+    "end": 7.54,
+    "hl": false
+   },
+   {
+    "text": "with",
+    "start": 7.54,
+    "end": 7.74,
+    "hl": false
+   },
+   {
+    "text": "a",
+    "start": 7.74,
+    "end": 7.86,
+    "hl": false
+   },
+   {
+    "text": "gentle",
+    "start": 7.86,
+    "end": 8.12,
+    "hl": true
+   }
+  ]
+ },
+ {
+  "start": 8.12,
+  "end": 8.72,
+  "words": [
+   {
+    "text": "cleanser.",
+    "start": 8.12,
+    "end": 8.7,
+    "hl": true
+   }
+  ]
+ },
+ {
+  "start": 8.72,
+  "end": 9.5,
+  "words": [
+   {
+    "text": "And",
+    "start": 8.72,
+    "end": 9.02,
+    "hl": false
+   },
+   {
+    "text": "then",
+    "start": 9.02,
+    "end": 9.1,
+    "hl": false
+   },
+   {
+    "text": "tunggu",
+    "start": 9.1,
+    "end": 9.5,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 9.5,
+  "end": 10.4,
+  "words": [
+   {
+    "text": "sampai",
+    "start": 9.5,
+    "end": 9.62,
+    "hl": false
+   },
+   {
+    "text": "skin",
+    "start": 9.62,
+    "end": 10.0,
+    "hl": false
+   },
+   {
+    "text": "korang",
+    "start": 10.0,
+    "end": 10.4,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 10.4,
+  "end": 10.86,
+  "words": [
+   {
+    "text": "kering.",
+    "start": 10.4,
+    "end": 10.72,
+    "hl": true
+   }
+  ]
+ },
+ {
+  "start": 10.86,
+  "end": 11.64,
+  "words": [
+   {
+    "text": "And",
+    "start": 10.86,
+    "end": 11.16,
+    "hl": false
+   },
+   {
+    "text": "then",
+    "start": 11.16,
+    "end": 11.38,
+    "hl": false
+   },
+   {
+    "text": "you",
+    "start": 11.38,
+    "end": 11.5,
+    "hl": false
+   },
+   {
+    "text": "can",
+    "start": 11.5,
+    "end": 11.64,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 11.64,
+  "end": 12.44,
+  "words": [
+   {
+    "text": "proceed",
+    "start": 11.64,
+    "end": 11.94,
+    "hl": false
+   },
+   {
+    "text": "dengan",
+    "start": 11.94,
+    "end": 12.16,
+    "hl": false
+   },
+   {
+    "text": "this",
+    "start": 12.16,
+    "end": 12.44,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 12.44,
+  "end": 13.8,
+  "words": [
+   {
+    "text": "Blumé Bright Toner Mist.",
+    "start": 12.44,
+    "end": 13.54,
+    "hl": true
+   }
+  ]
+ },
+ {
+  "start": 13.8,
+  "end": 14.86,
+  "words": [
+   {
+    "text": "Nak",
+    "start": 13.8,
+    "end": 13.92,
+    "hl": false
+   },
+   {
+    "text": "pakai",
+    "start": 13.92,
+    "end": 14.2,
+    "hl": false
+   },
+   {
+    "text": "this",
+    "start": 14.2,
+    "end": 14.36,
+    "hl": false
+   },
+   {
+    "text": "toner",
+    "start": 14.36,
+    "end": 14.58,
+    "hl": true
+   },
+   {
+    "text": "mist",
+    "start": 14.58,
+    "end": 14.86,
+    "hl": true
+   }
+  ]
+ },
+ {
+  "start": 14.86,
+  "end": 15.82,
+  "words": [
+   {
+    "text": "ada",
+    "start": 14.86,
+    "end": 15.06,
+    "hl": false
+   },
+   {
+    "text": "dua",
+    "start": 15.06,
+    "end": 15.3,
+    "hl": true
+   },
+   {
+    "text": "cara.",
+    "start": 15.3,
+    "end": 15.52,
+    "hl": true
+   }
+  ]
+ },
+ {
+  "start": 15.82,
+  "end": 16.64,
+  "words": [
+   {
+    "text": "You",
+    "start": 15.82,
+    "end": 16.18,
+    "hl": false
+   },
+   {
+    "text": "boleh",
+    "start": 16.18,
+    "end": 16.36,
+    "hl": false
+   },
+   {
+    "text": "spray",
+    "start": 16.36,
+    "end": 16.64,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 16.64,
+  "end": 17.44,
+  "words": [
+   {
+    "text": "direct",
+    "start": 16.64,
+    "end": 16.92,
+    "hl": true
+   },
+   {
+    "text": "onto",
+    "start": 16.92,
+    "end": 17.24,
+    "hl": false
+   },
+   {
+    "text": "your",
+    "start": 17.24,
+    "end": 17.44,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 17.44,
+  "end": 17.88,
+  "words": [
+   {
+    "text": "skin,",
+    "start": 17.44,
+    "end": 17.74,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 17.88,
+  "end": 18.96,
+  "words": [
+   {
+    "text": "or",
+    "start": 17.88,
+    "end": 18.34,
+    "hl": false
+   },
+   {
+    "text": "you",
+    "start": 18.34,
+    "end": 18.5,
+    "hl": false
+   },
+   {
+    "text": "spray",
+    "start": 18.5,
+    "end": 18.76,
+    "hl": false
+   },
+   {
+    "text": "dulu",
+    "start": 18.76,
+    "end": 18.96,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 18.96,
+  "end": 19.84,
+  "words": [
+   {
+    "text": "dekat",
+    "start": 18.96,
+    "end": 19.22,
+    "hl": false
+   },
+   {
+    "text": "tangan",
+    "start": 19.22,
+    "end": 19.7,
+    "hl": true
+   },
+   {
+    "text": "and",
+    "start": 19.7,
+    "end": 19.84,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 19.84,
+  "end": 20.84,
+  "words": [
+   {
+    "text": "pat-pat",
+    "start": 19.84,
+    "end": 20.22,
+    "hl": true
+   },
+   {
+    "text": "dekat",
+    "start": 20.22,
+    "end": 20.42,
+    "hl": false
+   },
+   {
+    "text": "muka.",
+    "start": 20.42,
+    "end": 20.64,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 20.84,
+  "end": 21.58,
+  "words": [
+   {
+    "text": "Lepas",
+    "start": 20.84,
+    "end": 21.22,
+    "hl": false
+   },
+   {
+    "text": "pakai",
+    "start": 21.22,
+    "end": 21.36,
+    "hl": false
+   },
+   {
+    "text": "this",
+    "start": 21.36,
+    "end": 21.58,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 21.58,
+  "end": 21.98,
+  "words": [
+   {
+    "text": "toner,",
+    "start": 21.58,
+    "end": 21.82,
+    "hl": true
+   }
+  ]
+ },
+ {
+  "start": 21.98,
+  "end": 22.52,
+  "words": [
+   {
+    "text": "you",
+    "start": 21.98,
+    "end": 22.08,
+    "hl": false
+   },
+   {
+    "text": "can",
+    "start": 22.08,
+    "end": 22.28,
+    "hl": false
+   },
+   {
+    "text": "lock",
+    "start": 22.28,
+    "end": 22.52,
+    "hl": true
+   }
+  ]
+ },
+ {
+  "start": 22.52,
+  "end": 23.44,
+  "words": [
+   {
+    "text": "everything",
+    "start": 22.52,
+    "end": 22.8,
+    "hl": false
+   },
+   {
+    "text": "with",
+    "start": 22.8,
+    "end": 23.32,
+    "hl": false
+   },
+   {
+    "text": "a",
+    "start": 23.32,
+    "end": 23.44,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 23.44,
+  "end": 24.06,
+  "words": [
+   {
+    "text": "moisturizer.",
+    "start": 23.44,
+    "end": 23.66,
+    "hl": true
+   }
+  ]
+ },
+ {
+  "start": 24.1,
+  "end": 25.72,
+  "words": [
+   {
+    "text": "Jadi",
+    "start": 24.1,
+    "end": 24.44,
+    "hl": false
+   },
+   {
+    "text": "untuk",
+    "start": 24.44,
+    "end": 24.72,
+    "hl": false
+   },
+   {
+    "text": "50",
+    "start": 24.8,
+    "end": 25.4,
+    "hl": true
+   },
+   {
+    "text": "orang",
+    "start": 25.4,
+    "end": 25.72,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 25.72,
+  "end": 26.52,
+  "words": [
+   {
+    "text": "yang",
+    "start": 25.72,
+    "end": 25.92,
+    "hl": false
+   },
+   {
+    "text": "terawal",
+    "start": 25.92,
+    "end": 26.38,
+    "hl": true
+   },
+   {
+    "text": "yang",
+    "start": 26.38,
+    "end": 26.52,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 26.52,
+  "end": 27.66,
+  "words": [
+   {
+    "text": "purchase",
+    "start": 26.52,
+    "end": 26.84,
+    "hl": false
+   },
+   {
+    "text": "this",
+    "start": 26.84,
+    "end": 27.08,
+    "hl": false
+   },
+   {
+    "text": "toner",
+    "start": 27.08,
+    "end": 27.38,
+    "hl": true
+   },
+   {
+    "text": "mist,",
+    "start": 27.38,
+    "end": 27.66,
+    "hl": true
+   }
+  ]
+ },
+ {
+  "start": 27.66,
+  "end": 28.72,
+  "words": [
+   {
+    "text": "akan",
+    "start": 27.66,
+    "end": 28.06,
+    "hl": false
+   },
+   {
+    "text": "dapat",
+    "start": 28.06,
+    "end": 28.36,
+    "hl": false
+   },
+   {
+    "text": "this",
+    "start": 28.36,
+    "end": 28.72,
+    "hl": false
+   }
+  ]
+ },
+ {
+  "start": 28.72,
+  "end": 30.14,
+  "words": [
+   {
+    "text": "Rumorik",
+    "start": 28.72,
+    "end": 29.2,
+    "hl": true
+   },
+   {
+    "text": "Serum",
+    "start": 29.2,
+    "end": 29.58,
+    "hl": true
+   },
+   {
+    "text": "for",
+    "start": 29.58,
+    "end": 29.78,
+    "hl": false
+   },
+   {
+    "text": "free.",
+    "start": 29.78,
+    "end": 30.04,
+    "hl": true
+   }
+  ]
+ },
+ {
+  "start": 30.14,
+  "end": 31.62,
+  "words": [
+   {
+    "text": "Grab",
+    "start": 30.14,
+    "end": 30.6,
+    "hl": true
+   },
+   {
+    "text": "yours",
+    "start": 30.6,
+    "end": 30.76,
+    "hl": true
+   },
+   {
+    "text": "now!",
+    "start": 30.76,
+    "end": 31.02,
+    "hl": true
+   }
+  ]
+ }
+]

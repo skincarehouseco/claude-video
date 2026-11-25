@@ -27,3 +27,33 @@ python3 scripts/make_audio.py public/audio
 python3 scripts/build_captions.py
 npm run render   # -> out/final.mp4
 ```
+
+---
+
+# Blumé Bright Toner Mist — feminine infographic edit (`BlumeEdit`)
+
+31.6 s 9:16 TikTok edit, real-time (no speed change, full original duration). Same infographic methodology as above
+(cut-out speaker, contextual animated backgrounds, step graphics, synced SFX), with a feminine editorial art direction:
+blush / dusty rose / lilac / butter / sky / peach palette, Playfair Display headlines, Plus Jakarta Sans UI + captions,
+Caveat handwritten notes (all SIL OFL, in `public/fonts`).
+
+- `src/blume/BlumeEdit.tsx` – layer stack (background → speaker → infographics → captions → transitions) + audio mix and SFX timeline
+- `src/blume/layout.ts` – speaker framing keyframes (full-frame reframes, right-shift, close-up, editorial arch card) with eased moves and emphasis push-ins
+- `src/blume/Scenes.tsx` – one contextual background + infographic per sentence group (hook, hello, guide, 4 steps, 2 ways, lock layers, recap, promo, free serum, CTA)
+- `src/blume/ui.tsx` – icons (unbranded line-art) and animated building blocks
+- `src/blume/Captions.tsx` / `captions.json` – word-synced captions (Whisper large-v3, Malay-English kept as spoken)
+- `scripts/blume/make_subject.py` – merges u2net_human_seg + isnet masks into flicker-free cut-outs (`public/blume/subject/*.webp`)
+- `scripts/blume/make_audio.py` – original synthesized music bed + CapCut-style SFX (no third-party samples)
+- `public/blume/product_toner.png` – real packaging cut out of the footage (frame 440)
+
+## Rebuild
+```bash
+mkdir -p work/frames work/human work/isnet
+ffmpeg -i source.mov -q:v 1 work/frames/f_%04d.jpg
+# rembg masks (only_mask): u2net_human_seg for all frames, isnet-general-use for frames 1-90, 400-610, 620-735, 770-949
+python3 scripts/blume/make_subject.py work/frames work/human work/isnet public/blume/subject 4
+ffmpeg -i source.mov -vn -af "highpass=f=80,afftdn=nf=-30,acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120:makeup=2,loudnorm=I=-15:TP=-1.5:LRA=9" -ar 48000 -ac 2 public/blume/audio/voice.wav
+python3 scripts/blume/make_audio.py public/blume/audio
+python3 scripts/blume/build_captions.py
+npx remotion render src/index.ts BlumeEdit out/blume_final.mp4 --codec h264 --crf 17 --audio-bitrate 256k --timeout 120000
+```

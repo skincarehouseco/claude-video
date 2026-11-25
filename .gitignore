@@ -7,3 +7,7 @@ public/audio/music.wav
 public/audio/voice.wav
 public/main_graded.mp4
 public/subject/
+# Blumé edit: generated media (regenerate with scripts/blume; see README)
+public/blume/subject/
+public/blume/audio/voice.wav
+public/blume/audio/music.wav
