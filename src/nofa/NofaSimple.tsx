@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill, Audio, Easing, interpolate, OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Audio, Easing, Img, interpolate, OffthreadVideo, Sequence, spring, staticFile, useCurrentFrame} from 'remotion';
 import {FPS} from '../theme';
 import track from './swatch_track.json';
 
@@ -76,6 +76,32 @@ const SwatchLabels: React.FC<{t: number; frame: number}> = ({t, frame}) => {
   );
 };
 
+/** checklist over the close-up tube shot (both points are printed on the pack: "Pore Blurring Effect", "Brightening Care") */
+const CHECKS = [
+  {t: 'pore blurring effect', at: 17.15},
+  {t: 'mencerahkan kulit', at: 17.75},
+];
+const Checklist: React.FC<{t: number}> = ({t}) => {
+  if (t < 17.0 || t > 19.7) return null;
+  const out = 1 - ease(clamp((t - 19.45) / 0.25));
+  return (
+    <div style={{position: 'absolute', left: 60, width: 870, top: 250, display: 'flex', justifyContent: 'center', opacity: out}}>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 14}}>
+      {CHECKS.map((c) => {
+        if (t < c.at) return <div key={c.t} style={{height: 66}} />;
+        const p = spring({frame: (t - c.at) * FPS, fps: FPS, config: {damping: 13, stiffness: 220, mass: 0.6}});
+        return (
+          <div key={c.t} style={{...txt(58, 700), display: 'flex', alignItems: 'center', gap: 16, opacity: Math.min(1, p * 1.5), transform: `scale(${0.85 + 0.15 * p})`}}>
+            <Img src={staticFile('emoji/2705.svg')} style={{width: 54, height: 54, filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.25))'}} />
+            {c.t}
+          </div>
+        );
+      })}
+      </div>
+    </div>
+  );
+};
+
 type Cue = [number, string, number];
 const CUES: Cue[] = [
   [0.2, 'n_handle', 0.35],
@@ -89,6 +115,8 @@ const CUES: Cue[] = [
   [9.55, 'n_swipe', 0.45],
   [9.35, 'n_pop', 0.3],
   [14.93, 'n_handle', 0.35],
+  [17.15, 'n_pop', 0.35],
+  [17.75, 'n_pop', 0.35],
   [19.7, 'n_handle', 0.3],
   [22.05, 'n_squeeze', 0.65],
   [22.8, 'n_creamy', 0.4],
@@ -112,6 +140,7 @@ export const NofaSimple: React.FC = () => {
       <SwatchLabels t={t} frame={frame} />
       <Center t={t} a={10.4} b={14.9} small="three shades, side by side" y={200} />
       <Center t={t} a={13.1} b={14.9} small="Vanilla · Light · Natural" y={1300} />
+      <Checklist t={t} />
       {/* end */}
       <Center t={t} a={22.6} b={25.5} small="which one is your perfect shade?" big="Vanilla, Light or Natural?" y={250} bigSize={78} />
 
