@@ -18,7 +18,8 @@ export type Transition = 'cut' | 'swipe' | 'fade' | 'zoom' | 'whip';
 
 const ease = Easing.inOut(Easing.cubic);
 // one consistent, light grade across the main video and the Drive clips
-const GRADE = 'saturate(1.06) contrast(1.04) brightness(1.02)';
+// soft, warm 'aesthetic' grade, identical on every clip
+const GRADE = 'saturate(0.92) contrast(0.95) brightness(1.04) sepia(0.08)';
 
 const ShotView: React.FC<{shot: Shot; len: number}> = ({shot, len}) => {
   const f = useCurrentFrame();

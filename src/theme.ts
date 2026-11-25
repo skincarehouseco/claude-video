@@ -7,6 +7,16 @@ const FONTS: [string, string, string, string][] = [
   ['Poppins', 'fonts/Poppins-BlackItalic.ttf', '900', 'italic'],
   ['Lilita', 'fonts/LilitaOne-Regular.ttf', '400', 'normal'],
   ['Sofia', 'fonts/SofiaSans-Variable.ttf', '100 900', 'normal'],
+  ['Cormorant', 'fonts/CormorantGaramond-Light.ttf', '300', 'normal'],
+  ['Cormorant', 'fonts/CormorantGaramond-LightItalic.ttf', '300', 'italic'],
+  ['Cormorant', 'fonts/CormorantGaramond-Medium.ttf', '500', 'normal'],
+  ['Montserrat', 'fonts/Montserrat-Light.ttf', '300', 'normal'],
+  ['Montserrat', 'fonts/Montserrat-Regular.ttf', '400', 'normal'],
+  ['Montserrat', 'fonts/Montserrat-Medium.ttf', '500', 'normal'],
+  ['TikTokSans', 'fonts/TikTokSans-500.ttf', '500', 'normal'],
+  ['TikTokSans', 'fonts/TikTokSans-600.ttf', '600', 'normal'],
+  ['TikTokSans', 'fonts/TikTokSans-700.ttf', '700', 'normal'],
+  ['TikTokSans', 'fonts/TikTokSans-800.ttf', '800', 'normal'],
 ];
 if (typeof window !== 'undefined' && 'FontFace' in window) {
   const handle = delayRender('Loading fonts', {timeoutInMilliseconds: 120000, retries: 2});
