@@ -1,0 +1,6 @@
+skin_layers.jpg: "Skin Layers Unlabeled.jpg" — Wikimedia Commons, CC BY-SA 3.0
+epidermis.png: "502 Layers of epidermis (no labels).png" — Wikimedia Commons, CC BY 3.0
+skin_labeled.jpg: "Labeled layers of the skin.jpg" — Wikimedia Commons, CC0
+toner_studio.png / pack_toner.png / pack_serum.png: official Yello Skincare product photos (yelloskincare.com), supplied by Skincarehouse
+emoji/*.svg: Twemoji (jdecked/twemoji 15.1.0), CC BY 4.0
+sfx/*.wav: Mixkit free sound effects (Mixkit Sound Effects Free License); scratch.wav and spray.wav synthesized in scripts/blume/make_audio.py

@@ -77,3 +77,10 @@ heavy-italic annotations, CapCut-style pop-in captions with yellow keyword highl
 (GENTLE / DIRECT! / LOCK!), impact flashes + camera shake on the big beats, a white / charcoal / signal-yellow /
 product-coral / blue palette, and neutral contextual room backgrounds. Previous version: `out/backup_feminine_infographic/`
 (commit 593fcd0, local tag `backup/feminine-infographic`).
+
+## Explainer edit (`BlumeExplainer`, current final -> out/blume_final.mp4)
+Built from the two references (TikTok @skinwithdr.kim large-pores explainer + "WHIMSY 1" kinetic edit):
+real product packshots, real textbook skin illustrations (Wikimedia Commons), a routine checklist that types in as
+each step is named, kinetic keyword slams, time-skip / colour-bars meme cutaways, Twemoji reactions, Mixkit SFX,
+real-room scenes mixed with contextual background replacements. Code: `src/blume/explainer/`.
+Asset credits: `public/blume/img/CREDITS.txt`.
