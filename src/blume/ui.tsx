@@ -135,14 +135,14 @@ export const StepTag: React.FC<{t: number; at: number; n: string; color: string;
   return (
     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
       <div style={{display: 'flex', alignItems: 'center', gap: 14, opacity: p, transform: `translateY(${(1 - p) * 20}px)`}}>
-        <div style={{fontFamily: SANS, fontWeight: 700, fontSize: 26, letterSpacing: 6, color: C.ink, opacity: 0.75}}>STEP</div>
-        <div style={{width: 60 * p, height: 2, background: C.ink, opacity: 0.4}} />
+        <div style={{fontFamily: SERIF_I, fontStyle: 'italic', fontSize: 40, letterSpacing: 0.3, color: C.cherry}}>step</div>
+        <div style={{width: 70 * p, height: 3, borderRadius: 2, background: C.cherry, opacity: 0.55}} />
       </div>
       <div
         style={{
           fontFamily: SERIF,
-          fontWeight: 600,
-          fontSize: 170,
+          fontWeight: 700,
+          fontSize: 176,
           lineHeight: 0.9,
           color,
           transform: `translateY(${(1 - p) * 40}px) scale(${0.8 + 0.2 * p})`,

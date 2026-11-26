@@ -97,7 +97,7 @@ const Room: React.FC<{children: React.ReactNode; blur?: number; drift?: number; 
       width={W}
       height={H}
       viewBox={`0 0 ${W} ${H}`}
-      style={{position: 'absolute', inset: 0, filter: `blur(${blur}px)`, transform: `scale(${1.04 + 0.01 * Math.sin(t * 0.3)}) translateX(${Math.sin(t * 0.25) * 8 * drift}px)`}}
+      style={{position: 'absolute', inset: 0, filter: `blur(${blur}px) saturate(0.8) sepia(0.06)`, transform: `scale(${1.04 + 0.01 * Math.sin(t * 0.3)}) translateX(${Math.sin(t * 0.25) * 8 * drift}px)`}}
     >
       {children}
     </svg>

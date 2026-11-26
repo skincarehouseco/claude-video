@@ -63,3 +63,10 @@ Same edit, alternate look for A/B testing: contextual scenes shown as tilted pol
 paper (`src/blume/Polaroid.tsx`), step labels on washi tape, CapCut-style pop-in captions with yellow keyword
 highlights, a swung 98 BPM music bed (`music_b.wav`) and a shutter click as each polaroid lands.
 `npx remotion render src/index.ts BlumeEditB out/blume_final_B.mp4 --codec h264 --crf 17 --audio-bitrate 256k --timeout 120000`
+
+### Revision: infographic style restored (current `BlumeEdit`)
+The original infographic edit (STEP 01–04 cards, guide card, arch picture-in-picture, mist / pat-pat / skin-layer diagram,
+recap, 50-counter, free-serum reveal) is back, refined: warm ivory / dusty rose / muted berry / lavender / beige palette,
+editorial italic-serif labels instead of spaced caps, contextual illustrated rooms behind the infographic layers
+(bathroom, towel + clock, morning window, store, gifts, shopping), extra punch-ins, and a "beberapa saat kemudian…" meme insert.
+The previous "rooms" version is kept in `out/backup_rooms_version/` and at commit 7d4f40f (local tag `backup/rooms-version`).

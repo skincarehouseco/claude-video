@@ -33,7 +33,7 @@ const CaptionsB: React.FC<{t: number; chunk: Chunk}> = ({t, chunk}) => {
                 display: 'inline-block',
                 padding: w.hl ? '0 14px 4px' : 0,
                 borderRadius: 14,
-                background: w.hl ? '#FFE27A' : 'transparent',
+                background: w.hl ? '#EFD9A6' : 'transparent',
                 color: w.hl ? C.ink : '#FFFFFF',
                 textShadow: w.hl ? 'none' : `0 0 2px ${C.ink}, 0 3px 0 ${C.ink}, 2px 0 0 ${C.ink}, -2px 0 0 ${C.ink}, 0 -2px 0 ${C.ink}, 0 8px 18px rgba(60,20,40,0.45)`,
                 boxShadow: w.hl ? `0 4px 0 ${C.ink}, 0 8px 18px rgba(60,20,40,0.3)` : 'none',

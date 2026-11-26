@@ -32,19 +32,19 @@ export const L = {
 };
 
 // [time (s), framing]; transitions ease over TR seconds starting at each key time
-const TR = 0.5;
+const TR = 0.42;
 const KEYS: [number, Frame][] = [
   [0, L.intro],
   [0.05, L.low],
   [1.85, L.centre],
-  [3.3, L.wide],
+  [3.3, L.right],
   [5.9, L.rightHi],
-  [8.62, L.centre],
+  [8.62, L.arch],
   [10.78, L.right],
   [13.72, L.leftish],
   [15.72, L.wide],
   [17.8, L.process],
-  [20.75, L.centre],
+  [20.75, L.arch],
   [24.22, L.low],
   [27.55, L.freeWide],
   [30.05, L.close],
@@ -57,6 +57,10 @@ const mix = (a: Frame, b: Frame, p: number): Frame => ({
 
 // short emphasis push-ins [start, end, amount] (scale about the face)
 const EMPH: [number, number, number][] = [
+  [5.98, 6.5, 0.06], // "First,"
+  [15.0, 15.6, 0.06], // "dua cara"
+  [18.3, 19.0, 0.04], // spray into the palm
+  [25.9, 26.4, 0.04], // "terawal"
   [0.76, 1.7, 0.05], // product name in hook
   [10.4, 10.84, 0.05], // "kering"
   [22.28, 22.9, 0.05], // "lock"
