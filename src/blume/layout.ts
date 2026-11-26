@@ -87,6 +87,13 @@ export const frameAt = (t: number): Frame => {
   const fx = f.ix + 540 * f.is;
   const fy = f.iy + 450 * f.is;
   f = {...f, is: f.is * k, ix: fx - (fx - f.ix) * k, iy: fy - (fy - f.iy) * k};
+  // camera shake on the big beats ("dua", "lock", "50", "free")
+  for (const a of [15.06, 22.3, 24.72, 29.78]) {
+    if (t >= a && t < a + 0.35) {
+      const d = 1 - (t - a) / 0.35;
+      f = {...f, ix: f.ix + Math.sin(t * 95) * 12 * d, iy: f.iy + Math.cos(t * 81) * 9 * d};
+    }
+  }
   // full-frame framings must keep the frame-cut bottom/sides hidden
   if (f.ca < 0.01) {
     const maxX = 540 * (f.is - 1);

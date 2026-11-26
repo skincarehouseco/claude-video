@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {AbsoluteFill, Audio, interpolate, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import captions from './captions.json';
 import {Captions} from './Captions';
-import {Backgrounds, Foregrounds} from './Scenes';
+import {Backgrounds, Foregrounds, ImpactFlash, KineticWords} from './Scenes';
 import {CARD_TIMES, PolaroidBackgrounds} from './Polaroid';
 import {Subject} from './Subject';
 import {C, DURATION, FPS, HAND, prog, rnd, Variant, VariantCtx} from './theme';
@@ -22,11 +22,11 @@ const PromoWipe: React.FC = () => {
     <AbsoluteFill style={{pointerEvents: 'none'}}>
       <AbsoluteFill
         style={{
-          background: `radial-gradient(circle at 50% 45%, #FBF2EF 0%, ${C.blushDeep} 60%, ${C.rose} 100%)`,
+          background: `radial-gradient(circle at 50% 45%, #F6F6F4 0%, ${C.blushDeep} 60%, ${C.rose} 100%)`,
           clipPath: pout > 0 ? `circle(${2300 * (1 - pout)}px at 540px 900px)` : `circle(${r}px at 540px 900px)`,
         }}
       >
-        <div style={{position: 'absolute', top: 820, width: '100%', textAlign: 'center', fontFamily: HAND, fontWeight: 700, fontSize: 110, color: C.cherry, transform: `rotate(-4deg) scale(${0.8 + 0.2 * pin})`}}>
+        <div style={{position: 'absolute', top: 820, width: '100%', textAlign: 'center', fontFamily: HAND, fontStyle: 'italic', fontWeight: 700, fontSize: 68, color: C.cherry, transform: `rotate(-4deg) scale(${0.8 + 0.2 * pin})`}}>
           wait, ada lagi…
         </div>
         {Array.from({length: 10}).map((_, i) => (
@@ -86,7 +86,8 @@ export const SFX: Sfx[] = [
   [6.95, 'bubble', 0.13],
   [7.15, 'bubble', 0.13],
   [7.35, 'bubble', 0.13],
-  [7.86, 'pop', 0.15],
+  [7.86, 'impact', 0.16],
+  [7.88, 'pop', 0.15],
   [8.66, 'whoosh', 0.15],
   [8.74, 'pop', 0.15],
   [9.15, 'tick', 0.12],
@@ -108,6 +109,8 @@ export const SFX: Sfx[] = [
   [15.74, 'swipe', 0.15],
   [15.86, 'pop', 0.13],
   [16.25, 'spray', 0.17],
+  [16.64, 'impact', 0.15],
+  [16.66, 'swipe', 0.12],
   [16.95, 'spray', 0.12],
   [17.82, 'whoosh', 0.14],
   [18.32, 'spray', 0.2],
@@ -141,6 +144,7 @@ export const SFX: Sfx[] = [
   [28.72, 'pop', 0.13],
   [29.62, 'sparkle', 0.2],
   [29.78, 'ding', 0.18],
+  [29.78, 'impact', 0.18],
   [30.06, 'whoosh', 0.16],
   [30.14, 'pop', 0.16],
   [30.6, 'pop', 0.14],
@@ -176,7 +180,9 @@ export const BlumeEdit: React.FC<{variant?: Variant}> = ({variant = 'A'}) => (
       {variant === 'B' ? <PolaroidBackgrounds /> : <Backgrounds />}
       <Subject />
       <Foregrounds />
+      <KineticWords />
       <Captions />
+      <ImpactFlash />
       <PromoWipe />
       <AudioMix variant={variant} />
     </AbsoluteFill>

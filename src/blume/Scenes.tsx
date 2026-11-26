@@ -59,7 +59,7 @@ const Dots: React.FC<{color: string; gap?: number; o?: number}> = ({color, gap =
 const Grain: React.FC = () => (
   <AbsoluteFill
     style={{
-      background: 'radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.0) 55%, rgba(150,90,110,0.12) 100%)',
+      background: 'radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.0) 55%, rgba(20,22,30,0.12) 100%)',
     }}
   />
 );
@@ -87,7 +87,7 @@ const BgHook: React.FC<{t: number}> = ({t}) => (
 );
 
 const BgHello: React.FC<{t: number}> = ({t}) => (
-  <AbsoluteFill style={{background: `linear-gradient(180deg, ${C.blush} 0%, #F7ECEA 60%, ${C.lilac} 100%)`}}>
+  <AbsoluteFill style={{background: `linear-gradient(180deg, ${C.blush} 0%, #F1F3F5 60%, ${C.lilac} 100%)`}}>
     <Blob x={120} y={300} r={240} color={C.lilacMid} t={t} o={0.6} />
     <Blob x={960} y={500} r={220} color={C.blushDeep} t={t} ph={1} o={0.7} />
     {/* soft concentric "hello" waves radiating from behind */}
@@ -233,7 +233,7 @@ const BgLock: React.FC<{t: number}> = ({t}) => (
 
 const BgPromo: React.FC<{t: number}> = ({t}) => {
   return (
-    <AbsoluteFill style={{background: `linear-gradient(180deg, #F4E1E1 0%, #DDAEB6 55%, ${C.cherry} 140%)`}}>
+    <AbsoluteFill style={{background: `linear-gradient(180deg, #ECEFF3 0%, #E6EAEF 55%, ${C.cherry} 140%)`}}>
       <Blob x={150} y={250} r={240} color="#FFFFFF" t={t} o={0.55} />
       <Grain />
     </AbsoluteFill>
@@ -336,7 +336,7 @@ const FgHook: React.FC<{t: number}> = ({t}) => {
                   fontFamily: i === 3 ? SERIF_I : SERIF,
                   fontStyle: i === 3 ? 'italic' : 'normal',
                   fontWeight: 600,
-                  fontSize: 76,
+                  fontSize: 60,
                   color: i === 3 ? C.cherry : C.ink,
                   display: 'inline-block',
                   opacity: Math.min(1, p * 1.5),
@@ -517,7 +517,7 @@ const TimeSkip: React.FC<{t: number; a: number; b: number}> = ({t, a, b}) => {
         {/* rotating sunburst */}
         <div style={{position: 'absolute', left: 600 - 900, top: 165 - 900, width: 1800, height: 1800, transform: `rotate(${(t - a) * 90}deg)`, background: `repeating-conic-gradient(${C.butterDeep} 0deg 10deg, #E9D39C 10deg 20deg)`}} />
         <div style={{position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <span style={{fontFamily: SERIF_I, fontStyle: 'italic', fontWeight: 700, fontSize: 96, color: '#fff', textShadow: `0 5px 0 ${C.cherry}, 4px 0 0 ${C.cherry}, -4px 0 0 ${C.cherry}, 0 -4px 0 ${C.cherry}, 0 14px 30px rgba(53,34,45,0.5)`, transform: `scale(${0.7 + 0.3 * pin})`}}>
+          <span style={{fontFamily: SERIF_I, fontStyle: 'italic', fontWeight: 900, fontSize: 64, color: '#fff', textShadow: `0 5px 0 ${C.cherry}, 4px 0 0 ${C.cherry}, -4px 0 0 ${C.cherry}, 0 -4px 0 ${C.cherry}, 0 14px 30px rgba(53,34,45,0.5)`, transform: `scale(${0.7 + 0.3 * pin})`}}>
             beberapa saat kemudian…
           </span>
         </div>
@@ -560,7 +560,7 @@ const FgDry: React.FC<{t: number}> = ({t}) => {
         </div>
       </Card>
       <div style={abs(250, 960, {transform: `scale(${done}) rotate(${-10 * done}deg)`, opacity: Math.min(1, done * 1.5)})}>
-        <div style={{display: 'flex', alignItems: 'center', gap: 10, padding: '10px 26px', borderRadius: 999, background: '#fff', border: `4px solid ${C.cherry}`, fontFamily: HAND, fontWeight: 700, fontSize: 56, color: C.cherry}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: 10, padding: '10px 26px', borderRadius: 999, background: '#fff', border: `4px solid ${C.cherry}`, fontFamily: HAND, fontStyle: 'italic', fontWeight: 700, fontSize: 35, color: C.cherry}}>
           kering <Check size={44} />
         </div>
       </div>
@@ -657,7 +657,7 @@ const FgWay1: React.FC<{t: number}> = ({t}) => {
             <path d="M52 3 L62 10 L52 17" stroke={C.ink} strokeWidth="4" fill="none" strokeLinecap="round" />
           </svg>
           <Face size={56} closed />
-          <span style={{fontFamily: HAND, fontWeight: 700, fontSize: 40, color: C.cherry, marginLeft: 6}}>skin</span>
+          <span style={{fontFamily: HAND, fontStyle: 'italic', fontWeight: 700, fontSize: 25, color: C.cherry, marginLeft: 6}}>skin</span>
         </div>
       </Card>
       {/* fine mist drifting from her extended hand (right) onto her face */}
@@ -699,7 +699,7 @@ const FgWay2: React.FC<{t: number}> = ({t}) => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: active ? `0 0 0 5px ${C.cherry}, 0 14px 30px rgba(217,79,114,0.3)` : '0 8px 20px rgba(120,60,80,0.12)',
+                      boxShadow: active ? `0 0 0 5px ${C.cherry}, 0 14px 30px rgba(217,79,114,0.3)` : '0 8px 20px rgba(20,22,30,0.12)',
                     }}
                   >
                     {s.icon}
@@ -725,7 +725,7 @@ const FgWay2: React.FC<{t: number}> = ({t}) => {
         const o = life(t, at, at + 0.5, 0.05, 0.2);
         return (
           <div key={i} style={abs(Math.max(70, lc.x - 330 + (i % 2) * 30), lc.y - 80 + i * 70, {opacity: o, transform: `scale(${p}) rotate(${i % 2 ? 8 : -8}deg)`})}>
-            <span style={{fontFamily: HAND, fontWeight: 700, fontSize: 76, color: C.cherry, textShadow: '0 3px 0 #fff, 0 6px 16px rgba(255,255,255,0.9)'}}>pat!</span>
+            <span style={{fontFamily: HAND, fontStyle: 'italic', fontWeight: 700, fontSize: 47, color: C.cherry, textShadow: '0 3px 0 #fff, 0 6px 16px rgba(255,255,255,0.9)'}}>pat!</span>
           </div>
         );
       })}
@@ -820,7 +820,7 @@ const FgPromo: React.FC<{t: number}> = ({t}) => {
           <span style={{fontFamily: SERIF, fontWeight: 700, fontSize: 190, lineHeight: 1, color: C.cherry, textShadow: '0 8px 30px rgba(255,255,255,0.7)'}}>{n}</span>
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <span style={{fontFamily: SERIF_I, fontStyle: 'italic', fontSize: 62, color: C.ink, lineHeight: 1}}>orang</span>
-            <span style={{fontFamily: HAND, fontWeight: 700, fontSize: 64, color: C.cherry, opacity: prog(t, 25.9, 26.1), lineHeight: 1}}>terawal!</span>
+            <span style={{fontFamily: HAND, fontStyle: 'italic', fontWeight: 700, fontSize: 40, color: C.cherry, opacity: prog(t, 25.9, 26.1), lineHeight: 1}}>terawal!</span>
           </div>
         </div>
       </div>
@@ -835,7 +835,7 @@ const FgPromo: React.FC<{t: number}> = ({t}) => {
         <div style={{fontFamily: SERIF_I, fontStyle: 'italic', fontSize: 29, letterSpacing: 0.3, color: C.cherry, marginTop: 6}}>first 50</div>
       </Card>
       <div style={abs(540, 1190, {transform: `scale(${bag}) rotate(${-4 * bag}deg)`, opacity: Math.min(1, bag * 1.5)})}>
-        <div style={{display: 'flex', alignItems: 'center', gap: 12, padding: '12px 24px', borderRadius: 30, background: 'rgba(255,255,255,0.92)', boxShadow: '0 14px 30px rgba(120,60,80,0.2)'}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: 12, padding: '12px 24px', borderRadius: 30, background: 'rgba(255,255,255,0.92)', boxShadow: '0 14px 30px rgba(20,22,30,0.2)'}}>
           <Bag size={54} color={C.rose} />
           <div>
             <div style={{fontFamily: SERIF_I, fontStyle: 'italic', fontSize: 26, letterSpacing: 0.3, color: C.inkSoft}}>purchase</div>
@@ -906,7 +906,7 @@ const FgCta: React.FC<{t: number}> = ({t}) => {
                 fontFamily: i === 2 ? SERIF_I : SERIF,
                 fontStyle: i === 2 ? 'italic' : 'normal',
                 fontWeight: 700,
-                fontSize: 118,
+                fontSize: 92,
                 color: i === 2 ? C.cherry : C.ink,
                 display: 'inline-block',
                 textShadow: '0 4px 0 #fff, 0 10px 30px rgba(255,255,255,0.85)',
@@ -1017,4 +1017,61 @@ export const Foregrounds: React.FC = () => {
       })}
     </AbsoluteFill>
   );
+};
+
+/* ========================================================================================
+ * Kinetic keywords — bold words slam in on the exact spoken word, placed in free space beside her
+ * ====================================================================================== */
+type KW = {text: string; at: number; end: number; x: number; y: number; size: number; color: string; stroke: string; rot: number};
+const KEYWORDS: KW[] = [
+  {text: 'GENTLE', at: 7.86, end: 8.7, x: 86, y: 590, size: 84, color: C.butterDeep, stroke: C.ink, rot: -6},
+  {text: 'DIRECT!', at: 16.64, end: 17.8, x: 480, y: 360, size: 82, color: '#FFFFFF', stroke: C.skyDeep, rot: 5},
+  {text: 'LOCK!', at: 22.28, end: 23.6, x: 96, y: 540, size: 104, color: C.cherry, stroke: '#FFFFFF', rot: -5},
+];
+export const KineticWords: React.FC = () => {
+  const t = useCurrentFrame() / FPS;
+  return (
+    <AbsoluteFill style={{pointerEvents: 'none'}}>
+      {KEYWORDS.map((k, i) => {
+        if (t < k.at - 0.05 || t > k.end + 0.2) return null;
+        // slam: starts big, overshoots small, settles; quick exit
+        const p = pop(t, k.at - 0.03, {damping: 9, stiffness: 320, mass: 0.5});
+        const out = prog(t, k.end, k.end + 0.18);
+        const sc = (2.1 - 1.1 * p) * (1 - out * 0.4);
+        return (
+          <div
+            key={i}
+            style={{
+              position: 'absolute',
+              left: k.x,
+              top: k.y,
+              fontFamily: SERIF,
+              fontWeight: 900,
+              fontSize: k.size,
+              lineHeight: 1,
+              color: k.color,
+              WebkitTextStroke: `${Math.round(k.size * 0.08)}px ${k.stroke}`,
+              paintOrder: 'stroke fill',
+              textShadow: `0 ${k.size * 0.08}px 0 ${k.stroke}, 0 ${k.size * 0.16}px ${k.size * 0.3}px rgba(0,0,0,0.3)`,
+              transform: `rotate(${k.rot}deg) scale(${sc})`,
+              transformOrigin: 'left center',
+              opacity: Math.min(1, p * 2) * (1 - out),
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {k.text}
+          </div>
+        );
+      })}
+    </AbsoluteFill>
+  );
+};
+
+/** two-frame white impact flash on the big beats */
+export const IMPACTS = [15.06, 22.3, 24.72, 29.78];
+export const ImpactFlash: React.FC = () => {
+  const t = useCurrentFrame() / FPS;
+  const hit = IMPACTS.find((a) => t >= a && t < a + 0.12);
+  if (hit === undefined) return null;
+  return <AbsoluteFill style={{background: '#FFFFFF', opacity: 0.55 * (1 - (t - hit) / 0.12), pointerEvents: 'none'}} />;
 };

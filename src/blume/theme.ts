@@ -2,10 +2,12 @@ import {continueRender, delayRender, Easing, interpolate, spring, staticFile} fr
 
 /* Fonts (SIL OFL, bundled in public/fonts so renders work offline) */
 const FONTS: [string, string, FontFaceDescriptors][] = [
-  ['BSans', 'fonts/PlusJakartaSans.ttf', {weight: '200 800'}],
-  ['BSerif', 'fonts/PlayfairDisplay.ttf', {weight: '400 900'}],
-  ['BSerifItalic', 'fonts/PlayfairDisplay-Italic.ttf', {weight: '400', style: 'italic'}],
-  ['BHand', 'fonts/Caveat.ttf', {weight: '400 700'}],
+  // bold explainer typography: Montserrat throughout; "display" faces are registered heavy-only so every headline renders 800-900
+  ['BSans', 'fonts/Montserrat.ttf', {weight: '100 900'}],
+  ['BSerif', 'fonts/Montserrat.ttf', {weight: '800 900'}],
+  ['BSerifItalic', 'fonts/Montserrat-Italic.ttf', {weight: '800 900', style: 'italic'}],
+  // annotations: heavy italic "marker" style instead of cute handwriting
+  ['BHand', 'fonts/Montserrat-Italic.ttf', {weight: '800 900', style: 'italic'}],
 ];
 if (typeof window !== 'undefined' && 'FontFace' in window) {
   const handle = delayRender('Loading Blumé fonts', {timeoutInMilliseconds: 120000, retries: 2});
@@ -31,29 +33,29 @@ export const DURATION = 949; // 31.633 s — full original length, real-time (no
 export const W = 1080;
 export const H = 1920;
 
-/** Beauty-editorial palette: warm ivory, dusty rose, muted berry, soft lavender, cream, warm beige (+ muted contextual accents) */
+/** Explainer palette: white / charcoal / signal yellow / product coral-red / clear blue (keys kept for compatibility) */
 export const C = {
-  blush: '#F6E9E4',
-  blushDeep: '#E9CFCB',
-  rose: '#C98B92',
-  dusty: '#A55D6E',
-  cherry: '#8E3B5B',
-  lilac: '#EFEAF5',
-  lilacMid: '#D6CCE8',
-  lilacDeep: '#7A68A6',
-  cream: '#FFF9F1',
-  butter: '#F7EDD3',
-  butterDeep: '#C8A55E',
-  sky: '#E7EEF2',
-  skyMid: '#C5D5E1',
-  skyDeep: '#58799A',
-  peach: '#F5E3D6',
-  peachMid: '#EAC6B1',
-  coral: '#DE7A62',
-  coralDeep: '#C4553F',
-  beige: '#ECDFCF',
-  ink: '#35222D',
-  inkSoft: '#6C5462',
+  blush: '#F1F1EE',
+  blushDeep: '#DCDCD6',
+  rose: '#FF6A3D',
+  dusty: '#E5532E',
+  cherry: '#E63B2E',
+  lilac: '#E9EEF6',
+  lilacMid: '#C7D5EC',
+  lilacDeep: '#2E5BBA',
+  cream: '#FFFFFF',
+  butter: '#FFF2A8',
+  butterDeep: '#FFC400',
+  sky: '#E2F0FB',
+  skyMid: '#B3D7F3',
+  skyDeep: '#1C74C9',
+  peach: '#FFE3D3',
+  peachMid: '#FFC0A2',
+  coral: '#F2643C',
+  coralDeep: '#D9432A',
+  beige: '#ECE7DE',
+  ink: '#141414',
+  inkSoft: '#4A4A4A',
   white: '#FFFFFF',
 };
 

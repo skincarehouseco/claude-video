@@ -70,3 +70,10 @@ recap, 50-counter, free-serum reveal) is back, refined: warm ivory / dusty rose 
 editorial italic-serif labels instead of spaced caps, contextual illustrated rooms behind the infographic layers
 (bathroom, towel + clock, morning window, store, gifts, shopping), extra punch-ins, and a "beberapa saat kemudian…" meme insert.
 The previous "rooms" version is kept in `out/backup_rooms_version/` and at commit 7d4f40f (local tag `backup/rooms-version`).
+
+### Revision: bold explainer direction (current `BlumeEdit`)
+All feminine styling removed. Same infographic components and timing, now with: Montserrat 800–900 headlines and labels,
+heavy-italic annotations, CapCut-style pop-in captions with yellow keyword highlights, kinetic keyword slams
+(GENTLE / DIRECT! / LOCK!), impact flashes + camera shake on the big beats, a white / charcoal / signal-yellow /
+product-coral / blue palette, and neutral contextual room backgrounds. Previous version: `out/backup_feminine_infographic/`
+(commit 593fcd0, local tag `backup/feminine-infographic`).

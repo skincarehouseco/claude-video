@@ -157,7 +157,7 @@ export const StepTag: React.FC<{t: number; at: number; n: string; color: string;
         {label}
       </div>
       {sub && (
-        <div style={{fontFamily: HAND, fontWeight: 600, fontSize: 46, color: C.dusty, marginTop: 2, opacity: p3, transform: `translateX(${(1 - p3) * -20}px) rotate(-2deg)`}}>
+        <div style={{fontFamily: HAND, fontStyle: 'italic', fontWeight: 600, fontSize: 29, color: C.dusty, marginTop: 2, opacity: p3, transform: `translateX(${(1 - p3) * -20}px) rotate(-2deg)`}}>
           {sub}
         </div>
       )}
@@ -186,7 +186,7 @@ export const Chip: React.FC<{t: number; at: number; text: string; bg?: string; c
         padding: `${size * 0.32}px ${size * 0.7}px`,
         borderRadius: 999,
         background: bg,
-        boxShadow: '0 10px 26px rgba(120,60,80,0.18), inset 0 0 0 1.5px rgba(255,255,255,0.8)',
+        boxShadow: '0 10px 26px rgba(20,22,30,0.18), inset 0 0 0 1.5px rgba(255,255,255,0.8)',
         fontFamily: SANS,
         fontWeight: 650,
         fontSize: size,
@@ -233,7 +233,7 @@ export const HandNote: React.FC<{t: number; at: number; text: string; size?: num
 }) => {
   const n = Math.floor(Math.max(0, t - at) * cps);
   return (
-    <div style={{fontFamily: HAND, fontWeight: 700, fontSize: size, color, transform: `rotate(${rot}deg)`, whiteSpace: 'nowrap', textShadow: '0 3px 14px rgba(255,255,255,0.7)'}}>
+    <div style={{fontFamily: HAND, fontStyle: 'italic', fontWeight: 700, fontSize: size * 0.62, color, transform: `rotate(${rot}deg)`, whiteSpace: 'nowrap', textShadow: '0 3px 14px rgba(255,255,255,0.7)'}}>
       {text.split('').map((ch, i) => (
         <span key={i} style={{opacity: i < n ? 1 : 0}}>
           {ch}
@@ -274,7 +274,7 @@ export const Card: React.FC<{children: React.ReactNode; style?: React.CSSPropert
         background: 'rgba(255,255,255,0.78)',
         borderRadius: 40,
         padding: '28px 34px',
-        boxShadow: '0 18px 50px rgba(120,60,80,0.18), inset 0 0 0 2px rgba(255,255,255,0.9)',
+        boxShadow: '0 18px 50px rgba(20,22,30,0.18), inset 0 0 0 2px rgba(255,255,255,0.9)',
         backdropFilter: 'blur(10px)',
         opacity: Math.min(1, p * 1.3),
         transform: `translateY(${(1 - p) * 50}px) scale(${0.85 + 0.15 * p})`,

@@ -37,7 +37,7 @@ export const Subject: React.FC = () => {
           overflow: 'hidden',
           borderRadius: `${f.cr}px ${f.cr}px ${36 * card}px ${36 * card}px`,
           background: card > 0.01 ? `linear-gradient(180deg, rgba(255,249,243,${card}) 0%, rgba(246,201,213,${card}) 100%)` : 'transparent',
-          boxShadow: card > 0.01 ? `0 0 0 ${10 * card}px rgba(255,255,255,${card}), 0 ${30 * card}px ${70 * card}px rgba(120,60,80,${0.28 * card})` : 'none',
+          boxShadow: card > 0.01 ? `0 0 0 ${10 * card}px rgba(255,255,255,${card}), 0 ${30 * card}px ${70 * card}px rgba(20,22,30,${0.28 * card})` : 'none',
         }}
       >
         {card > 0.01 && (
@@ -65,7 +65,7 @@ export const Subject: React.FC = () => {
             transformOrigin: '0 0',
             transform: `translate(${f.ix}px, ${f.iy}px) scale(${f.is})`,
             // natural, gentle clean-up only (no reshaping / smoothing)
-            filter: `brightness(1.03) contrast(1.03) saturate(1.04) drop-shadow(0 ${24 * (1 - card)}px ${40 * (1 - card)}px rgba(110,50,75,${0.22 * (1 - card)}))`,
+            filter: `brightness(1.03) contrast(1.03) saturate(1.04) drop-shadow(0 ${24 * (1 - card)}px ${40 * (1 - card)}px rgba(20,22,30,${0.22 * (1 - card)}))`,
           }}
         />
       </div>

@@ -56,7 +56,7 @@ const Photo: React.FC<{card: Card; t: number; enter: number; depth: number}> = (
         height: PH + BORDER + BOTTOM,
         background: '#FFFDF9',
         borderRadius: 10,
-        boxShadow: `0 ${18 + depth * 4}px ${50}px rgba(110,60,80,${0.22 + 0.04 * depth})`,
+        boxShadow: `0 ${18 + depth * 4}px ${50}px rgba(20,22,30,${0.22 + 0.04 * depth})`,
         transform: `translate(${x}px, ${y}px) rotate(${rot}deg) scale(${sc})`,
         filter: depth ? `brightness(${1 - depth * 0.04})` : undefined,
       }}
@@ -104,12 +104,12 @@ const TapeLabel: React.FC<{card: Card; t: number}> = ({card, t}) => {
         opacity: 0.95 * Math.min(1, p * 1.4),
         transform: `rotate(-4deg) scaleX(${0.3 + 0.7 * p})`,
         transformOrigin: 'left center',
-        boxShadow: '0 6px 14px rgba(110,60,80,0.15)',
+        boxShadow: '0 6px 14px rgba(20,22,30,0.15)',
         backgroundImage: 'repeating-linear-gradient(90deg, rgba(255,255,255,0.3) 0 12px, transparent 12px 24px)',
         clipPath: 'polygon(2% 0, 100% 4%, 98% 100%, 0 96%)',
       }}
     >
-      <span style={{fontFamily: HAND, fontWeight: 700, fontSize: 54, color: C.ink, whiteSpace: 'nowrap'}}>
+      <span style={{fontFamily: HAND, fontStyle: 'italic', fontWeight: 700, fontSize: 33, color: C.ink, whiteSpace: 'nowrap'}}>
         {card.tape.split('').map((ch, i) => (
           <span key={i} style={{opacity: i < n ? 1 : 0}}>
             {ch}

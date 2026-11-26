@@ -97,12 +97,12 @@ const Room: React.FC<{children: React.ReactNode; blur?: number; drift?: number; 
       width={W}
       height={H}
       viewBox={`0 0 ${W} ${H}`}
-      style={{position: 'absolute', inset: 0, filter: `blur(${blur}px) saturate(0.8) sepia(0.06)`, transform: `scale(${1.04 + 0.01 * Math.sin(t * 0.3)}) translateX(${Math.sin(t * 0.25) * 8 * drift}px)`}}
+      style={{position: 'absolute', inset: 0, filter: `blur(${blur}px)`, transform: `scale(${1.04 + 0.01 * Math.sin(t * 0.3)}) translateX(${Math.sin(t * 0.25) * 8 * drift}px)`}}
     >
       {children}
     </svg>
     {/* soft vignette = depth */}
-    <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 42%, rgba(255,255,255,0) 50%, rgba(120,70,90,0.16) 100%)'}} />
+    <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 42%, rgba(255,255,255,0) 50%, rgba(20,30,45,0.18) 100%)'}} />
   </AbsoluteFill>
 );
 
@@ -111,8 +111,8 @@ export const RoomStudio: React.FC<{t: number}> = ({t}) => (
   <Room t={t}>
     <defs>
       <linearGradient id="st-wall" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stopColor="#FCEDEB" />
-        <stop offset="1" stopColor="#F4D9DC" />
+        <stop offset="0" stopColor="#EEF1F4" />
+        <stop offset="1" stopColor="#DDE4EC" />
       </linearGradient>
       <linearGradient id="st-sky" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stopColor="#DCEBFA" />
@@ -128,16 +128,16 @@ export const RoomStudio: React.FC<{t: number}> = ({t}) => (
     {/* sunbeam */}
     <path d="M360 200 L 1080 900 L 1080 1300 L 360 940 Z" fill="#FFF6E0" opacity={0.35} />
     {/* floating shelf with skincare on the right */}
-    <rect x={740} y={600} width={380} height={22} rx={8} fill="#E9CDBF" />
-    <Bottle x={770} y={600} w={58} h={150} body="#F5B9C6" kind="pump" />
+    <rect x={740} y={600} width={380} height={22} rx={8} fill="#D9CDBE" />
+    <Bottle x={770} y={600} w={58} h={150} body="#FF8F70" kind="pump" />
     <Bottle x={845} y={600} w={50} h={120} body="#D9CCF5" kind="dropper" />
     <Bottle x={910} y={600} w={74} h={70} body="#FFE7A8" kind="jar" />
     <Bottle x={1000} y={600} w={50} h={140} body="#C8E0F6" kind="spray" />
-    <rect x={740} y={900} width={380} height={22} rx={8} fill="#E9CDBF" />
+    <rect x={740} y={900} width={380} height={22} rx={8} fill="#D9CDBE" />
     <Plant x={1000} y={880} s={0.8} t={t} />
     <Bottle x={780} y={900} w={64} h={110} body="#FFD3C2" kind="tube" />
     {/* fairy lights */}
-    <path d="M-20 130 C 250 230, 520 120, 780 210 S 1060 140, 1100 190" stroke="#E7C9B7" strokeWidth={3} fill="none" />
+    <path d="M-20 130 C 250 230, 520 120, 780 210 S 1060 140, 1100 190" stroke="#D5CBBE" strokeWidth={3} fill="none" />
     {Array.from({length: 11}).map((_, i) => {
       const x = i * 105;
       const y = 150 + Math.sin(i * 1.1) * 40;
@@ -172,13 +172,13 @@ export const RoomBathroom: React.FC<{t: number; imgCleanser?: boolean}> = ({t}) 
     {/* glass shelf with cleanser (left) */}
     <rect x={-20} y={820} width={300} height={16} rx={6} fill="#CFE2F5" />
     <Bottle x={40} y={820} w={78} h={200} body="#BFD7F2" cap="#fff" kind="pump" />
-    <Bottle x={140} y={820} w={60} h={90} body="#F6C7D3" kind="jar" />
+    <Bottle x={140} y={820} w={60} h={90} body="#FFD3C2" kind="jar" />
     <rect x={215} y={730} width={46} height={90} rx={10} fill="#fff" opacity={0.85} />
-    <rect x={226} y={660} width={8} height={90} rx={4} fill="#F5B9C6" />
+    <rect x={226} y={660} width={8} height={90} rx={4} fill="#FF8F70" />
     <rect x={240} y={670} width={8} height={80} rx={4} fill="#9FC3EA" />
     {/* towel ring (right) */}
     <circle cx={960} cy={720} r={56} fill="none" stroke="#E6C98F" strokeWidth={10} />
-    <path d="M905 740 C 900 880, 940 960, 960 980 C 990 960, 1020 880, 1015 740 Z" fill="#F7D6DF" />
+    <path d="M905 740 C 900 880, 940 960, 960 980 C 990 960, 1020 880, 1015 740 Z" fill="#BFD7F2" />
     <path d="M915 900 H1005" stroke="#fff" strokeWidth={8} opacity={0.7} />
     {/* faucet peeking at the bottom-left */}
     <path d="M60 1180 V1120 C 60 1080, 110 1060, 150 1080 L 200 1100" stroke="#D9DEE6" strokeWidth={24} fill="none" strokeLinecap="round" />
@@ -228,11 +228,11 @@ export const RoomTowel: React.FC<{t: number}> = ({t}) => {
 export const RoomVanity: React.FC<{t: number; packshot?: number}> = ({t, packshot = 1}) => (
   <AbsoluteFill>
     <Room t={t} blur={2.5}>
-      <rect width={W} height={H} fill="#FBE3DC" />
-      <rect x={0} y={1180} width={W} height={740} fill="#F2CDBF" />
-      <rect x={0} y={1180} width={W} height={26} fill="#FFF1EA" />
+      <rect width={W} height={H} fill="#F1EFEB" />
+      <rect x={0} y={1180} width={W} height={740} fill="#D9D1C6" />
+      <rect x={0} y={1180} width={W} height={26} fill="#FFFFFF" />
       {/* hollywood mirror */}
-      <rect x={150} y={180} width={780} height={980} rx={60} fill="#FFF7F3" stroke="#F4C6B6" strokeWidth={20} />
+      <rect x={150} y={180} width={780} height={980} rx={60} fill="#FFF7F3" stroke="#CFC6BA" strokeWidth={20} />
       {Array.from({length: 7}).map((_, i) => {
         const y = 240 + i * 135;
         const glow = 0.7 + 0.3 * Math.sin(t * 2 + i);
@@ -278,7 +278,7 @@ export const RoomMorning: React.FC<{t: number}> = ({t}) => (
       <radialGradient id="mo-sun" cx="0.5" cy="0.25" r="0.7">
         <stop offset="0" stopColor="#FFFFFF" />
         <stop offset="0.5" stopColor="#E7F1FB" />
-        <stop offset="1" stopColor="#F6E6F0" />
+        <stop offset="1" stopColor="#EDF2F8" />
       </radialGradient>
     </defs>
     <rect width={W} height={H} fill="url(#mo-sun)" />
@@ -310,8 +310,8 @@ export const RoomEvening: React.FC<{t: number}> = ({t}) => (
   <Room t={t} blur={2.5}>
     <defs>
       <linearGradient id="ev-wall" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stopColor="#E4DAF5" />
-        <stop offset="1" stopColor="#F6E2E8" />
+        <stop offset="0" stopColor="#DCE2F0" />
+        <stop offset="1" stopColor="#E8E7F1" />
       </linearGradient>
       <radialGradient id="ev-lamp" cx="0.5" cy="0.5" r="0.5">
         <stop offset="0" stopColor="#FFE9B8" stopOpacity="0.9" />
@@ -332,7 +332,7 @@ export const RoomEvening: React.FC<{t: number}> = ({t}) => (
     <rect x={922} y={600} width={16} height={260} fill="#D9C08E" />
     <rect x={860} y={860} width={140} height={22} rx={10} fill="#D9C08E" />
     {/* shelf with a moisturizer jar (left) */}
-    <rect x={-20} y={860} width={340} height={20} rx={8} fill="#E3D0E8" />
+    <rect x={-20} y={860} width={340} height={20} rx={8} fill="#D3D8E2" />
     <g>
       <rect x={60} y={760} width={160} height={100} rx={26} fill="#FFFFFF" />
       <rect x={52} y={720} width={176} height={56} rx={20} fill={C.rose} />
@@ -344,19 +344,19 @@ export const RoomEvening: React.FC<{t: number}> = ({t}) => (
 );
 
 /* ---------------- 7. skincare store (50 orang terawal) ---------------- */
-const SHELF_COLORS = ['#F6B4A3', '#FFE7A8', '#F5B9C6', '#D6C9F3', '#BFD7F2', '#FFD3C2'];
+const SHELF_COLORS = ['#F6B4A3', '#FFE7A8', '#FF8F70', '#D6C9F3', '#BFD7F2', '#FFD3C2'];
 export const RoomStore: React.FC<{t: number}> = ({t}) => (
   <Room t={t} blur={3}>
-    <rect width={W} height={H} fill="#FBE6EC" />
+    <rect width={W} height={H} fill="#EDF1F5" />
     {[0, 1].map((side) => (
       <g key={side}>
-        <rect x={side ? 760 : -20} y={140} width={340} height={1400} rx={16} fill="#FFF7F5" />
+        <rect x={side ? 760 : -20} y={140} width={340} height={1400} rx={16} fill="#FFFFFF" />
         {Array.from({length: 5}).map((_, r) => {
           const y = 380 + r * 250;
           const x0 = side ? 780 : 0;
           return (
             <g key={r}>
-              <rect x={x0 - 10} y={y} width={330} height={18} rx={6} fill="#E9CDBF" />
+              <rect x={x0 - 10} y={y} width={330} height={18} rx={6} fill="#D9CDBE" />
               {Array.from({length: 5}).map((__, k) => {
                 const kinds: BottleKind[] = ['pump', 'spray', 'jar', 'dropper', 'tube'];
                 const kind = kinds[(k + r + side) % 5];
@@ -391,7 +391,7 @@ const GiftBox: React.FC<{x: number; y: number; w: number; h: number; c: string; 
 export const RoomGifts: React.FC<{t: number}> = ({t}) => (
   <Room t={t} blur={2.5}>
     <rect width={W} height={H} fill="#FFF5DC" />
-    <rect x={0} y={1180} width={W} height={740} fill="#F9E1E6" />
+    <rect x={0} y={1180} width={W} height={740} fill="#E3E8EE" />
     {/* bunting */}
     <path d="M-20 160 Q 540 300 1100 160" stroke="#E6C98F" strokeWidth={4} fill="none" />
     {Array.from({length: 11}).map((_, i) => {
@@ -425,8 +425,8 @@ const ShopBag: React.FC<{x: number; y: number; w: number; h: number; c: string}>
 );
 export const RoomShopping: React.FC<{t: number}> = ({t}) => (
   <Room t={t} blur={2.5}>
-    <rect width={W} height={H} fill="#FDE9E2" />
-    <rect x={0} y={1100} width={W} height={820} fill="#F7D7CF" />
+    <rect width={W} height={H} fill="#EEF1F4" />
+    <rect x={0} y={1100} width={W} height={820} fill="#D7DEE6" />
     {/* rail with hanging bags */}
     <rect x={-20} y={520} width={1120} height={16} rx={8} fill="#E6C98F" />
     {[40, 200, 820, 960].map((x, i) => (
