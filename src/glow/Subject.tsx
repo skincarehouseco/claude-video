@@ -49,7 +49,8 @@ export const subjectCam = (f: number) => {
     const d = f - pf;
     if (d >= 0 && d < 40) s += amt * Math.min(d / 5, 1) * Math.exp(-Math.max(0, d - 5) / 14);
   });
-  return {x: ch(1), y: ch(2), s};
+  // the hijab touches the source frame's right edge: keep that edge off-canvas
+  return {x: Math.max(ch(1), (W / 2) * (1 - s) + 2), y: ch(2), s};
 };
 
 export const Subject: React.FC = () => {
