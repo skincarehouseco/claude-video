@@ -2,6 +2,7 @@ import React from 'react';
 import {AbsoluteFill, Img, staticFile, useCurrentFrame} from 'remotion';
 import {toScreen} from './layout';
 import {C, FPS, H, HAND, life, pop, popSoft, prog, ramp, rnd, S, SANS, SectionKey, SERIF, SERIF_I, W} from './theme';
+import {RoomBathroom, RoomEvening, RoomGifts, RoomMorning, RoomShopping, RoomStore, RoomStudio, RoomTowel, RoomVanity} from './Rooms';
 import {Bag, Card, Check, Chip, CurvedArrow, Drop, Face, Gift, HandNote, Lock, Palm, Person, PumpBottle, Sparkle, SprayIcon, StepTag, Underline} from './ui';
 
 /* ========================================================================================
@@ -177,12 +178,11 @@ const BgProduct: React.FC<{t: number}> = ({t}) => (
   </AbsoluteFill>
 );
 
-const BgTwo: React.FC<{t: number}> = ({t}) => {
+const BgTwoNumeral: React.FC<{t: number}> = ({t}) => {
   const a = S.two[0];
   const p = pop(t, a + 1.25, {damping: 14, stiffness: 120, mass: 0.9}); // "dua" at 15.06
   return (
-    <AbsoluteFill style={{background: `linear-gradient(180deg, ${C.lilac} 0%, ${C.lilacMid} 100%)`}}>
-      <Blob x={850} y={350} r={260} color={C.blushDeep} t={t} o={0.6} />
+    <AbsoluteFill>
       {/* giant numeral BEHIND the speaker */}
       <div
         style={{
@@ -201,7 +201,6 @@ const BgTwo: React.FC<{t: number}> = ({t}) => {
       >
         2
       </div>
-      <Grain />
     </AbsoluteFill>
   );
 };
@@ -343,169 +342,54 @@ const FgHook: React.FC<{t: number}> = ({t}) => {
           Blumé Bright Toner Mist
         </div>
       </div>
-      <div style={abs(80, 405, {opacity: pop(t, 1.0)})}>
-        <HandNote t={t} at={1.0} text="step-by-step ✿" size={58} color={C.dusty} rot={-6} />
-      </div>
       <Sparkle t={t} size={46} color="#fff" style={abs(860, 260, {opacity: pop(t, 0.9)})} />
       <Sparkle t={t} size={30} phase={2} color={C.cherry} style={abs(110, 250, {opacity: pop(t, 1.1)})} />
     </>
   );
 };
 
-const FgHello: React.FC<{t: number}> = ({t}) => {
-  const l = toScreen(t, 230, 520);
-  const r = toScreen(t, 820, 520);
+/** small, consistent step marker (top-left) */
+const StepChip: React.FC<{t: number; at: number; n: number; label: string; color: string}> = ({t, at, n, label, color}) => {
+  const p = pop(t, at, {damping: 14, stiffness: 170, mass: 0.6});
   return (
-    <>
-      <div style={abs(70, 180, {width: 835, display: 'flex', justifyContent: 'center'})}>
-        <HandNote t={t} at={2.0} text="hello everyone!" size={92} color={C.cherry} rot={-3} cps={30} />
-      </div>
-      {/* little wave strokes beside both raised hands (2.0 – 2.9 s) */}
-      {[l, r].map((p, i) => (
-        <svg key={i} width={200} height={200} viewBox="0 0 200 200" style={abs(p.x - 100 + (i ? 110 : -110), p.y - 120, {opacity: life(t, 2.05, 2.95)})}>
-          {[0, 1, 2].map((k) => (
-            <path
-              key={k}
-              d={i ? `M${60 + k * 26} ${60 - k * 10} C ${90 + k * 26} 90, ${90 + k * 26} 110, ${60 + k * 26} ${140 + k * 10}` : `M${140 - k * 26} ${60 - k * 10} C ${110 - k * 26} 90, ${110 - k * 26} 110, ${140 - k * 26} ${140 + k * 10}`}
-              stroke={C.rose}
-              strokeWidth={7}
-              fill="none"
-              strokeLinecap="round"
-              opacity={0.5 + 0.5 * Math.sin(t * 14 - k)}
-            />
-          ))}
-        </svg>
-      ))}
-    </>
+    <div style={abs(70, 175, {display: 'flex', alignItems: 'center', gap: 14, padding: '10px 26px 10px 10px', borderRadius: 999, background: 'rgba(255,255,255,0.9)', boxShadow: '0 10px 26px rgba(120,60,80,0.18)', opacity: Math.min(1, p * 1.4), transform: `translateX(${(1 - p) * -40}px) scale(${0.8 + 0.2 * p})`, transformOrigin: 'left center'})}>
+      <div style={{width: 58, height: 58, borderRadius: '50%', background: color, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: SERIF, fontWeight: 700, fontSize: 34}}>{n}</div>
+      <div style={{fontFamily: SERIF_I, fontStyle: 'italic', fontSize: 44, color: C.ink, whiteSpace: 'nowrap'}}>{label}</div>
+    </div>
   );
 };
 
-const GUIDE = [
-  {n: '01', label: 'Cuci muka', c: C.skyDeep, icon: 'clean'},
-  {n: '02', label: 'Tunggu kering', c: C.butterDeep, icon: 'dry'},
-  {n: '03', label: 'Toner Mist', c: C.coral, icon: 'mist'},
-  {n: '04', label: 'Moisturizer', c: C.dusty, icon: 'lock'},
-];
-const MiniIcon: React.FC<{kind: string; size?: number}> = ({kind, size = 54}) =>
-  kind === 'clean' ? <PumpBottle size={size * 0.62} color={C.skyMid} /> : kind === 'dry' ? <Drop size={size * 0.72} color={C.skyDeep} /> : kind === 'mist' ? <SprayIcon size={size * 0.66} /> : <Lock size={size * 0.75} open={0} color={C.rose} />;
-
-const FgGuide: React.FC<{t: number}> = ({t}) => (
-  <div style={abs(70, 200, {width: 450})}>
-    <div style={{opacity: pop(t, 3.35), transform: `translateY(${(1 - pop(t, 3.35)) * 20}px)`}}>
-      <div style={{fontFamily: SANS, fontWeight: 700, fontSize: 26, letterSpacing: 6, color: C.lilacDeep}}>HARI NI</div>
-      <div style={{fontFamily: SERIF_I, fontStyle: 'italic', fontSize: 70, lineHeight: 1.0, color: C.ink, marginTop: 4}}>
-        cara pakai
-      </div>
-      <Underline t={t} at={3.6} width={300} color={C.rose} />
-    </div>
-    <Card t={t} at={3.55} style={{marginTop: 26, padding: '22px 26px', width: 410}}>
-      {GUIDE.map((g, i) => {
-        const at = 3.75 + i * 0.32;
-        const p = pop(t, at);
-        return (
-          <div key={i} style={{display: 'flex', alignItems: 'center', gap: 16, padding: '12px 0', borderTop: i ? '2px dashed rgba(149,131,204,0.3)' : 'none', opacity: p, transform: `translateX(${(1 - p) * -40}px)`}}>
-            <div style={{width: 64, height: 64, borderRadius: 22, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `inset 0 0 0 3px ${g.c}`}}>
-              <MiniIcon kind={g.icon} />
-            </div>
-            <div style={{fontFamily: SERIF, fontWeight: 600, fontSize: 34, color: g.c, width: 46}}>{g.n}</div>
-            <div style={{fontFamily: SANS, fontWeight: 600, fontSize: 34, color: C.ink}}>{g.label}</div>
-          </div>
-        );
-      })}
-    </Card>
+const FgHello: React.FC<{t: number}> = ({t}) => (
+  <div style={abs(70, 175, {width: 835, display: 'flex', justifyContent: 'center'})}>
+    <HandNote t={t} at={2.0} text="hello everyone!" size={88} color={C.cherry} rot={-3} cps={30} />
   </div>
 );
 
-const FgCleanse: React.FC<{t: number}> = ({t}) => {
-  const pb = popSoft(t, 6.55);
-  const foam = prog(t, 6.9, 8.2);
-  return (
-    <>
-      <div style={abs(70, 190)}>
-        <StepTag t={t} at={5.98} n="01" color={C.skyDeep} label="Cuci muka" sub="dulu, okay!" />
-      </div>
-      {/* cleanser bottle + foam -> clean face */}
-      <div style={abs(70, 760, {width: 420, height: 520})}>
-        <div style={{position: 'absolute', left: 10, top: 40, opacity: pb, transform: `translateY(${(1 - pb) * 60}px) rotate(${-8 + Math.sin(t * 2) * 2}deg)`}}>
-          <PumpBottle size={170} color={C.skyMid} />
-        </div>
-        {Array.from({length: 9}).map((_, i) => {
-          const s = prog(t, 6.9 + i * 0.12, 7.3 + i * 0.12);
-          return (
-            <div
-              key={i}
-              style={{
-                position: 'absolute',
-                left: 150 + Math.cos(i * 1.7) * 60 + i * 14,
-                top: 60 - i * 8 + Math.sin(i * 2.3) * 30,
-                width: 40 + (i % 3) * 18,
-                height: 40 + (i % 3) * 18,
-                borderRadius: '50%',
-                background: 'radial-gradient(circle at 30% 30%, #fff 0 25%, rgba(220,235,250,0.9) 60%, rgba(191,215,242,0.7))',
-                boxShadow: 'inset 0 0 0 2px rgba(255,255,255,0.9)',
-                transform: `scale(${s})`,
-              }}
-            />
-          );
-        })}
-        <div style={{position: 'absolute', left: 230, top: 170, opacity: popSoft(t, 7.1), transform: `scale(${0.7 + 0.3 * popSoft(t, 7.1)})`}}>
-          <Face size={150} closed />
-          {/* foam on the face */}
-          {Array.from({length: 7}).map((_, i) => (
-            <div
-              key={i}
-              style={{
-                position: 'absolute',
-                left: 20 + (i % 4) * 30,
-                top: 40 + Math.floor(i / 4) * 55 + (i % 2) * 10,
-                width: 28,
-                height: 28,
-                borderRadius: '50%',
-                background: 'radial-gradient(circle at 30% 30%, #fff, rgba(210,228,248,0.9))',
-                transform: `scale(${foam * (0.8 + 0.3 * Math.sin(t * 6 + i))})`,
-              }}
-            />
-          ))}
-        </div>
-        <svg width={420} height={420} style={abs(0, 0, {overflow: 'visible'})}>
-          <CurvedArrow t={t} at={7.2} d="M150 300 C 170 360, 230 380, 280 350" len={200} color={C.skyDeep} head={[280, 350, -30]} />
-        </svg>
-      </div>
-      <div style={abs(80, 1260, {opacity: pop(t, 7.8)})}>
-        <Chip t={t} at={7.86} text="gentle cleanser" bg="#fff" color={C.skyDeep} size={36} icon={<Sparkle t={t} size={30} color={C.skyMid} />} />
-        <div style={{marginLeft: 70, marginTop: -4}}>
-          <Underline t={t} at={7.9} width={180} color={C.skyDeep} />
-        </div>
-      </div>
-    </>
-  );
-};
+// she points up-left (4.0 – 5.2 s): the note appears where she points
+const FgGuide: React.FC<{t: number}> = ({t}) => (
+  <div style={abs(80, 250, {opacity: life(t, 3.9, 5.95)})}>
+    <HandNote t={t} at={3.95} text="cara pakai ✿" size={66} color={C.dusty} rot={-8} cps={20} />
+  </div>
+);
+
+const FgCleanse: React.FC<{t: number}> = ({t}) => (
+  <>
+    <StepChip t={t} at={6.0} n={1} label="Cuci muka" color={C.skyDeep} />
+    <Bubbles t={t} n={9} color="rgba(191,215,242,0.5)" speed={120} seed={7} big={0.7} />
+    <div style={abs(110, 290, {opacity: life(t, 7.86, 8.75)})}>
+      <HandNote t={t} at={7.86} text="gentle cleanser" size={54} color={C.skyDeep} rot={-5} cps={30} />
+    </div>
+  </>
+);
 
 const FgDry: React.FC<{t: number}> = ({t}) => {
   const fill = ramp(t, [9.15, 10.35], [0, 100]);
   const done = pop(t, 10.4, {damping: 11, stiffness: 200, mass: 0.6});
-  const evap = prog(t, 9.2, 10.4);
   return (
     <>
-      <div style={abs(70, 190)}>
-        <StepTag t={t} at={8.72} n="02" color={C.butterDeep} label="Tunggu" sub="sampai kering" />
-      </div>
-      {/* water droplet evaporating into wisps */}
-      <div style={abs(110, 760, {width: 340, height: 260})}>
-        <div style={{position: 'absolute', left: 110, top: 70, transform: `scale(${1 - 0.75 * evap})`, opacity: 1 - evap * 0.7, transformOrigin: '50% 100%'}}>
-          <Drop size={110} color={C.skyDeep} />
-        </div>
-        {[0, 1, 2].map((i) => {
-          const k = ((t * 0.9 + i / 3) % 1) * Math.min(1, evap * 3);
-          return (
-            <svg key={i} width={60} height={120} viewBox="0 0 60 120" style={abs(80 + i * 60, 60 - k * 90, {opacity: (1 - k) * Math.min(1, evap * 3)})}>
-              <path d="M30 110 C 10 90, 50 70, 30 50 C 10 30, 50 20, 30 4" stroke={C.skyMid} strokeWidth="7" fill="none" strokeLinecap="round" />
-            </svg>
-          );
-        })}
-      </div>
+      <StepChip t={t} at={8.74} n={2} label="Tunggu kering" color={C.butterDeep} />
       {/* playful loading bar */}
-      <Card t={t} at={9.05} style={{position: 'absolute', left: 70, top: 1080, width: 410, padding: '22px 26px'}}>
+      <Card t={t} at={9.05} style={{position: 'absolute', left: 70, top: 1130, width: 380, padding: '18px 24px'}}>
         <div style={{display: 'flex', justifyContent: 'space-between', fontFamily: SANS, fontWeight: 600, fontSize: 28, color: C.ink}}>
           <span>skin drying…</span>
           <span style={{color: C.cherry}}>{Math.round(fill)}%</span>
@@ -514,7 +398,7 @@ const FgDry: React.FC<{t: number}> = ({t}) => {
           <div style={{width: `${fill}%`, height: '100%', borderRadius: 20, background: `repeating-linear-gradient(-45deg, ${C.butterDeep} 0 18px, #F7DD86 18px 36px)`, backgroundPosition: `${t * 60}px 0`}} />
         </div>
       </Card>
-      <div style={abs(250, 960, {transform: `scale(${done}) rotate(${-10 * done}deg)`, opacity: Math.min(1, done * 1.5)})}>
+      <div style={abs(220, 1020, {transform: `scale(${done}) rotate(${-10 * done}deg)`, opacity: Math.min(1, done * 1.5)})}>
         <div style={{display: 'flex', alignItems: 'center', gap: 10, padding: '10px 26px', borderRadius: 999, background: '#fff', border: `4px solid ${C.cherry}`, fontFamily: HAND, fontWeight: 700, fontSize: 56, color: C.cherry}}>
           kering <Check size={44} />
         </div>
@@ -523,50 +407,21 @@ const FgDry: React.FC<{t: number}> = ({t}) => {
   );
 };
 
-const FgProduct: React.FC<{t: number}> = ({t}) => {
-  const p = popSoft(t, 11.0);
-  const float = Math.sin(t * 2.2) * 10;
-  return (
-    <>
-      <div style={abs(70, 190)}>
-        <StepTag t={t} at={10.9} n="03" color={C.coralDeep} label="Toner Mist" sub="proceed, babe ✦" />
-      </div>
-      {/* official Yello packshot (yelloskincare.com), on a glossy spotlight */}
-      <div
-        style={abs(30, 640, {
-          width: 260,
-          height: 600,
-          opacity: p,
-          transform: `translateY(${(1 - p) * 120 + float}px) rotate(${(1 - p) * -12 + Math.sin(t * 1.4) * 2}deg)`,
-        })}
-      >
-        <div style={{position: 'absolute', left: -20, top: 20, width: 300, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 68%)'}} />
-        <Img src={staticFile('blume/pack_toner.png')} style={{position: 'absolute', left: 58, top: 0, height: 520, filter: 'drop-shadow(0 26px 30px rgba(180,70,50,0.35))'}} />
-        <Sparkle t={t} size={44} style={abs(190, 20)} />
-        <Sparkle t={t} size={30} phase={3} color={C.butter} style={abs(20, 200)} />
-      </div>
-    </>
-  );
-};
+const FgProduct: React.FC<{t: number}> = ({t}) => (
+  <>
+    <StepChip t={t} at={10.9} n={3} label="Toner Mist" color={C.coralDeep} />
+    {/* glow + sparkles on the real packshot standing on the vanity shelf */}
+    <div style={abs(20, 300, {width: 260, height: 460, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,250,240,0.8) 0%, rgba(255,250,240,0) 70%)', opacity: life(t, 12.3, 13.8)})} />
+    <Sparkle t={t} size={40} style={abs(200, 420, {opacity: life(t, 12.44, 13.8)})} />
+    <Sparkle t={t} size={28} phase={2} color={C.butter} style={abs(60, 520, {opacity: life(t, 12.6, 13.8)})} />
+  </>
+);
 
-const FgTwo: React.FC<{t: number}> = ({t}) => {
-  const bottle = toScreen(t, 905, 560);
-  return (
-    <>
-      <div style={abs(80, 1050, {display: 'flex', flexDirection: 'column', gap: 18})}>
-        <Chip t={t} at={15.06} text="Cara 1 · spray direct" bg="#fff" color={C.lilacDeep} size={34} tilt={-2} />
-        <Chip t={t} at={15.3} text="Cara 2 · tangan + pat" bg="#fff" color={C.cherry} size={34} tilt={2} />
-      </div>
-      <div style={abs(90, 860, {opacity: pop(t, 15.06)})}>
-        <HandNote t={t} at={15.1} text="cara" size={110} color={C.lilacDeep} rot={-8} cps={14} />
-      </div>
-      {/* glow tag on the product she is holding */}
-      <div style={abs(Math.min(bottle.x - 200, 640), bottle.y - 250, {opacity: pop(t, 14.36)})}>
-        <Chip t={t} at={14.36} text="toner mist" bg={C.coral} color="#fff" size={30} />
-      </div>
-    </>
-  );
-};
+const FgTwo: React.FC<{t: number}> = ({t}) => (
+  <div style={abs(90, 880, {opacity: pop(t, 15.06)})}>
+    <HandNote t={t} at={15.1} text="cara" size={110} color={C.lilacDeep} rot={-8} cps={14} />
+  </div>
+);
 
 const Mist: React.FC<{t: number; from: [number, number]; to: [number, number]; a: number; b: number; n?: number; color?: string; spread?: number}> = ({
   t,
@@ -600,19 +455,9 @@ const FgWay1: React.FC<{t: number}> = ({t}) => {
   const face = toScreen(t, 330, 560);
   return (
     <>
-      <Card t={t} at={15.85} style={{position: 'absolute', left: 70, top: 1010, width: 380, padding: '22px 26px'}}>
-        <div style={{fontFamily: SANS, fontWeight: 700, fontSize: 24, letterSpacing: 5, color: C.lilacDeep}}>CARA 1</div>
-        <div style={{fontFamily: SERIF_I, fontStyle: 'italic', fontSize: 50, lineHeight: 1.05, color: C.ink, marginTop: 4}}>Spray direct</div>
-        <div style={{display: 'flex', alignItems: 'center', gap: 10, marginTop: 10}}>
-          <SprayIcon size={46} />
-          <svg width={70} height={20}>
-            <path d="M4 10 H60" stroke={C.ink} strokeWidth="4" strokeDasharray="6 8" strokeLinecap="round" />
-            <path d="M52 3 L62 10 L52 17" stroke={C.ink} strokeWidth="4" fill="none" strokeLinecap="round" />
-          </svg>
-          <Face size={56} closed />
-          <span style={{fontFamily: HAND, fontWeight: 700, fontSize: 40, color: C.cherry, marginLeft: 6}}>skin</span>
-        </div>
-      </Card>
+      <div style={abs(560, 230, {opacity: life(t, 15.9, 17.85)})}>
+        <HandNote t={t} at={15.95} text="spray direct!" size={64} color={C.skyDeep} rot={4} cps={24} />
+      </div>
       {/* fine mist drifting from her extended hand (right) onto her face */}
       <Mist t={t} from={[1000, 1250]} to={[face.x + 40, face.y]} a={16.2} b={17.85} n={70} color="rgba(255,255,255,0.95)" />
       <Mist t={t} from={[1000, 1250]} to={[face.x + 40, face.y]} a={16.3} b={17.85} n={30} color="rgba(191,215,242,0.9)" />
@@ -621,54 +466,13 @@ const FgWay1: React.FC<{t: number}> = ({t}) => {
 };
 
 const FgWay2: React.FC<{t: number}> = ({t}) => {
-  const steps = [
-    {at: 18.5, label: 'spray', icon: <SprayIcon size={56} />},
-    {at: 19.22, label: 'tangan', icon: <Palm size={70} />},
-    {at: 19.84, label: 'pat-pat', icon: <Face size={66} closed />},
-  ];
   const nozzle = toScreen(t, 300, 900);
   const palm = toScreen(t, 820, 1110);
   const lc = toScreen(t, 400, 600);
   return (
     <>
-      <div style={abs(70, 180, {width: 835})}>
-        <div style={{display: 'flex', alignItems: 'center', gap: 14, opacity: pop(t, 17.9)}}>
-          <div style={{fontFamily: SANS, fontWeight: 700, fontSize: 24, letterSpacing: 5, color: C.cherry}}>CARA 2</div>
-          <div style={{height: 2, flex: 1, background: C.cherry, opacity: 0.3}} />
-        </div>
-        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: 14}}>
-          {steps.map((s, i) => {
-            const p = pop(t, s.at - 0.1);
-            const active = t >= s.at - 0.1 && (i === 2 || t < steps[i + 1].at - 0.1);
-            return (
-              <React.Fragment key={i}>
-                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 0.35 + 0.65 * p, transform: `scale(${0.85 + 0.15 * p + (active ? 0.05 : 0)})`}}>
-                  <div
-                    style={{
-                      width: 130,
-                      height: 130,
-                      borderRadius: 44,
-                      background: active ? '#fff' : 'rgba(255,255,255,0.7)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: active ? `0 0 0 5px ${C.cherry}, 0 14px 30px rgba(217,79,114,0.3)` : '0 8px 20px rgba(120,60,80,0.12)',
-                    }}
-                  >
-                    {s.icon}
-                  </div>
-                  <div style={{fontFamily: SANS, fontWeight: 700, fontSize: 30, color: active ? C.cherry : C.ink}}>{s.label}</div>
-                </div>
-                {i < 2 && (
-                  <svg width={120} height={60} viewBox="0 0 120 60" style={{marginTop: 34, opacity: prog(t, steps[i + 1].at - 0.3, steps[i + 1].at)}}>
-                    <path d="M8 40 C 40 4, 80 4, 108 34" stroke={C.ink} strokeWidth="4" fill="none" strokeDasharray="7 9" strokeLinecap="round" />
-                    <path d="M96 34 L110 36 L106 22" stroke={C.ink} strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                )}
-              </React.Fragment>
-            );
-          })}
-        </div>
+      <div style={abs(70, 175, {opacity: life(t, 17.9, 20.8)})}>
+        <Chip t={t} at={17.9} text="Cara 2 · spray → tangan → pat" bg="rgba(255,255,255,0.92)" color={C.cherry} size={34} />
       </div>
       {/* spray into the palm (18.3 – 19.0 s) */}
       <Mist t={t} from={[nozzle.x + 40, nozzle.y]} to={[palm.x - 40, palm.y]} a={18.3} b={19.05} n={55} color="rgba(255,255,255,0.95)" spread={0.25} />
@@ -687,84 +491,25 @@ const FgWay2: React.FC<{t: number}> = ({t}) => {
 };
 
 const FgLock: React.FC<{t: number}> = ({t}) => {
-  const L0 = 70;
-  const Wd = 420;
-  const top = 640;
-  const tonerIn = prog(t, 21.0, 21.9);
-  const cream = prog(t, 22.1, 22.55);
   const locked = prog(t, 22.35, 22.55);
   const lp = pop(t, 22.2, {damping: 12, stiffness: 180, mass: 0.6});
   return (
     <>
-      <div style={abs(70, 190)}>
-        <StepTag t={t} at={20.86} n="04" color={C.dusty} label="Lock it in" sub="with a moisturizer" />
+      <StepChip t={t} at={20.86} n={4} label="Moisturizer" color={C.dusty} />
+      {/* padlock snaps shut on "lock" */}
+      <div style={abs(770, 330, {transform: `scale(${lp}) rotate(${(1 - lp) * 20}deg)`, opacity: life(t, 22.2, 23.75, 0.05)})}>
+        <Lock size={110} open={1 - locked} color={C.cherry} />
       </div>
-      {/* skin cross-section */}
-      <div style={abs(L0, top, {width: Wd, height: 560})}>
-        <svg width={Wd} height={560} viewBox={`0 0 ${Wd} 560`} style={{overflow: 'visible'}}>
-          {/* skin */}
-          <path d={`M0 360 C 70 340, 140 380, 210 360 C 280 340, 350 380, ${Wd} 360 V 560 H 0 Z`} fill="#F6CDB8" />
-          <path d={`M0 420 C 70 400, 140 440, 210 420 C 280 400, 350 440, ${Wd} 420 V 560 H 0 Z`} fill="#EDB59C" />
-          {/* toner hydration layer (fills with droplets) */}
-          <path d={`M0 ${360 - 60 * tonerIn} C 70 ${340 - 60 * tonerIn}, 140 ${380 - 60 * tonerIn}, 210 ${360 - 60 * tonerIn} C 280 ${340 - 60 * tonerIn}, 350 ${380 - 60 * tonerIn}, ${Wd} ${360 - 60 * tonerIn} V 362 C 350 380, 280 340, 210 362 C 140 380, 70 340, 0 362 Z`} fill="rgba(240,122,98,0.35)" />
-          {/* moisturizer seal */}
-          <path
-            d={`M${-Wd * (1 - cream)} 290 C ${70 - Wd * (1 - cream)} 270, ${140 - Wd * (1 - cream)} 310, ${210 - Wd * (1 - cream)} 290 C ${280 - Wd * (1 - cream)} 270, ${350 - Wd * (1 - cream)} 310, ${Wd - Wd * (1 - cream)} 290 V 250 C ${350 - Wd * (1 - cream)} 230, ${280 - Wd * (1 - cream)} 270, ${210 - Wd * (1 - cream)} 250 C ${140 - Wd * (1 - cream)} 230, ${70 - Wd * (1 - cream)} 270, ${-Wd * (1 - cream)} 250 Z`}
-            fill="#FFF8F1"
-            stroke={C.rose}
-            strokeWidth="4"
-          />
-        </svg>
-        {/* falling toner droplets */}
-        {Array.from({length: 7}).map((_, i) => {
-          const at = 21.0 + i * 0.11;
-          const p = prog(t, at, at + 0.45, (x) => x * x);
-          return p > 0 && p < 1 ? (
-            <div key={i} style={abs(30 + i * 55, 40 + p * 260)}>
-              <Drop size={26} color={C.coral} />
-            </div>
-          ) : null;
-        })}
-        <div style={abs(Wd - 150, 380, {opacity: prog(t, 21.3, 21.6)})}>
-          <span style={{fontFamily: SANS, fontWeight: 700, fontSize: 26, color: C.coralDeep, background: '#fff', padding: '6px 14px', borderRadius: 999}}>toner</span>
-        </div>
-        <div style={abs(0, 470)}>
-          <span style={{fontFamily: SANS, fontWeight: 700, fontSize: 24, color: '#fff', letterSpacing: 4}}>SKIN</span>
-        </div>
-        <div style={abs(10, 190, {opacity: prog(t, 22.45, 22.7)})}>
-          <span style={{fontFamily: SANS, fontWeight: 700, fontSize: 26, color: C.dusty, background: '#fff', padding: '6px 14px', borderRadius: 999}}>moisturizer</span>
-        </div>
-        {/* padlock snaps shut on "lock" */}
-        <div style={abs(Wd - 150, 40, {transform: `scale(${lp}) rotate(${(1 - lp) * 20}deg)`})}>
-          <Lock size={120} open={1 - locked} color={C.cherry} />
-        </div>
+      <div style={abs(700, 480, {opacity: life(t, 22.5, 23.75)})}>
+        <HandNote t={t} at={22.5} text="lock it in!" size={56} color={C.cherry} rot={-6} cps={26} />
       </div>
     </>
   );
 };
 
-const FgRecap: React.FC<{t: number}> = ({t}) => (
-  <Card t={t} at={23.66} style={{position: 'absolute', left: 70, top: 640, width: 420, padding: '22px 26px'}}>
-    <div style={{fontFamily: SANS, fontWeight: 700, fontSize: 24, letterSpacing: 5, color: C.cherry, marginBottom: 6}}>RECAP</div>
-    {GUIDE.map((g, i) => {
-      const at = 23.74 + i * 0.1;
-      const p = pop(t, at, {damping: 11, stiffness: 240, mass: 0.5});
-      return (
-        <div key={i} style={{display: 'flex', alignItems: 'center', gap: 14, padding: '9px 0'}}>
-          <div style={{transform: `scale(${p})`}}>
-            <Check size={40} color={g.c} />
-          </div>
-          <div style={{fontFamily: SANS, fontWeight: 600, fontSize: 32, color: C.ink}}>{g.label}</div>
-        </div>
-      );
-    })}
-  </Card>
-);
-
 const FgPromo: React.FC<{t: number}> = ({t}) => {
   const n = Math.round(ramp(t, [24.72, 25.4], [0, 50]));
   const p = pop(t, 24.72);
-  const bag = pop(t, 26.52, {damping: 11, stiffness: 200, mass: 0.6});
   return (
     <>
       <div style={abs(70, 170, {width: 835, display: 'flex', flexDirection: 'column', alignItems: 'center'})}>
@@ -777,25 +522,6 @@ const FgPromo: React.FC<{t: number}> = ({t}) => {
           </div>
         </div>
       </div>
-      {/* the first 50 buyers fill up, one per person, as she says "50 orang" */}
-      <Card t={t} at={24.75} style={{position: 'absolute', left: 70, top: 465, width: 262, padding: '16px 16px 12px'}}>
-        <div style={{display: 'flex', flexWrap: 'wrap', gap: '4px 2px', width: 230}}>
-          {Array.from({length: 50}).map((_, i) => {
-            const on = i < Math.floor(ramp(t, [24.75, 25.7], [0, 50])) ? 1 : 0;
-            return <Person key={i} size={21} on={on} />;
-          })}
-        </div>
-        <div style={{fontFamily: SANS, fontWeight: 700, fontSize: 20, letterSpacing: 3, color: C.cherry, marginTop: 6}}>FIRST 50</div>
-      </Card>
-      <div style={abs(540, 1190, {transform: `scale(${bag}) rotate(${-4 * bag}deg)`, opacity: Math.min(1, bag * 1.5)})}>
-        <div style={{display: 'flex', alignItems: 'center', gap: 12, padding: '12px 24px', borderRadius: 30, background: 'rgba(255,255,255,0.92)', boxShadow: '0 14px 30px rgba(120,60,80,0.2)'}}>
-          <Bag size={54} color={C.rose} />
-          <div>
-            <div style={{fontFamily: SANS, fontWeight: 700, fontSize: 18, letterSpacing: 4, color: C.inkSoft}}>PURCHASE</div>
-            <div style={{fontFamily: SERIF_I, fontStyle: 'italic', fontSize: 36, color: C.ink, lineHeight: 1}}>Toner Mist</div>
-          </div>
-        </div>
-      </div>
     </>
   );
 };
@@ -803,7 +529,6 @@ const FgPromo: React.FC<{t: number}> = ({t}) => {
 const FgFree: React.FC<{t: number}> = ({t}) => {
   const lid = prog(t, 29.62, 29.95, (x) => 1 - (1 - x) * (1 - x));
   const g = pop(t, 28.06);
-  const serum = toScreen(t, 120, 760); // top of the yellow serum she holds up (28.6 – 30 s)
   const freeP = pop(t, 29.78, {damping: 10, stiffness: 220, mass: 0.55});
   const serumP = pop(t, 28.72, {damping: 14, stiffness: 120, mass: 0.8});
   return (
@@ -829,13 +554,6 @@ const FgFree: React.FC<{t: number}> = ({t}) => {
         <Sparkle t={t} size={36} color="#fff" style={abs(100, -10, {opacity: prog(t, 29.62, 29.8)})} />
         <Sparkle t={t} size={28} phase={2} color={C.butterDeep} style={abs(-10, 150, {opacity: prog(t, 29.62, 29.8)})} />
       </div>
-      {/* hand-drawn arrow down the left edge to the serum */}
-      <div style={{opacity: life(t, 28.6, 30.15)}}>
-        <svg width={W} height={H} style={abs(0, 0)}>
-          <CurvedArrow t={t} at={28.7} d={`M 120 300 C 80 420, 70 ${serum.y - 200}, ${Math.max(90, serum.x)} ${serum.y - 40}`} len={600} color={C.cherry} width={6} head={[Math.max(90, serum.x), serum.y - 40, 75]} />
-        </svg>
-        <Sparkle t={t} size={42} color={C.butterDeep} style={abs(Math.max(60, serum.x - 40), serum.y - 20, {opacity: prog(t, 29.0, 29.2)})} />
-      </div>
     </>
   );
 };
@@ -846,7 +564,6 @@ const FgCta: React.FC<{t: number}> = ({t}) => {
     {w: 'yours', at: 30.6},
     {w: 'now!', at: 30.76},
   ];
-  const bag = pop(t, 30.3, {damping: 12, stiffness: 160, mass: 0.7});
   return (
     <>
       <div style={abs(70, 215, {width: 835, display: 'flex', justifyContent: 'center', gap: 22})}>
@@ -875,13 +592,6 @@ const FgCta: React.FC<{t: number}> = ({t}) => {
       <div style={abs(300, 357)}>
         <Underline t={t} at={30.9} width={480} color={C.cherry} />
       </div>
-      <div style={abs(600, 1300, {transform: `scale(${bag}) rotate(${-8 + Math.sin(t * 5) * 4}deg)`})}>
-        <Bag size={84} color={C.cherry} />
-      </div>
-      {/* bouncing arrow toward the product link area */}
-      <svg width={80} height={110} viewBox="0 0 120 170" style={abs(712, 1300 + Math.abs(Math.sin(t * 6)) * 10, {opacity: pop(t, 30.8)})}>
-        <path d="M60 10 V140 M20 100 L60 150 L100 100" stroke={C.cherry} strokeWidth="12" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
       <Sparkle t={t} size={50} style={abs(110, 190, {opacity: pop(t, 30.7)})} />
       <Sparkle t={t} size={40} phase={2} color={C.butter} style={abs(850, 360, {opacity: pop(t, 30.85)})} />
     </>
@@ -892,22 +602,29 @@ const FgCta: React.FC<{t: number}> = ({t}) => {
  * Layer assembly with reveal transitions
  * ====================================================================================== */
 
+const BgTwoRoom: React.FC<{t: number}> = ({t}) => (
+  <AbsoluteFill>
+    <RoomVanity t={t} packshot={0} />
+    <BgTwoNumeral t={t} />
+  </AbsoluteFill>
+);
+
 type Sec = {key: SectionKey; Bg: React.FC<{t: number}>; Fg: React.FC<{t: number}>; origin: [number, number]};
 export const SECTIONS: Sec[] = [
   {key: 'hook', Bg: BgHook, Fg: FgHook, origin: [540, 600]},
-  {key: 'hello', Bg: BgHello, Fg: FgHello, origin: [540, 700]},
-  {key: 'guide', Bg: BgGuide, Fg: FgGuide, origin: [200, 300]},
-  {key: 'cleanse', Bg: BgCleanse, Fg: FgCleanse, origin: [150, 900]},
-  {key: 'dry', Bg: BgDry, Fg: FgDry, origin: [270, 420]},
-  {key: 'product', Bg: BgProduct, Fg: FgProduct, origin: [260, 900]},
-  {key: 'two', Bg: BgTwo, Fg: FgTwo, origin: [880, 600]},
-  {key: 'way1', Bg: BgWay1, Fg: FgWay1, origin: [1000, 1250]},
-  {key: 'way2', Bg: BgWay2, Fg: FgWay2, origin: [540, 1300]},
-  {key: 'lock', Bg: BgLock, Fg: FgLock, origin: [280, 900]},
-  {key: 'recap', Bg: BgLock, Fg: FgRecap, origin: [280, 900]},
-  {key: 'promo', Bg: BgPromo, Fg: FgPromo, origin: [540, 900]},
-  {key: 'free', Bg: BgFree, Fg: FgFree, origin: [300, 1100]},
-  {key: 'cta', Bg: BgCta, Fg: FgCta, origin: [540, 600]},
+  {key: 'hello', Bg: RoomStudio, Fg: FgHello, origin: [540, 700]},
+  {key: 'guide', Bg: RoomStudio, Fg: FgGuide, origin: [200, 300]},
+  {key: 'cleanse', Bg: RoomBathroom, Fg: FgCleanse, origin: [150, 900]},
+  {key: 'dry', Bg: RoomTowel, Fg: FgDry, origin: [860, 250]},
+  {key: 'product', Bg: RoomVanity, Fg: FgProduct, origin: [140, 600]},
+  {key: 'two', Bg: BgTwoRoom, Fg: FgTwo, origin: [880, 600]},
+  {key: 'way1', Bg: RoomMorning, Fg: FgWay1, origin: [1000, 1250]},
+  {key: 'way2', Bg: RoomMorning, Fg: FgWay2, origin: [540, 1300]},
+  {key: 'lock', Bg: RoomEvening, Fg: FgLock, origin: [190, 340]},
+  {key: 'recap', Bg: RoomEvening, Fg: () => null, origin: [280, 900]},
+  {key: 'promo', Bg: RoomStore, Fg: FgPromo, origin: [540, 900]},
+  {key: 'free', Bg: RoomGifts, Fg: FgFree, origin: [300, 1100]},
+  {key: 'cta', Bg: RoomShopping, Fg: FgCta, origin: [540, 600]},
 ];
 const REVEAL = 0.4; // seconds
 
