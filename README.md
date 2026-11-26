@@ -27,3 +27,38 @@ python3 scripts/make_audio.py public/audio
 python3 scripts/build_captions.py
 npm run render   # -> out/final.mp4
 ```
+
+---
+
+# GlowEdit — premium skincare edit (treatment essence video)
+
+`npx remotion render src/index.ts GlowEdit out/glow.mp4 --codec h264 --crf 17 --audio-bitrate 192k --timeout 120000`
+
+Layer stack (`src/glow/GlowEdit.tsx`): designed background → text *behind* the speaker → speaker cut-out → infographics → full-screen B-roll scenes → captions.
+
+| time | narration | treatment |
+|---|---|---|
+| 0–3.7 s | "why … best-selling products" | cut-out in blush arch studio, animated title, "01" chip |
+| 3.7–7.8 | Galactomyces, pores | cream editorial scene, footage in tilted arch frame, pore-refining skin disc |
+| 7.8–10 | smoother texture | lavender silk, before/after texture slider |
+| 10–14.7 | 5% Niacinamide + Centella | peach glow, counting 5%, centella leaves grow in |
+| 14.7–20.7 | soothe / redness / acne scars | sky-blue glass, benefit cards with animated skin discs |
+| 20.7–22.6 | "the best part" | blush rays, giant text layered behind the speaker |
+| 22.6–27.9 | texture, lightweight, watery, absorbs | aqua water scene, freeze-frame + flash, speed ramp, skin-layer absorption infographic |
+| 27.9–31.8 | not heavy, layers with other products | sunlit linen, floating feathers, routine-layering steps |
+| 31.8–36.7 | comfortable, easy, routine | lavender dream, animated checklist |
+| 36.7–end | "you have to try this" | peach podium end card |
+
+Files: `src/glow/{theme,Subject,Bits,Backgrounds,Scenes,Captions,GlowEdit}.tsx`, `src/glow/captions.json` (brand spelling set in `scripts/build_glow_captions.py`).
+
+## Rebuild GlowEdit media
+```bash
+ffmpeg -i source.mov -q:v 2 -start_number 0 frames/f_%04d.jpg
+ffmpeg -i source.mov -vn -af "highpass=f=80,afftdn=nf=-30,acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120:makeup=2,loudnorm=I=-15:TP=-1.5:LRA=9" -ar 48000 -ac 2 public/glow/voice.wav
+# BiRefNet-portrait masks on every 3rd frame of the talking-head shots (~20 s/frame on CPU)
+python3 scripts/seg_birefnet.py frames masks f_0000.jpg f_0003.jpg ...
+python3 scripts/make_cutouts.py frames masks public/glow/cut 0-109 234-676 838-952 953-1196
+for n in $(seq 100 250) $(seq 667 850); do cp frames/f_$(printf %04d $n).jpg public/glow/broll/b_$(printf %04d $n).jpg; done
+python3 scripts/make_glow_audio.py public/glow
+python3 scripts/build_glow_captions.py
+```
