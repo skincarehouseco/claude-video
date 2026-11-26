@@ -1,0 +1,778 @@
+[
+ {
+  "start": 0.0,
+  "end": 1.32,
+  "words": [
+   {
+    "text": "Why",
+    "start": 0.0,
+    "end": 0.5
+   },
+   {
+    "text": "Bulani",
+    "start": 0.5,
+    "end": 1.18
+   },
+   {
+    "text": "is",
+    "start": 1.18,
+    "end": 1.32
+   }
+  ]
+ },
+ {
+  "start": 1.32,
+  "end": 1.9,
+  "words": [
+   {
+    "text": "one",
+    "start": 1.32,
+    "end": 1.5
+   },
+   {
+    "text": "of",
+    "start": 1.5,
+    "end": 1.64
+   },
+   {
+    "text": "our",
+    "start": 1.64,
+    "end": 1.9
+   }
+  ]
+ },
+ {
+  "start": 1.9,
+  "end": 2.58,
+  "words": [
+   {
+    "text": "best",
+    "start": 1.9,
+    "end": 2.12
+   },
+   {
+    "text": "selling",
+    "start": 2.12,
+    "end": 2.34
+   },
+   {
+    "text": "products?",
+    "start": 2.34,
+    "end": 2.58
+   }
+  ]
+ },
+ {
+  "start": 2.78,
+  "end": 3.24,
+  "words": [
+   {
+    "text": "First,",
+    "start": 2.78,
+    "end": 3.24
+   }
+  ]
+ },
+ {
+  "start": 3.34,
+  "end": 3.92,
+  "words": [
+   {
+    "text": "because",
+    "start": 3.34,
+    "end": 3.54
+   },
+   {
+    "text": "it",
+    "start": 3.54,
+    "end": 3.68
+   },
+   {
+    "text": "contains",
+    "start": 3.68,
+    "end": 3.92
+   }
+  ]
+ },
+ {
+  "start": 3.92,
+  "end": 5.12,
+  "words": [
+   {
+    "text": "Galactomyces",
+    "start": 3.92,
+    "end": 4.8
+   },
+   {
+    "text": "that",
+    "start": 4.8,
+    "end": 5.12
+   }
+  ]
+ },
+ {
+  "start": 5.12,
+  "end": 6.04,
+  "words": [
+   {
+    "text": "helps",
+    "start": 5.12,
+    "end": 5.3
+   },
+   {
+    "text": "improve",
+    "start": 5.3,
+    "end": 5.88
+   },
+   {
+    "text": "the",
+    "start": 5.88,
+    "end": 6.04
+   }
+  ]
+ },
+ {
+  "start": 6.04,
+  "end": 7.04,
+  "words": [
+   {
+    "text": "appearance",
+    "start": 6.04,
+    "end": 6.48
+   },
+   {
+    "text": "of",
+    "start": 6.48,
+    "end": 6.74
+   },
+   {
+    "text": "visible",
+    "start": 6.74,
+    "end": 7.04
+   }
+  ]
+ },
+ {
+  "start": 7.04,
+  "end": 8.18,
+  "words": [
+   {
+    "text": "pores",
+    "start": 7.04,
+    "end": 7.48
+   },
+   {
+    "text": "and",
+    "start": 7.48,
+    "end": 7.98
+   },
+   {
+    "text": "make",
+    "start": 7.98,
+    "end": 8.18
+   }
+  ]
+ },
+ {
+  "start": 8.18,
+  "end": 8.96,
+  "words": [
+   {
+    "text": "the",
+    "start": 8.18,
+    "end": 8.44
+   },
+   {
+    "text": "skin",
+    "start": 8.44,
+    "end": 8.62
+   },
+   {
+    "text": "texture",
+    "start": 8.62,
+    "end": 8.96
+   }
+  ]
+ },
+ {
+  "start": 8.96,
+  "end": 9.8,
+  "words": [
+   {
+    "text": "look",
+    "start": 8.96,
+    "end": 9.24
+   },
+   {
+    "text": "smoother.",
+    "start": 9.24,
+    "end": 9.8
+   }
+  ]
+ },
+ {
+  "start": 10.1,
+  "end": 10.98,
+  "words": [
+   {
+    "text": "Other",
+    "start": 10.1,
+    "end": 10.48
+   },
+   {
+    "text": "than",
+    "start": 10.48,
+    "end": 10.7
+   },
+   {
+    "text": "that,",
+    "start": 10.7,
+    "end": 10.98
+   }
+  ]
+ },
+ {
+  "start": 10.98,
+  "end": 12.06,
+  "words": [
+   {
+    "text": "it",
+    "start": 10.98,
+    "end": 11.16
+   },
+   {
+    "text": "has",
+    "start": 11.16,
+    "end": 11.42
+   },
+   {
+    "text": "5%",
+    "start": 11.42,
+    "end": 12.06
+   }
+  ]
+ },
+ {
+  "start": 12.06,
+  "end": 13.2,
+  "words": [
+   {
+    "text": "Niacinamide",
+    "start": 12.06,
+    "end": 12.96
+   },
+   {
+    "text": "with",
+    "start": 12.96,
+    "end": 13.2
+   }
+  ]
+ },
+ {
+  "start": 13.2,
+  "end": 14.5,
+  "words": [
+   {
+    "text": "Centella",
+    "start": 13.2,
+    "end": 13.68
+   },
+   {
+    "text": "Asiatica",
+    "start": 13.68,
+    "end": 14.5
+   }
+  ]
+ },
+ {
+  "start": 14.5,
+  "end": 15.98,
+  "words": [
+   {
+    "text": "that",
+    "start": 14.5,
+    "end": 14.9
+   },
+   {
+    "text": "helps",
+    "start": 14.9,
+    "end": 15.32
+   },
+   {
+    "text": "soothe",
+    "start": 15.32,
+    "end": 15.98
+   }
+  ]
+ },
+ {
+  "start": 15.98,
+  "end": 16.4,
+  "words": [
+   {
+    "text": "the",
+    "start": 15.98,
+    "end": 16.12
+   },
+   {
+    "text": "skin,",
+    "start": 16.12,
+    "end": 16.4
+   }
+  ]
+ },
+ {
+  "start": 16.56,
+  "end": 17.44,
+  "words": [
+   {
+    "text": "calm",
+    "start": 16.56,
+    "end": 16.92
+   },
+   {
+    "text": "redness,",
+    "start": 16.92,
+    "end": 17.44
+   }
+  ]
+ },
+ {
+  "start": 17.62,
+  "end": 18.6,
+  "words": [
+   {
+    "text": "and",
+    "start": 17.62,
+    "end": 18.02
+   },
+   {
+    "text": "also",
+    "start": 18.02,
+    "end": 18.22
+   },
+   {
+    "text": "improve",
+    "start": 18.22,
+    "end": 18.6
+   }
+  ]
+ },
+ {
+  "start": 18.6,
+  "end": 19.86,
+  "words": [
+   {
+    "text": "the",
+    "start": 18.6,
+    "end": 18.9
+   },
+   {
+    "text": "appearance",
+    "start": 18.9,
+    "end": 19.42
+   },
+   {
+    "text": "of",
+    "start": 19.42,
+    "end": 19.86
+   }
+  ]
+ },
+ {
+  "start": 19.86,
+  "end": 20.5,
+  "words": [
+   {
+    "text": "acne",
+    "start": 19.86,
+    "end": 20.18
+   },
+   {
+    "text": "scars.",
+    "start": 20.18,
+    "end": 20.5
+   }
+  ]
+ },
+ {
+  "start": 20.8,
+  "end": 21.74,
+  "words": [
+   {
+    "text": "And",
+    "start": 20.8,
+    "end": 21.22
+   },
+   {
+    "text": "honestly,",
+    "start": 21.22,
+    "end": 21.74
+   }
+  ]
+ },
+ {
+  "start": 21.94,
+  "end": 22.46,
+  "words": [
+   {
+    "text": "the",
+    "start": 21.94,
+    "end": 22.08
+   },
+   {
+    "text": "best",
+    "start": 22.08,
+    "end": 22.2
+   },
+   {
+    "text": "part",
+    "start": 22.2,
+    "end": 22.46
+   }
+  ]
+ },
+ {
+  "start": 22.46,
+  "end": 23.68,
+  "words": [
+   {
+    "text": "is",
+    "start": 22.46,
+    "end": 22.68
+   },
+   {
+    "text": "its",
+    "start": 22.68,
+    "end": 23.2
+   },
+   {
+    "text": "texture.",
+    "start": 23.2,
+    "end": 23.68
+   }
+  ]
+ },
+ {
+  "start": 24.06,
+  "end": 25.64,
+  "words": [
+   {
+    "text": "It's",
+    "start": 24.06,
+    "end": 24.62
+   },
+   {
+    "text": "very",
+    "start": 24.62,
+    "end": 24.92
+   },
+   {
+    "text": "lightweight,",
+    "start": 24.92,
+    "end": 25.64
+   }
+  ]
+ },
+ {
+  "start": 25.9,
+  "end": 26.32,
+  "words": [
+   {
+    "text": "watery,",
+    "start": 25.9,
+    "end": 26.32
+   }
+  ]
+ },
+ {
+  "start": 26.56,
+  "end": 27.76,
+  "words": [
+   {
+    "text": "and",
+    "start": 26.56,
+    "end": 26.7
+   },
+   {
+    "text": "absorbs",
+    "start": 26.7,
+    "end": 27.1
+   },
+   {
+    "text": "quickly.",
+    "start": 27.1,
+    "end": 27.76
+   }
+  ]
+ },
+ {
+  "start": 27.76,
+  "end": 28.4,
+  "words": [
+   {
+    "text": "It",
+    "start": 27.76,
+    "end": 28.06
+   },
+   {
+    "text": "doesn't",
+    "start": 28.06,
+    "end": 28.32
+   },
+   {
+    "text": "feel",
+    "start": 28.32,
+    "end": 28.4
+   }
+  ]
+ },
+ {
+  "start": 28.4,
+  "end": 29.44,
+  "words": [
+   {
+    "text": "heavy",
+    "start": 28.4,
+    "end": 28.82
+   },
+   {
+    "text": "and",
+    "start": 28.82,
+    "end": 29.1
+   },
+   {
+    "text": "it's",
+    "start": 29.1,
+    "end": 29.44
+   }
+  ]
+ },
+ {
+  "start": 29.44,
+  "end": 30.36,
+  "words": [
+   {
+    "text": "easy",
+    "start": 29.44,
+    "end": 29.68
+   },
+   {
+    "text": "to",
+    "start": 29.68,
+    "end": 30.1
+   },
+   {
+    "text": "apply",
+    "start": 30.1,
+    "end": 30.36
+   }
+  ]
+ },
+ {
+  "start": 30.36,
+  "end": 31.14,
+  "words": [
+   {
+    "text": "to",
+    "start": 30.36,
+    "end": 30.6
+   },
+   {
+    "text": "other",
+    "start": 30.6,
+    "end": 30.86
+   },
+   {
+    "text": "skincare",
+    "start": 30.86,
+    "end": 31.14
+   }
+  ]
+ },
+ {
+  "start": 31.14,
+  "end": 31.5,
+  "words": [
+   {
+    "text": "products.",
+    "start": 31.14,
+    "end": 31.5
+   }
+  ]
+ },
+ {
+  "start": 31.54,
+  "end": 32.02,
+  "words": [
+   {
+    "text": "So,",
+    "start": 31.54,
+    "end": 32.02
+   }
+  ]
+ },
+ {
+  "start": 32.08,
+  "end": 32.78,
+  "words": [
+   {
+    "text": "if",
+    "start": 32.08,
+    "end": 32.34
+   },
+   {
+    "text": "you",
+    "start": 32.34,
+    "end": 32.56
+   },
+   {
+    "text": "like",
+    "start": 32.56,
+    "end": 32.78
+   }
+  ]
+ },
+ {
+  "start": 32.78,
+  "end": 33.42,
+  "words": [
+   {
+    "text": "essence",
+    "start": 32.78,
+    "end": 33.12
+   },
+   {
+    "text": "that",
+    "start": 33.12,
+    "end": 33.4
+   },
+   {
+    "text": "is",
+    "start": 33.4,
+    "end": 33.42
+   }
+  ]
+ },
+ {
+  "start": 33.42,
+  "end": 35.38,
+  "words": [
+   {
+    "text": "comfortable",
+    "start": 33.42,
+    "end": 34.04
+   },
+   {
+    "text": "and",
+    "start": 34.04,
+    "end": 34.86
+   },
+   {
+    "text": "easy",
+    "start": 34.86,
+    "end": 35.38
+   }
+  ]
+ },
+ {
+  "start": 35.38,
+  "end": 36.06,
+  "words": [
+   {
+    "text": "to",
+    "start": 35.38,
+    "end": 35.7
+   },
+   {
+    "text": "apply",
+    "start": 35.7,
+    "end": 35.96
+   },
+   {
+    "text": "to",
+    "start": 35.96,
+    "end": 36.06
+   }
+  ]
+ },
+ {
+  "start": 36.06,
+  "end": 36.58,
+  "words": [
+   {
+    "text": "your",
+    "start": 36.06,
+    "end": 36.06
+   },
+   {
+    "text": "skincare",
+    "start": 36.06,
+    "end": 36.36
+   },
+   {
+    "text": "routine,",
+    "start": 36.36,
+    "end": 36.58
+   }
+  ]
+ },
+ {
+  "start": 36.76,
+  "end": 37.46,
+  "words": [
+   {
+    "text": "you",
+    "start": 36.76,
+    "end": 37.12
+   },
+   {
+    "text": "have",
+    "start": 37.12,
+    "end": 37.28
+   },
+   {
+    "text": "to",
+    "start": 37.28,
+    "end": 37.46
+   }
+  ]
+ },
+ {
+  "start": 37.46,
+  "end": 38.62,
+  "words": [
+   {
+    "text": "try",
+    "start": 37.46,
+    "end": 37.64
+   },
+   {
+    "text": "this",
+    "start": 37.64,
+    "end": 38.02
+   },
+   {
+    "text": "Bulani",
+    "start": 38.02,
+    "end": 38.62
+   }
+  ]
+ },
+ {
+  "start": 38.62,
+  "end": 39.34,
+  "words": [
+   {
+    "text": "Treatment",
+    "start": 38.62,
+    "end": 38.94
+   },
+   {
+    "text": "Essence.",
+    "start": 38.94,
+    "end": 39.34
+   }
+  ]
+ }
+]

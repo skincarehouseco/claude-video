@@ -7,3 +7,8 @@ public/audio/music.wav
 public/audio/voice.wav
 public/main_graded.mp4
 public/subject/
+# GlowEdit generated media (see README "GlowEdit")
+public/glow/voice.wav
+public/glow/music.wav
+public/glow/cut/
+public/glow/broll/
