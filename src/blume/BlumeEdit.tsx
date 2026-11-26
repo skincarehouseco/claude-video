@@ -3,8 +3,9 @@ import {AbsoluteFill, Audio, interpolate, Sequence, staticFile, useCurrentFrame}
 import captions from './captions.json';
 import {Captions} from './Captions';
 import {Backgrounds, Foregrounds} from './Scenes';
+import {CARD_TIMES, PolaroidBackgrounds} from './Polaroid';
 import {Subject} from './Subject';
-import {C, DURATION, FPS, HAND, prog, rnd} from './theme';
+import {C, DURATION, FPS, HAND, prog, rnd, Variant, VariantCtx} from './theme';
 import {Sparkle} from './ui';
 
 /* ---------- section-change sparkle sweep + the cover for the source's built-in white flash (24.37–24.53 s) ---------- */
@@ -126,18 +127,20 @@ export const SFX: Sfx[] = [
   [30.9, 'sparkle', 0.14],
 ];
 
-const AudioMix: React.FC = () => {
+const AudioMix: React.FC<{variant: Variant}> = ({variant}) => {
   const vol = useMusicVolume();
+  // version B: different music bed + a camera-shutter click each time a new polaroid lands
+  const sfx: Sfx[] = variant === 'B' ? [...SFX, ...CARD_TIMES.filter((c) => Math.abs(c - 24.3) > 0.1).map((c) => [c + 0.05, 'shutter', 0.16] as Sfx)] : SFX;
   return (
     <>
       <Audio src={staticFile('blume/audio/voice.wav')} volume={1} />
       <Audio
-        src={staticFile('blume/audio/music.wav')}
+        src={staticFile(variant === 'B' ? 'blume/audio/music_b.wav' : 'blume/audio/music.wav')}
         volume={(f) =>
           vol[Math.min(f, vol.length - 1)] * interpolate(f, [0, 6, DURATION - 20, DURATION], [0, 1, 1, 0.3], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})
         }
       />
-      {SFX.map(([at, name, v], i) => (
+      {sfx.map(([at, name, v], i) => (
         <Sequence key={i} from={Math.max(0, Math.round(at * FPS))} durationInFrames={45} layout="none">
           <Audio src={staticFile(`blume/audio/${name}.wav`)} volume={v} />
         </Sequence>
@@ -146,13 +149,15 @@ const AudioMix: React.FC = () => {
   );
 };
 
-export const BlumeEdit: React.FC = () => (
-  <AbsoluteFill style={{backgroundColor: C.cream}}>
-    <Backgrounds />
-    <Subject />
-    <Foregrounds />
-    <Captions />
-    <PromoWipe />
-    <AudioMix />
-  </AbsoluteFill>
+export const BlumeEdit: React.FC<{variant?: Variant}> = ({variant = 'A'}) => (
+  <VariantCtx.Provider value={variant}>
+    <AbsoluteFill style={{backgroundColor: C.cream}}>
+      {variant === 'B' ? <PolaroidBackgrounds /> : <Backgrounds />}
+      <Subject />
+      <Foregrounds />
+      <Captions />
+      <PromoWipe />
+      <AudioMix variant={variant} />
+    </AbsoluteFill>
+  </VariantCtx.Provider>
 );

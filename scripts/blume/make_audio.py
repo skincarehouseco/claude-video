@@ -137,22 +137,6 @@ cc[:len(a)] += a; st = int(0.09*SR); cc[st:st+len(b)] += b[:len(cc)-st]
 cc[:int(0.05*SR)] += hp(noise(0.05), 0.5) * env(int(0.05*SR), 0.0005, 0.01) * 0.6
 save("cart.wav", cc)
 
-# ------------------------------------------------------------------ music bed
-# light upbeat lifestyle pop, 112 BPM, Fmaj7 - Am7 - Dm7 - Bbmaj7 (soft, bright)
-BPM = 112; beat = 60 / BPM; bars = 17
-L = int(bars * 4 * beat * SR) + SR * 2
-mL = np.zeros(L); mR = np.zeros(L)
-
-
-def add(buf, s, at):
-    i = int(at * SR); n = min(len(s), len(buf) - i)
-    if n > 0: buf[i:i+n] += s[:n]
-
-
-prog = [[53, 57, 60, 64], [57, 60, 64, 67], [50, 53, 57, 60], [46, 50, 53, 57]]
-roots = [41, 45, 38, 46]
-
-
 def pluck(fr, d=0.5):
     tt = t(d)
     s = np.sin(2*np.pi*fr*tt) + 0.5*np.sin(2*np.pi*2*fr*tt)*np.exp(-tt/0.08) + 0.2*np.sin(2*np.pi*3*fr*tt)*np.exp(-tt/0.04)
@@ -180,33 +164,45 @@ def hat():
     d = 0.05; return hp(noise(d), 0.7) * env(int(d*SR), 0.0005, 0.012)
 
 
-melody = [72, 76, 79, 76, 77, 76, 74, 72, 76, 79, 81, 79, 77, 74, 72, 69]
-for bar in range(bars):
-    ch = prog[bar % 4]; t0 = bar * 4 * beat
-    p = pad(ch, 4 * beat + 0.2); add(mL, p, t0); add(mR, p, t0)
-    b = pluck(hz(roots[bar % 4]), 0.6) * 0.9
-    for k in (0, 1.5, 2, 3.5):
-        add(mL, b * (0.8 if k else 1), t0 + k*beat); add(mR, b * (0.8 if k else 1), t0 + k*beat)
-    if bar >= 1:
-        for k in range(4):
-            add(mL, kick()*0.55, t0+k*beat) if k in (0, 2) else None
-            add(mR, kick()*0.55, t0+k*beat) if k in (0, 2) else None
-            if k in (1, 3):
-                cl = clap()*0.28; add(mL, cl, t0+k*beat); add(mR, cl, t0+k*beat)
-        for k in range(8):
-            h = hat()*0.12; add(mL if k % 2 else mR, h, t0+k*beat/2 + 0.01)
-    # sparkly plucked arpeggio
-    for k in range(8):
-        m = ch[k % 4] + 12
-        s = pluck(hz(m), 0.4) * 0.22
-        add(mL if k % 2 else mR, s, t0 + k*beat/2)
-    if bar % 2 == 1:
-        for k, m in enumerate(melody[(bar//2 % 2)*8:(bar//2 % 2)*8+8]):
-            s = pluck(hz(m), 0.5) * 0.18
-            add(mL, s, t0 + k*beat/2); add(mR, s*0.9, t0 + k*beat/2 + 0.012)
 
-mix = np.stack([mL, mR], 1)
-fade = np.minimum(np.arange(len(mix))/(SR*0.6), 1)
-mix *= fade[:, None]
-save("music.wav", mix, 0.8)
+# ------------------------------------------------------------------ music beds
+def make_music(name, BPM, prog, roots, melody, bars=17, swing=0.0, kick_pattern=(0, 2), seed=0):
+    beat = 60 / BPM
+    L = int(bars * 4 * beat * SR) + SR * 2
+    mL = np.zeros(L); mR = np.zeros(L)
+    def add(buf, s_, at):
+        i = int(at * SR); n = min(len(s_), len(buf) - i)
+        if n > 0: buf[i:i+n] += s_[:n]
+    for bar in range(bars):
+        ch = prog[bar % len(prog)]; t0 = bar * 4 * beat
+        p = pad(ch, 4 * beat + 0.2); add(mL, p, t0); add(mR, p, t0)
+        b = pluck(hz(roots[bar % len(roots)]), 0.6) * 0.9
+        for k in (0, 1.5, 2, 3.5):
+            add(mL, b * (0.8 if k else 1), t0 + k*beat); add(mR, b * (0.8 if k else 1), t0 + k*beat)
+        if bar >= 1:
+            for k in range(4):
+                if k in kick_pattern:
+                    add(mL, kick()*0.55, t0+k*beat); add(mR, kick()*0.55, t0+k*beat)
+                if k in (1, 3):
+                    cl = clap()*0.28; add(mL, cl, t0+k*beat); add(mR, cl, t0+k*beat)
+            for k in range(8):
+                h = hat()*0.12; add(mL if k % 2 else mR, h, t0+k*beat/2 + (swing*beat/2 if k % 2 else 0) + 0.01)
+        for k in range(8):
+            m = ch[k % 4] + 12
+            s_ = pluck(hz(m), 0.4) * 0.22
+            add(mL if k % 2 else mR, s_, t0 + k*beat/2 + (swing*beat/2 if k % 2 else 0))
+        if bar % 2 == 1:
+            for k, m in enumerate(melody[(bar//2 % 2)*8:(bar//2 % 2)*8+8]):
+                s_ = pluck(hz(m), 0.5) * 0.18
+                add(mL, s_, t0 + k*beat/2); add(mR, s_*0.9, t0 + k*beat/2 + 0.012)
+    mix = np.stack([mL, mR], 1)
+    mix *= np.minimum(np.arange(len(mix))/(SR*0.6), 1)[:, None]
+    save(name, mix, 0.8)
+
+# A: light upbeat lifestyle pop, 112 BPM, Fmaj7 - Am7 - Dm7 - Bbmaj7
+make_music("music.wav", 112, [[53, 57, 60, 64], [57, 60, 64, 67], [50, 53, 57, 60], [46, 50, 53, 57]], [41, 45, 38, 46],
+           [72, 76, 79, 76, 77, 76, 74, 72, 76, 79, 81, 79, 77, 74, 72, 69])
+# B: breezy swung bedroom-pop, 98 BPM, Ebmaj7 - Cm7 - Abmaj7 - Bb6 (warmer, for the polaroid version)
+make_music("music_b.wav", 98, [[51, 55, 58, 62], [48, 51, 55, 58], [44, 48, 51, 55], [46, 50, 53, 55]], [39, 36, 44, 46],
+           [70, 74, 75, 79, 77, 75, 74, 70, 72, 75, 79, 82, 79, 77, 75, 74], bars=15, swing=0.33, kick_pattern=(0, 2.5))
 print("audio written to", OUT)

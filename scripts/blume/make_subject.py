@@ -19,7 +19,15 @@ N = len([f for f in os.listdir(fdir) if f.endswith('.jpg')])
 # the person model glues it to the hijab. Fade out only DARK pixels inside a soft ellipse over the
 # object (shirt / skin / bottles are lighter and stay; no hard edges).
 # (first frame, last frame, centre x, centre y, radius x, radius y) — the framing shifts slightly between takes
-OBJS = [(737, 907, 742, 912, 66, 62), (908, 949, 692, 898, 74, 46)]
+OBJS = [
+    # colour takes: the object sits just right of her neck (fade dark + grey-wall pixels only)
+    (1, 64, 700, 900, 62, 42), (65, 181, 700, 906, 62, 42), (182, 332, 715, 906, 62, 42),
+    (333, 414, 697, 904, 62, 42), (415, 471, 694, 902, 60, 40), (472, 519, 802, 985, 64, 44),
+    (520, 542, 694, 892, 62, 42), (543, 576, 698, 892, 62, 42), (577, 629, 860, 1030, 62, 44),
+    (630, 728, 700, 912, 62, 42),
+    # black & white take and final shot
+    (737, 907, 742, 912, 66, 62), (908, 949, 692, 898, 74, 46),
+]
 _yy, _xx = np.mgrid[0:1920, 0:1080].astype(np.float32)
 UPPER = np.clip((900 - _yy) / 25, 0, 1)  # above her shoulder line there is only wall + object
 WEIGHTS = []
@@ -30,8 +38,14 @@ for a_, b_, cx, cy, rx, ry in OBJS:
 def clean_static(n, m):
     w = next((w for a_, b_, w in WEIGHTS if a_ <= n <= b_), None)
     if w is None: return m
-    g = cv2.GaussianBlur(cv2.imread(f"{fdir}/f_{n:04d}.jpg", cv2.IMREAD_GRAYSCALE).astype(np.float32), (0, 0), 1.5)
+    bgr = cv2.GaussianBlur(cv2.imread(f"{fdir}/f_{n:04d}.jpg"), (0, 0), 1.5)
+    g = cv2.cvtColor(bgr, cv2.COLOR_BGR2GRAY).astype(np.float32)
     dark = np.clip((105 - g) / 25, 0, 1)
+    if n < 737:
+        # colour shots: also fade grey wall / shelf (low saturation); shirt, skin and bottles are saturated
+        hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV).astype(np.float32)
+        wall = np.clip((0.22 * 255 - hsv[..., 1]) / 20, 0, 1) * (g > 80)
+        return m * (1 - w * np.maximum(dark, wall))
     return m * (1 - w * np.maximum(dark, UPPER))
 
 def raw(n):

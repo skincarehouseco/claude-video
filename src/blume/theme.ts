@@ -97,3 +97,9 @@ export const S = {
   cta: [30.1, 31.64],
 } as const;
 export type SectionKey = keyof typeof S;
+
+/* ---------- edit variant (A = original, B = polaroid / scrapbook alternate) ---------- */
+import {createContext, useContext} from 'react';
+export type Variant = 'A' | 'B';
+export const VariantCtx = createContext<Variant>('A');
+export const useVariant = () => useContext(VariantCtx);

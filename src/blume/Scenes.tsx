@@ -1,7 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, Img, staticFile, useCurrentFrame} from 'remotion';
 import {toScreen} from './layout';
-import {C, FPS, H, HAND, life, pop, popSoft, prog, ramp, rnd, S, SANS, SectionKey, SERIF, SERIF_I, W} from './theme';
+import {C, FPS, H, HAND, life, pop, popSoft, prog, ramp, rnd, S, SANS, SectionKey, SERIF, SERIF_I, useVariant, W} from './theme';
 import {RoomBathroom, RoomEvening, RoomGifts, RoomMorning, RoomShopping, RoomStore, RoomStudio, RoomTowel, RoomVanity} from './Rooms';
 import {Bag, Card, Check, Chip, CurvedArrow, Drop, Face, Gift, HandNote, Lock, Palm, Person, PumpBottle, Sparkle, SprayIcon, StepTag, Underline} from './ui';
 
@@ -350,6 +350,8 @@ const FgHook: React.FC<{t: number}> = ({t}) => {
 
 /** small, consistent step marker (top-left) */
 const StepChip: React.FC<{t: number; at: number; n: number; label: string; color: string}> = ({t, at, n, label, color}) => {
+  // version B labels each step on washi tape stuck to the polaroid instead
+  if (useVariant() === 'B') return null;
   const p = pop(t, at, {damping: 14, stiffness: 170, mass: 0.6});
   return (
     <div style={abs(70, 175, {display: 'flex', alignItems: 'center', gap: 14, padding: '10px 26px 10px 10px', borderRadius: 999, background: 'rgba(255,255,255,0.9)', boxShadow: '0 10px 26px rgba(120,60,80,0.18)', opacity: Math.min(1, p * 1.4), transform: `translateX(${(1 - p) * -40}px) scale(${0.8 + 0.2 * p})`, transformOrigin: 'left center'})}>
@@ -375,7 +377,13 @@ const FgGuide: React.FC<{t: number}> = ({t}) => (
 const FgCleanse: React.FC<{t: number}> = ({t}) => (
   <>
     <StepChip t={t} at={6.0} n={1} label="Cuci muka" color={C.skyDeep} />
-    <Bubbles t={t} n={9} color="rgba(191,215,242,0.5)" speed={120} seed={7} big={0.7} />
+    {/* bubbles only drift up the sides, never across her face */}
+    <AbsoluteFill style={{clipPath: 'polygon(0 0, 26% 0, 26% 100%, 0 100%)'}}>
+      <Bubbles t={t} n={14} color="rgba(191,215,242,0.5)" speed={120} seed={7} big={0.7} />
+    </AbsoluteFill>
+    <AbsoluteFill style={{clipPath: 'polygon(78% 0, 100% 0, 100% 100%, 78% 100%)'}}>
+      <Bubbles t={t} n={14} color="rgba(191,215,242,0.5)" speed={120} seed={9} big={0.7} />
+    </AbsoluteFill>
     <div style={abs(110, 290, {opacity: life(t, 7.86, 8.75)})}>
       <HandNote t={t} at={7.86} text="gentle cleanser" size={54} color={C.skyDeep} rot={-5} cps={30} />
     </div>
@@ -452,10 +460,11 @@ const Mist: React.FC<{t: number; from: [number, number]; to: [number, number]; a
 );
 
 const FgWay1: React.FC<{t: number}> = ({t}) => {
+  const isA = useVariant() === 'A';
   const face = toScreen(t, 330, 560);
   return (
     <>
-      <div style={abs(560, 230, {opacity: life(t, 15.9, 17.85)})}>
+      <div style={abs(560, 230, {opacity: isA ? life(t, 15.9, 17.85) : 0})}>
         <HandNote t={t} at={15.95} text="spray direct!" size={64} color={C.skyDeep} rot={4} cps={24} />
       </div>
       {/* fine mist drifting from her extended hand (right) onto her face */}
@@ -466,12 +475,13 @@ const FgWay1: React.FC<{t: number}> = ({t}) => {
 };
 
 const FgWay2: React.FC<{t: number}> = ({t}) => {
+  const isA = useVariant() === 'A';
   const nozzle = toScreen(t, 300, 900);
   const palm = toScreen(t, 820, 1110);
   const lc = toScreen(t, 400, 600);
   return (
     <>
-      <div style={abs(70, 175, {opacity: life(t, 17.9, 20.8)})}>
+      <div style={abs(70, 175, {opacity: isA ? life(t, 17.9, 20.8) : 0})}>
         <Chip t={t} at={17.9} text="Cara 2 · spray → tangan → pat" bg="rgba(255,255,255,0.92)" color={C.cherry} size={34} />
       </div>
       {/* spray into the palm (18.3 – 19.0 s) */}

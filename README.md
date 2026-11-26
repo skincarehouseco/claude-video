@@ -57,3 +57,9 @@ python3 scripts/blume/make_audio.py public/blume/audio
 python3 scripts/blume/build_captions.py
 npx remotion render src/index.ts BlumeEdit out/blume_final.mp4 --codec h264 --crf 17 --audio-bitrate 256k --timeout 120000
 ```
+
+### Version B (`BlumeEditB`)
+Same edit, alternate look for A/B testing: contextual scenes shown as tilted polaroids stacking on dotted
+paper (`src/blume/Polaroid.tsx`), step labels on washi tape, CapCut-style pop-in captions with yellow keyword
+highlights, a swung 98 BPM music bed (`music_b.wav`) and a shutter click as each polaroid lands.
+`npx remotion render src/index.ts BlumeEditB out/blume_final_B.mp4 --codec h264 --crf 17 --audio-bitrate 256k --timeout 120000`
