@@ -231,7 +231,7 @@ const RoutineCard: React.FC<{r: Routine}> = ({r}) => {
       <div style={{position: 'absolute', left: 495, top: 176, transform: `translateX(-50%) scale(${inP})`, opacity: out, padding: '8px 20px', borderRadius: 999, background: 'rgba(20,20,22,0.82)', color: '#fff', font: '600 26px InterS', letterSpacing: '0.12em', whiteSpace: 'nowrap'}}>
         {r.tag}
       </div>
-      <div style={{position: 'absolute', left: 495 - W / 2, top: 1085, width: W, padding: '22px 26px 24px', borderRadius: 30, background: 'rgba(20,20,22,0.86)', boxShadow: '0 16px 36px rgba(0,0,0,0.3)', opacity: out * Math.min(1, inP * 1.5), transform: `translateY(${(1 - inP) * 60}px)`}}>
+      <div style={{position: 'absolute', left: 495 - W / 2, top: 222, width: W, padding: '22px 26px 24px', borderRadius: 30, background: 'rgba(20,20,22,0.86)', boxShadow: '0 16px 36px rgba(0,0,0,0.3)', opacity: out * Math.min(1, inP * 1.5), transform: `translateY(${(1 - inP) * -60}px)`}}>
         {/* day bar */}
         <div style={{position: 'relative', height: 16, borderRadius: 8, background: 'linear-gradient(90deg,#FFB76B 0%,#7CC4FF 33%,#FF9E6B 66%,#26346E 100%)'}}>
           <div style={{position: 'absolute', left: `${pos * 100}%`, top: -9, width: 34, height: 34, borderRadius: 17, background: '#fff', transform: 'translateX(-50%)', boxShadow: '0 0 0 5px rgba(255,255,255,0.25)'}} />
@@ -329,20 +329,12 @@ export const V2ReferenceB: React.FC = () => {
   const s = t >= 3.06 && t < 4.48 ? 1 : shotScale(t);
   const blur = t >= BLUR[0] && t < BLUR[1];
   const key = KEYS.find((k) => t >= k.s && t < k.e);
-  // examples section (8.64 – 17.6): the video shrinks into a rounded frame at the top so the routine card sits under her chin
-  const inset = ease(ramp(frame, f(8.64), f(8.64) + 8)) * ease(ramp(frame, f(17.6) - 8, f(17.6), 1, 0));
-  const k = 1 - 0.34 * inset;
-  const frameStyle: React.CSSProperties =
-    inset > 0
-      ? {transform: `scale(${k})`, transformOrigin: '540px 441px', borderRadius: 48 * inset, boxShadow: '0 24px 60px rgba(0,0,0,0.45)'}
-      : {transform: `scale(${s})`, transformOrigin: '540px 880px'};
+  // examples section (8.64 – 17.6): full-screen video; the routine card sits above her head instead of the big keyword,
+  // and punch-ins stay gentle so the card never reaches her eyes / mask
+  const inRoutine = t >= 8.64 && t < 17.6;
+  const frameStyle: React.CSSProperties = {transform: `scale(${inRoutine ? Math.min(s, 1.04) : s})`, transformOrigin: '540px 880px'};
   return (
     <AbsoluteFill style={{background: '#000', overflow: 'hidden'}}>
-      {inset > 0 && (
-        <AbsoluteFill style={{filter: 'blur(30px) brightness(0.55)', transform: 'scale(1.15)'}}>
-          <Footage />
-        </AbsoluteFill>
-      )}
       <AbsoluteFill style={{...frameStyle, filter: blur ? 'blur(22px) brightness(0.92)' : undefined, overflow: 'hidden'}}>
         {/* supplied shots as hard-cut cut-aways (voice continues): bowl macro on "yang ni…jadual", face close-up on "shift malam" */}
         {t >= 3.06 && t < 4.48 ? (
@@ -359,7 +351,7 @@ export const V2ReferenceB: React.FC = () => {
       {ROUTINES.filter((r) => t >= r.from && t < r.to).map((r) => (
         <RoutineCard key={r.from} r={r} />
       ))}
-      {key && !blur && <Keyword k={key} />}
+      {key && !blur && !inRoutine && <Keyword k={key} />}
       <MiniSub />
       <AudioMix music="music2.wav" base={0.15} under={0.07} sfx={SFX} />
     </AbsoluteFill>
