@@ -19,9 +19,9 @@ const RED = '#D7263D';
 const BEIGE = '#EFCB86';
 
 type Part = {t: string; serif?: boolean; color?: string};
-type Key = {s: number; e: number; lines: Part[][]; type?: boolean; sticker?: 'jar' | 'sun'};
+type Key = {s: number; e: number; lines: Part[][]; type?: boolean; speed?: number; sticker?: 'jar' | 'sun'};
 const KEYS: Key[] = [
-  {s: 0.34, e: 2.24, type: true, lines: [[{t: 'pakai OTMS'}], [{t: 'waktu pagi?', serif: true}]]},
+  {s: 0.0, e: 2.24, type: true, speed: 1.0, lines: [[{t: 'pakai OTMS pagi,'}], [{t: 'salah ke?', serif: true, color: RED}]]},
   {s: 2.28, e: 2.6, lines: [[{t: 'boleh', color: BEIGE}]]},
   {s: 2.6, e: 3.06, lines: [[{t: 'tak ada'}], [{t: 'masalah'}]]},
   {s: 3.62, e: 3.9, lines: [[{t: 'tak ada'}]]},
@@ -72,7 +72,7 @@ const Keyword: React.FC<{k: Key}> = ({k}) => {
   const sc = 0.97 + 0.03 * ramp(frame, st, st + 4);
   // typewriter: reveal characters across the spoken span of each line
   const totalChars = k.lines.reduce((a, l) => a + l.reduce((b, p) => b + p.t.length, 0), 0);
-  const typeEnd = k.type ? Math.min(f(k.e) - 6, st + totalChars * 2.2) : st;
+  const typeEnd = k.type ? Math.min(f(k.e) - 6, st + totalChars * (k.speed ?? 2.2)) : st;
   const shown = k.type ? Math.floor(ramp(frame, st, typeEnd, 0, totalChars + 0.01)) : 99999;
   let used = 0;
   const cursorOn = k.type && Math.floor(frame / 8) % 2 === 0;
@@ -294,8 +294,8 @@ const SearchUI: React.FC = () => {
 };
 
 const SFX: Sfx[] = [
-  ...Array.from({length: 7}).map((_, i) => [0.36 + i * 0.09, 'type', 0.1] as Sfx),
-  ...Array.from({length: 7}).map((_, i) => [1.18 + i * 0.09, 'type', 0.1] as Sfx),
+  ...Array.from({length: 11}).map((_, i) => [0.02 + i * 0.075, 'type', 0.1] as Sfx),
+  [0.88, 'pop', 0.14],
   [2.28, 'pop', 0.14],
   [3.9, 'click', 0.14],
   [5.14, 'pop', 0.1],
