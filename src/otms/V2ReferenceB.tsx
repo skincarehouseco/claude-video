@@ -1,7 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame} from 'remotion';
-import {AudioMix, BRoll, clamp, f, Footage, pop, ramp, Sfx, SpeakerCut, WORDS} from './common';
-import {Sun} from './stickers';
+import {AudioMix, BRoll, clamp, ease, f, Footage, pop, ramp, Sfx, SpeakerCut, WORDS} from './common';
+import {Check, Moon, Sun, SunsetIcon} from './stickers';
 
 /*
  VIDEO 02 — Reference B editing language (minimal "talking + one big keyword"):
@@ -58,7 +58,6 @@ const shotScale = (t: number) => {
   return s;
 };
 
-const SHRINK: [number, number] = [9.2, 10.46]; // inset with black border
 const BLUR: [number, number] = [18.3, 20.08]; // blurred bg + UI moment
 
 const lineSize = (parts: Part[]) => {
@@ -187,6 +186,90 @@ const MiniSub: React.FC = () => {
   );
 };
 
+/* ---------- routine infographic for the two examples (clean dark UI card, same family as the search bars) ---------- */
+type Step = {at: number; label: string; icon: React.ReactNode; good?: boolean};
+type Routine = {from: number; to: number; tag: string; steps: Step[]; dayPos: [number, number][]};
+const JAR = <Img src={staticFile('otms/otms_jar.png')} style={{width: 92}} />;
+const ROUTINES: Routine[] = [
+  {
+    from: 8.64,
+    to: 12.74,
+    tag: 'CONTOH 1 · SHIFT MALAM',
+    steps: [
+      {at: 9.68, label: 'kerja malam', icon: <Moon size={64} />},
+      {at: 10.46, label: 'pagi: bangun', icon: <Sun size={70} />},
+      {at: 11.96, label: 'pakai OTMS', icon: JAR, good: true},
+    ],
+    // [time s, position 0..1 on the day bar: 0 = pagi, 0.33 = tengah hari, 0.66 = petang, 1 = malam]
+    dayPos: [[8.64, 1], [10.3, 1], [10.6, 0.02], [12.74, 0.06]],
+  },
+  {
+    from: 12.74,
+    to: 17.6,
+    tag: 'CONTOH 2 · KERJA PAGI',
+    steps: [
+      {at: 13.46, label: 'kerja pagi', icon: <Sun size={70} />},
+      {at: 14.38, label: 'balik petang', icon: <SunsetIcon size={74} />},
+      {at: 15.26, label: 'malam: OTMS', icon: JAR, good: true},
+    ],
+    dayPos: [[12.74, 0.02], [13.6, 0.1], [14.38, 0.62], [15.26, 0.98], [17.6, 1]],
+  },
+];
+
+const RoutineCard: React.FC<{r: Routine}> = ({r}) => {
+  const frame = useCurrentFrame();
+  const t = frame / 30;
+  const st = f(r.from);
+  const inP = pop(frame, st + 2, 10);
+  const out = ramp(frame, f(r.to) - 5, f(r.to), 1, 0);
+  const pos = interpolate(t, r.dayPos.map((d) => d[0]), r.dayPos.map((d) => d[1]), clamp);
+  const ok = r.steps[2].at + 0.5;
+  const W = 840;
+  return (
+    <>
+      {/* example tag */}
+      <div style={{position: 'absolute', left: 495, top: 176, transform: `translateX(-50%) scale(${inP})`, opacity: out, padding: '8px 20px', borderRadius: 999, background: 'rgba(20,20,22,0.82)', color: '#fff', font: '600 26px InterS', letterSpacing: '0.12em', whiteSpace: 'nowrap'}}>
+        {r.tag}
+      </div>
+      <div style={{position: 'absolute', left: 495 - W / 2, top: 1085, width: W, padding: '22px 26px 24px', borderRadius: 30, background: 'rgba(20,20,22,0.86)', boxShadow: '0 16px 36px rgba(0,0,0,0.3)', opacity: out * Math.min(1, inP * 1.5), transform: `translateY(${(1 - inP) * 60}px)`}}>
+        {/* day bar */}
+        <div style={{position: 'relative', height: 16, borderRadius: 8, background: 'linear-gradient(90deg,#FFB76B 0%,#7CC4FF 33%,#FF9E6B 66%,#26346E 100%)'}}>
+          <div style={{position: 'absolute', left: `${pos * 100}%`, top: -9, width: 34, height: 34, borderRadius: 17, background: '#fff', transform: 'translateX(-50%)', boxShadow: '0 0 0 5px rgba(255,255,255,0.25)'}} />
+        </div>
+        <div style={{display: 'flex', justifyContent: 'space-between', marginTop: 10, font: '600 22px InterS', color: '#A8A8B0'}}>
+          <span>pagi</span>
+          <span>tengah hari</span>
+          <span>petang</span>
+          <span>malam</span>
+        </div>
+        {/* steps */}
+        <div style={{position: 'relative', display: 'flex', justifyContent: 'space-between', marginTop: 18}}>
+          <div style={{position: 'absolute', left: 120, right: 120, top: 52, height: 4, background: 'rgba(255,255,255,0.15)'}} />
+          {r.steps.map((s, i) => {
+            const p = pop(frame, f(s.at), 9);
+            const lit = frame >= f(s.at);
+            const lineP = i < 2 ? ramp(frame, f(s.at), f(r.steps[i + 1].at)) : 0;
+            return (
+              <div key={i} style={{position: 'relative', width: 240, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                {i < 2 && <div style={{position: 'absolute', left: 170, top: 52, width: 230 * lineP, height: 4, background: '#fff'}} />}
+                <div style={{width: 108, height: 108, borderRadius: 54, background: s.good && lit ? '#25C2E0' : lit ? '#2E2E33' : '#1E1E22', border: `3px solid ${lit ? '#fff' : 'rgba(255,255,255,0.2)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: `scale(${lit ? 0.7 + 0.3 * p : 0.85})`, opacity: lit ? 1 : 0.35, overflow: 'hidden'}}>
+                  {s.icon}
+                </div>
+                <div style={{marginTop: 10, font: `${s.good ? 800 : 600} 32px ${s.good ? 'InterX' : 'InterS'}`, letterSpacing: '-0.02em', color: lit ? '#fff' : 'rgba(255,255,255,0.35)', whiteSpace: 'nowrap'}}>{s.label}</div>
+                {s.good && frame >= f(ok) && (
+                  <div style={{position: 'absolute', right: 28, top: -10, width: 46, height: 46, borderRadius: 23, background: '#2FB36D', display: 'flex', alignItems: 'center', justifyContent: 'center', transform: `scale(${pop(frame, f(ok), 8)})`}}>
+                    <Check size={34} color="#fff" stroke={16} />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </>
+  );
+};
+
 const SearchUI: React.FC = () => {
   const frame = useCurrentFrame();
   const st = f(BLUR[0]);
@@ -219,7 +302,16 @@ const SFX: Sfx[] = [
   [5.74, 'pop', 0.1],
   [6.82, 'pop', 0.1],
   [7.74, 'impact', 0.12],
+  [8.7, 'swipe', 0.12],
   [9.18, 'swipe', 0.14],
+  [9.68, 'click', 0.14],
+  [10.46, 'click', 0.14],
+  [12.46, 'ding', 0.14],
+  [12.8, 'swipe', 0.12],
+  [13.46, 'click', 0.14],
+  [14.38, 'click', 0.14],
+  [15.26, 'click', 0.14],
+  [15.76, 'ding', 0.14],
   [10.46, 'whoosh', 0.08],
   [11.96, 'pop', 0.16],
   [16.12, 'pop', 0.16],
@@ -234,13 +326,24 @@ const SFX: Sfx[] = [
 export const V2ReferenceB: React.FC = () => {
   const frame = useCurrentFrame();
   const t = frame / 30;
-  const s = (t >= 3.06 && t < 4.48) || (t >= 8.64 && t < 9.2) ? 1 : shotScale(t);
-  const shrink = t >= SHRINK[0] && t < SHRINK[1];
+  const s = t >= 3.06 && t < 4.48 ? 1 : shotScale(t);
   const blur = t >= BLUR[0] && t < BLUR[1];
   const key = KEYS.find((k) => t >= k.s && t < k.e);
+  // examples section (8.64 – 17.6): the video shrinks into a rounded frame at the top so the routine card sits under her chin
+  const inset = ease(ramp(frame, f(8.64), f(8.64) + 8)) * ease(ramp(frame, f(17.6) - 8, f(17.6), 1, 0));
+  const k = 1 - 0.34 * inset;
+  const frameStyle: React.CSSProperties =
+    inset > 0
+      ? {transform: `scale(${k})`, transformOrigin: '540px 441px', borderRadius: 48 * inset, boxShadow: '0 24px 60px rgba(0,0,0,0.45)'}
+      : {transform: `scale(${s})`, transformOrigin: '540px 880px'};
   return (
     <AbsoluteFill style={{background: '#000', overflow: 'hidden'}}>
-      <AbsoluteFill style={{transform: shrink ? 'scale(0.86)' : `scale(${s})`, transformOrigin: shrink ? '50% 50%' : '540px 880px', filter: blur ? 'blur(22px) brightness(0.92)' : undefined, overflow: 'hidden'}}>
+      {inset > 0 && (
+        <AbsoluteFill style={{filter: 'blur(30px) brightness(0.55)', transform: 'scale(1.15)'}}>
+          <Footage />
+        </AbsoluteFill>
+      )}
+      <AbsoluteFill style={{...frameStyle, filter: blur ? 'blur(22px) brightness(0.92)' : undefined, overflow: 'hidden'}}>
         {/* supplied shots as hard-cut cut-aways (voice continues): bowl macro on "yang ni…jadual", face close-up on "shift malam" */}
         {t >= 3.06 && t < 4.48 ? (
           <BRoll clip="bowl" from={3.06} start={0.2} />
@@ -253,6 +356,9 @@ export const V2ReferenceB: React.FC = () => {
         )}
       </AbsoluteFill>
       {blur && <SearchUI />}
+      {ROUTINES.filter((r) => t >= r.from && t < r.to).map((r) => (
+        <RoutineCard key={r.from} r={r} />
+      ))}
       {key && !blur && <Keyword k={key} />}
       <MiniSub />
       <AudioMix music="music2.wav" base={0.15} under={0.07} sfx={SFX} />
