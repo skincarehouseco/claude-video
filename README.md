@@ -27,3 +27,35 @@ python3 scripts/make_audio.py public/audio
 python3 scripts/build_captions.py
 npm run render   # -> out/final.mp4
 ```
+
+---
+
+# Yello OTMS — four edits from one take (Remotion)
+
+Source: `otms 1.mov` (24.27 s, 1080x1920 HEVC, 30 fps). Nothing is cut, sped up or re-voiced; every composition is exactly 728 frames.
+
+| Composition | Output | Idea |
+|---|---|---|
+| `YELLO-OTMS-01-Reference-A` | `out/YELLO_OTMS_01_Reference_A.mp4` | Reference A language: arched multi-font title + glossy stickers in the real room, cut to a dreamy meadow with the speaker cut out, script/bold/pink section headers, UI "screenshot" cards with red marker circles, thin italic captions |
+| `YELLO-OTMS-02-Reference-B` | `out/YELLO_OTMS_02_Reference_B.mp4` | Reference B language: real room, punch-in/out jump reframes, one huge tight sans keyword (serif-italic mixes, typewriter, coloured words), tiny single-word chest subtitle, one black-border shrink, one blur + UI moment |
+| `YELLO-OTMS-03-Original-Infographic` | `out/YELLO_OTMS_03_Original_Infographic.mp4` | Contextual background replacement explainer: sunrise question → BOLEH burst → schedule board → 24 h sky cycle → night-shift timeline → office day-to-night → sun/skin diagram → 24-tick "anytime" ring |
+| `YELLO-OTMS-04-Creative-Freestyle` | `out/YELLO_OTMS_04_Creative_Freestyle.mp4` | "Skincare girl talk" editorial: magazine cover (masthead behind her head), handwritten punch-ins, speech bubble, triptych, layered-cutout collage, magazine spread + product reveal with tracked arrow, doodle sun joke, back cover |
+
+Code: `src/otms/` (`common.tsx` audio mix/fonts/transcript, `stickers.tsx` original vector art, `text.tsx` arc text, one file per video).
+
+## Rebuild
+```bash
+# 1. footage + voice (denoise, gentle compression, loudness-normalised)
+ffmpeg -i otms.mov -c:v libx264 -crf 16 -pix_fmt yuv420p -r 30 -c:a aac public/otms/main.mp4
+ffmpeg -i otms.mov -vn -af "highpass=f=80,afftdn=nf=-30,acompressor=threshold=-20dB:ratio=2.5:attack=8:release=120:makeup=2,loudnorm=I=-15:TP=-1.5:LRA=9" -ar 48000 -ac 2 public/otms/voice.wav
+# 2. transcript: faster-whisper large-v3 (ms) word timings -> src/otms/words.json (manual fix: "sheeh" -> "shift")
+# 3. speaker matte: Robust Video Matting (rvm_resnet50, downsample 0.4) on every frame -> alpha PNGs, then
+ffmpeg -framerate 30 -i frames/%04d.jpg -framerate 30 -i alpha/%04d.png -filter_complex "[1:v]format=gray,erosion,gblur=sigma=1.1[a];[0:v][a]alphamerge,format=yuva420p" -c:v libvpx-vp9 -pix_fmt yuva420p -b:v 6M public/otms/subject.webm
+python3 scripts/otms/track_head.py alpha src/otms/track.json      # head tracking for tracked labels
+# 4. product cut-out from the official yelloskincare.com OTMS image (rembg isnet) -> public/otms/otms_jar.png
+python3 scripts/otms/make_meadow.py public/otms/bg               # procedural meadow (original art)
+python3 scripts/otms/make_audio.py public/otms/audio             # original music beds + SFX
+npx remotion render src/index.ts YELLO-OTMS-01-Reference-A out/YELLO_OTMS_01_Reference_A.mp4 --codec h264 --crf 17
+```
+Large generated media in `public/otms` (main.mp4, voice.wav, subject.webm, audio/*.wav) is git-ignored; regenerate with the steps above.
+All fonts are SIL OFL (Google Fonts). Music and SFX are synthesised in `make_audio.py` (no third-party samples).
