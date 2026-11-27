@@ -7,7 +7,7 @@ import {ArcText} from './text';
 /*
  VIDEO 01 — Reference A editing language (dreamy "whimsical tutorial" look):
  - opens in the real room with an arched, multi-font title stack + glossy stickers
- - hard cut to a soft-focus sunlit meadow; speaker cut out, bottom-left
+ - hard cut to a clean removed background (soft lilac-blush gradient); speaker cut out, bottom-left
  - two-tier section headers (script label + chunky rounded title + pink sub-line)
  - content "screenshot" cards with hand-drawn red circles / arrows
  - thin lowercase italic captions, twinkling sparkles, soft music-box bed
@@ -132,18 +132,15 @@ const OutroTitle: React.FC = () => {
   );
 };
 
-/* ---------- Meadow scene ---------- */
-const Meadow: React.FC<{front?: boolean}> = ({front}) => {
+/* ---------- clean removed-background scene (plain soft gradient, no scenery) ---------- */
+const PlainBg: React.FC = () => {
   const frame = useCurrentFrame();
-  const p = (frame - INTRO_END) / (OUTRO - INTRO_END);
-  if (front) {
-    const x = interpolate(p, [0, 1], [-90, -150]);
-    const sway = Math.sin(frame * 0.05) * 6;
-    return <Img src={staticFile('otms/bg/meadow_front.png')} style={{position: 'absolute', left: x + sway, top: -300, width: 1300, height: 2300, WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, transparent 80%, #000 88%)'}} />;
-  }
-  const x = interpolate(p, [0, 1], [-60, -170]);
-  const y = interpolate(p, [0, 1], [-130, -230]);
-  return <Img src={staticFile('otms/bg/meadow_back.jpg')} style={{position: 'absolute', left: x, top: y, width: 1300, height: 2300, transform: `scale(${1.02 + p * 0.04})`}} />;
+  const shift = Math.sin(frame * 0.02) * 6;
+  return (
+    <AbsoluteFill style={{background: `linear-gradient(${172 + shift}deg, #C7B3DD 0%, #E3BFD8 52%, #F4D8CF 100%)`}}>
+      <AbsoluteFill style={{background: 'radial-gradient(circle at 30% 18%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 45%)'}} />
+    </AbsoluteFill>
+  );
 };
 
 // speaker "keyframe" zoom accents (in & out on emphasis words)
@@ -226,7 +223,7 @@ const UiRow: React.FC<{icon: React.ReactNode; label: string; on: boolean; frame:
 };
 
 const DarkCard: React.FC<{title: string; children: React.ReactNode; style: React.CSSProperties}> = ({title, children, style}) => (
-  <div style={{position: 'absolute', left: CARD.x, top: CARD.y, width: CARD.w, padding: 18, borderRadius: 26, background: '#18181B', border: '5px solid #fff', boxShadow: '0 18px 40px rgba(60,70,40,0.35)', ...style}}>
+  <div style={{position: 'absolute', left: CARD.x, top: CARD.y, width: CARD.w, padding: 18, borderRadius: 26, background: '#18181B', border: '5px solid #fff', boxShadow: '0 18px 40px rgba(70,40,80,0.3)', ...style}}>
     <div style={{display: 'flex', gap: 8, marginBottom: 6}}>
       {['#FF5F57', '#FEBC2E', '#28C840'].map((c) => <div key={c} style={{width: 12, height: 12, borderRadius: 6, background: c}} />)}
     </div>
@@ -243,7 +240,7 @@ const Cards: React.FC = () => {
     <AbsoluteFill>
       {/* A — product card */}
       {show(2.28, 3.06) && (
-        <div style={{position: 'absolute', left: CARD.x, top: CARD.y + 20, width: CARD.w, height: 330, borderRadius: 26, background: 'linear-gradient(160deg,#FFF9EE,#FCE9C8)', border: '6px solid #fff', boxShadow: '0 18px 40px rgba(60,70,40,0.35)', ...cardIn(frame, f(2.3), f(3.06), 'slide')}}>
+        <div style={{position: 'absolute', left: CARD.x, top: CARD.y + 20, width: CARD.w, height: 330, borderRadius: 26, background: 'linear-gradient(160deg,#FFF9EE,#FCE9C8)', border: '6px solid #fff', boxShadow: '0 18px 40px rgba(70,40,80,0.3)', ...cardIn(frame, f(2.3), f(3.06), 'slide')}}>
           <Img src={staticFile('otms/otms_jar.png')} style={{position: 'absolute', left: 30, top: 70, width: 290}} />
           <div style={{position: 'absolute', left: 0, right: 0, top: 18, textAlign: 'center', font: '600 30px Fredoka', color: '#8A6A3A'}}>Yello OTMS</div>
           <div style={{position: 'absolute', left: 4, top: 46}}>
@@ -274,7 +271,7 @@ const Cards: React.FC = () => {
             const p = pop(frame, f(t.at) - 2, 9);
             const ok = ramp(frame, f(7.74) + i * 3, f(7.74) + i * 3 + 8);
             return (
-              <div key={i} style={{position: 'relative', height: 150, marginBottom: 14, borderRadius: 22, background: t.bg, border: '5px solid #fff', boxShadow: '0 10px 24px rgba(60,70,40,0.3)', display: 'flex', alignItems: 'center', padding: '0 22px', gap: 18, opacity: Math.min(1, p * 2), transform: `scale(${0.7 + 0.3 * p})`}}>
+              <div key={i} style={{position: 'relative', height: 150, marginBottom: 14, borderRadius: 22, background: t.bg, border: '5px solid #fff', boxShadow: '0 10px 24px rgba(70,40,80,0.28)', display: 'flex', alignItems: 'center', padding: '0 22px', gap: 18, opacity: Math.min(1, p * 2), transform: `scale(${0.7 + 0.3 * p})`}}>
                 {t.icon}
                 <div style={{font: '700 44px Fredoka', color: t.c}}>{t.label}</div>
                 <div style={{position: 'absolute', right: 14, top: 26}}>
@@ -317,7 +314,7 @@ const Cards: React.FC = () => {
       )}
       {/* F — sun sensitivity */}
       {show(17.6, 22.14) && (
-        <div style={{position: 'absolute', left: CARD.x, top: CARD.y, width: CARD.w, height: 400, borderRadius: 26, background: 'linear-gradient(180deg,#BFE3FF,#FFF4D8)', border: '6px solid #fff', boxShadow: '0 18px 40px rgba(60,70,40,0.35)', overflow: 'visible', ...cardIn(frame, f(17.62), f(22.14), 'click')}}>
+        <div style={{position: 'absolute', left: CARD.x, top: CARD.y, width: CARD.w, height: 400, borderRadius: 26, background: 'linear-gradient(180deg,#BFE3FF,#FFF4D8)', border: '6px solid #fff', boxShadow: '0 18px 40px rgba(70,40,80,0.3)', overflow: 'visible', ...cardIn(frame, f(17.62), f(22.14), 'click')}}>
           <div style={{position: 'absolute', left: 110, top: 40, transform: `rotate(${frame * 0.6}deg)`}}>
             <Sun size={140} />
           </div>
@@ -391,26 +388,25 @@ const SFX: Sfx[] = [
 
 export const V1ReferenceA: React.FC = () => {
   const frame = useCurrentFrame();
-  const inMeadow = frame >= INTRO_END && frame < OUTRO;
+  const inScene = frame >= INTRO_END && frame < OUTRO;
   const introPush = interpolate(frame, [0, INTRO_END], [1.0, 1.06], clamp);
   const outroPush = interpolate(frame, [OUTRO, DUR], [1.04, 1.0], clamp);
   return (
     <AbsoluteFill style={{background: '#000', overflow: 'hidden'}}>
-      {!inMeadow && (
+      {!inScene && (
         <AbsoluteFill style={{transform: `scale(${frame < INTRO_END ? introPush : outroPush})`, transformOrigin: '50% 42%'}}>
           <Footage />
           {/* soft warm haze over the room, like the reference's dim intro */}
           <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(60,40,50,0.38) 0%, rgba(60,40,50,0.12) 30%, rgba(0,0,0,0) 45%)'}} />
         </AbsoluteFill>
       )}
-      {inMeadow && (
+      {inScene && (
         <>
-          <Meadow />
-          <Twinkles n={30} seed={5} />
+          <PlainBg />
+          <Twinkles n={22} seed={5} />
           <AbsoluteFill style={{transform: speakerTransform(frame), transformOrigin: '540px 1920px', WebkitMaskImage: 'linear-gradient(to top, transparent 0%, #000 14%)'}}>
             <SpeakerCut style={{filter: 'drop-shadow(0 0 18px rgba(255,250,225,0.35))'}} />
           </AbsoluteFill>
-          <Meadow front />
           {HEADERS.filter((h) => frame >= f(h.from) && frame < f(h.to)).map((h) => (
             <HeaderBlock key={h.from} h={h} />
           ))}
