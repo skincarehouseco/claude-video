@@ -1,6 +1,6 @@
 import React from 'react';
-import {AbsoluteFill, Img, staticFile, useCurrentFrame} from 'remotion';
-import {AudioMix, BRoll, f, Footage, pop, ramp, Sfx, WORDS} from './common';
+import {AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame} from 'remotion';
+import {AudioMix, BRoll, clamp, f, Footage, pop, ramp, Sfx, SpeakerCut, WORDS} from './common';
 import {Sun} from './stickers';
 
 /*
@@ -124,6 +124,57 @@ const Keyword: React.FC<{k: Key}> = ({k}) => {
   );
 };
 
+/* ---------- time-of-day relight of the REAL room (no illustration) ----------
+ pagi -> warm golden morning light, tengah hari -> bright neutral daylight, malam -> dark blue night.
+ Only the background is graded: the speaker cut-out sits on top in her natural colours. */
+type Grade = {bright: number; sat: number; sepia: number; hue: number; tint: string; tintA: number; dark: number};
+const NEUTRAL: Grade = {bright: 1, sat: 1, sepia: 0, hue: 0, tint: '#000000', tintA: 0, dark: 0};
+const PAGI: Grade = {bright: 1.05, sat: 1.2, sepia: 0.3, hue: -8, tint: '#FFA24A', tintA: 0.22, dark: 0};
+const TENGAH: Grade = {bright: 1.22, sat: 1.08, sepia: 0, hue: 0, tint: '#EAF4FF', tintA: 0.22, dark: 0};
+const MALAM: Grade = {bright: 0.42, sat: 0.65, sepia: 0, hue: 0, tint: '#1A2A6C', tintA: 0.55, dark: 0.25};
+const KEYS_T: [number, Grade][] = [
+  [5.0, NEUTRAL],
+  [5.2, PAGI],
+  [5.68, PAGI],
+  [5.86, TENGAH],
+  [6.76, TENGAH],
+  [6.96, MALAM],
+  [7.9, MALAM],
+  [8.1, NEUTRAL],
+];
+const gradeAt = (t: number): Grade | null => {
+  if (t < KEYS_T[0][0] || t >= KEYS_T[KEYS_T.length - 1][0]) return null;
+  let i = 0;
+  while (i < KEYS_T.length - 2 && t >= KEYS_T[i + 1][0]) i++;
+  const [ta, a] = KEYS_T[i];
+  const [tb, b] = KEYS_T[i + 1];
+  const k = interpolate(t, [ta, tb], [0, 1], clamp);
+  const m = (x: number, y: number) => x + (y - x) * k;
+  // colour: crossfade by picking the stronger tint and blending alpha (good enough for short ramps)
+  return {
+    bright: m(a.bright, b.bright),
+    sat: m(a.sat, b.sat),
+    sepia: m(a.sepia, b.sepia),
+    hue: m(a.hue, b.hue),
+    tint: k < 0.5 ? (a.tintA > 0 ? a.tint : b.tint) : b.tintA > 0 ? b.tint : a.tint,
+    tintA: m(a.tintA, b.tintA),
+    dark: m(a.dark, b.dark),
+  };
+};
+
+const RelitRoom: React.FC<{g: Grade}> = ({g}) => (
+  <>
+    <AbsoluteFill>
+      <Footage style={{filter: `brightness(${g.bright}) saturate(${g.sat}) sepia(${g.sepia}) hue-rotate(${g.hue}deg)`}} />
+    </AbsoluteFill>
+    <AbsoluteFill style={{background: g.tint, opacity: g.tintA, mixBlendMode: 'multiply'}} />
+    <AbsoluteFill style={{background: 'radial-gradient(circle at 50% 40%, rgba(0,0,0,0) 30%, rgba(0,0,0,1) 100%)', opacity: g.dark}} />
+    <AbsoluteFill>
+      <SpeakerCut />
+    </AbsoluteFill>
+  </>
+);
+
 const MiniSub: React.FC = () => {
   const frame = useCurrentFrame();
   const t = frame / 30;
@@ -191,7 +242,15 @@ export const V2ReferenceB: React.FC = () => {
     <AbsoluteFill style={{background: '#000', overflow: 'hidden'}}>
       <AbsoluteFill style={{transform: shrink ? 'scale(0.86)' : `scale(${s})`, transformOrigin: shrink ? '50% 50%' : '540px 880px', filter: blur ? 'blur(22px) brightness(0.92)' : undefined, overflow: 'hidden'}}>
         {/* supplied shots as hard-cut cut-aways (voice continues): bowl macro on "yang ni…jadual", face close-up on "shift malam" */}
-        {t >= 3.06 && t < 4.48 ? <BRoll clip="bowl" from={3.06} start={0.2} /> : t >= 8.64 && t < 10.46 ? <BRoll clip="face" from={8.64} start={3.4} /> : <Footage />}
+        {t >= 3.06 && t < 4.48 ? (
+          <BRoll clip="bowl" from={3.06} start={0.2} />
+        ) : t >= 8.64 && t < 10.46 ? (
+          <BRoll clip="face" from={8.64} start={3.4} />
+        ) : gradeAt(t) ? (
+          <RelitRoom g={gradeAt(t)!} />
+        ) : (
+          <Footage />
+        )}
       </AbsoluteFill>
       {blur && <SearchUI />}
       {key && !blur && <Keyword k={key} />}
