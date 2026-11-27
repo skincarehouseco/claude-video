@@ -1,20 +1,20 @@
 import React from 'react';
 import {AbsoluteFill, Img, staticFile, useCurrentFrame} from 'remotion';
-import {AudioMix, f, Footage, pop, ramp, Sfx, WORDS} from './common';
+import {AudioMix, BRoll, f, Footage, pop, ramp, Sfx, WORDS} from './common';
 import {Sun} from './stickers';
 
 /*
  VIDEO 02 — Reference B editing language (minimal "talking + one big keyword"):
  - real room kept, no background replacement
  - hard jump-cut reframes (punch-in / punch-out) at phrase boundaries — no footage removed
- - ONE large tight-tracked sans keyword above the head, occasionally mixed with a thin serif italic,
+ - ONE large tight-tracked sans keyword above the head, occasionally mixed with a thin upright serif,
    a typewriter reveal with cursor, a coloured word, or a small sticker next to it
  - tiny single-word subtitle on the chest
  - one shrink-to-frame moment with black border, one blurred-background UI moment
 */
 
 const SANS = 'InterX';
-const SERIF = 'InstrSerifI';
+const SERIF = 'InstrSerif'; // upright serif (no italics/cursive — clearer)
 const RED = '#D7263D';
 const BEIGE = '#EFCB86';
 
@@ -98,7 +98,7 @@ const Keyword: React.FC<{k: Key}> = ({k}) => {
                 <span
                   key={pi}
                   style={{
-                    font: p.serif ? `italic 400 ${Math.round(size * 1.12)}px ${SERIF}` : `800 ${size}px ${SANS}`,
+                    font: p.serif ? `400 ${Math.round(size * 1.1)}px ${SERIF}` : `800 ${size}px ${SANS}`,
                     letterSpacing: p.serif ? '-0.01em' : '-0.065em',
                     color: p.color ?? '#FFFFFF',
                     textShadow: '0 3px 14px rgba(0,0,0,0.28), 0 1px 2px rgba(0,0,0,0.25)',
@@ -183,14 +183,15 @@ const SFX: Sfx[] = [
 export const V2ReferenceB: React.FC = () => {
   const frame = useCurrentFrame();
   const t = frame / 30;
-  const s = shotScale(t);
+  const s = (t >= 3.06 && t < 4.48) || (t >= 8.64 && t < 9.2) ? 1 : shotScale(t);
   const shrink = t >= SHRINK[0] && t < SHRINK[1];
   const blur = t >= BLUR[0] && t < BLUR[1];
   const key = KEYS.find((k) => t >= k.s && t < k.e);
   return (
     <AbsoluteFill style={{background: '#000', overflow: 'hidden'}}>
       <AbsoluteFill style={{transform: shrink ? 'scale(0.86)' : `scale(${s})`, transformOrigin: shrink ? '50% 50%' : '540px 880px', filter: blur ? 'blur(22px) brightness(0.92)' : undefined, overflow: 'hidden'}}>
-        <Footage />
+        {/* supplied shots as hard-cut cut-aways (voice continues): bowl macro on "yang ni…jadual", face close-up on "shift malam" */}
+        {t >= 3.06 && t < 4.48 ? <BRoll clip="bowl" from={3.06} start={0.2} /> : t >= 8.64 && t < 10.46 ? <BRoll clip="face" from={8.64} start={3.4} /> : <Footage />}
       </AbsoluteFill>
       {blur && <SearchUI />}
       {key && !blur && <Keyword k={key} />}

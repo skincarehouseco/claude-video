@@ -1,12 +1,12 @@
 import React from 'react';
 import {AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame} from 'remotion';
-import {AudioMix, clamp, ease, f, Footage, PHRASES, pop, ramp, Sfx, SpeakerCut, tokens} from './common';
+import {AudioMix, BRoll, clamp, ease, f, Footage, PHRASES, pop, ramp, Sfx, SpeakerCut, tokens} from './common';
 import {Moon, Sparkle, Sun} from './stickers';
 import track from './track.json';
 
 /*
  VIDEO 04 — Creative freestyle "Skincare Girl Talk".
- Beauty-editorial identity (ivory paper, turmeric accents, Instrument Serif + DM Sans + handwriting) with UGC energy:
+ Beauty-editorial identity (ivory paper, turmeric accents, Instrument Serif + DM Sans, no script fonts) with UGC energy:
  magazine cover (masthead tucked BEHIND her head) -> handwritten "BOLEH" punch-in -> speech bubble ->
  pagi / tengah hari / malam triptych -> night-shift collage with layered cut-outs -> magazine spread with
  product reveal + tracked arrow to the real mask -> doodle sun joke -> back-cover closing composition.
@@ -18,10 +18,10 @@ const TUR = '#E9A91C';
 const TUR_D = '#C98A0B';
 const INK = '#2A2118';
 const SERIF = 'InstrSerif';
-const SERIF_I = 'InstrSerifI';
+const SERIF_I = 'InstrSerif'; // upright, no slanted type
 const SANS = 'DMSansM';
 const SANS_X = 'DMSansX';
-const HAND = 'CaveatS';
+const HAND = 'DMSansX'; // annotations in clear bold sans (no handwriting fonts)
 
 const sec = (frame: number) => frame / 30;
 const head = (frame: number) => {
@@ -54,18 +54,18 @@ const HandText: React.FC<{t: string; at: number; size?: number; color?: string; 
   // "writing on" reveal from left to right
   const p = ramp(frame, f(at), f(at) + Math.max(6, t.length * 0.9));
   return (
-    <div style={{position: 'absolute', font: `600 ${size}px ${HAND}`, color, whiteSpace: 'nowrap', transform: `rotate(${rot}deg)`, clipPath: `inset(-20% ${(1 - p) * 100}% -20% -5%)`, ...style}}>
+    <div style={{position: 'absolute', font: `800 ${Math.round(size * 0.72)}px ${HAND}`, letterSpacing: '-0.02em', color, whiteSpace: 'nowrap', transform: `rotate(${rot}deg)`, clipPath: `inset(-20% ${(1 - p) * 100}% -20% -5%)`, ...style}}>
       {t}
     </div>
   );
 };
 
 /** live footage framed like a magazine page (ivory border) */
-const Framed: React.FC<{scale?: number; origin?: string; border?: number; children?: React.ReactNode; over?: React.ReactNode}> = ({scale = 1, origin = '540px 760px', border = 26, children, over}) => (
+const Framed: React.FC<{scale?: number; origin?: string; border?: number; children?: React.ReactNode; over?: React.ReactNode; media?: React.ReactNode}> = ({scale = 1, origin = '540px 760px', border = 26, children, over, media}) => (
   <AbsoluteFill style={{background: IVORY}}>
     <div style={{position: 'absolute', left: border, top: border, right: border, bottom: border, overflow: 'hidden', borderRadius: 6}}>
       <div style={{position: 'absolute', left: -border, top: -border, width: 1080, height: 1920, transform: `scale(${scale})`, transformOrigin: origin}}>
-        <Footage />
+        {media ?? <Footage />}
         {children}
       </div>
     </div>
@@ -97,7 +97,7 @@ const Cover: React.FC = () => {
       </div>
       <div style={{position: 'absolute', left: 70, top: 1090, width: 430, opacity: ramp(frame, 10, 14), transform: `translateX(${(1 - pop(frame, 10, 10)) * -60}px)`}}>
         <div style={{font: `500 30px ${SANS}`, letterSpacing: '0.2em', color: '#fff', textShadow: '0 1px 6px rgba(0,0,0,0.5)'}}>THE BIG QUESTION</div>
-        <div style={{font: `italic 400 82px ${SERIF_I}`, lineHeight: 0.92, color: '#fff', textShadow: '0 2px 14px rgba(0,0,0,0.45)'}}>
+        <div style={{font: `400 82px ${SERIF_I}`, lineHeight: 0.92, color: '#fff', textShadow: '0 2px 14px rgba(0,0,0,0.45)'}}>
           pakai waktu <span style={{color: '#FFD666'}}>pagi</span>, boleh ke?
         </div>
       </div>
@@ -137,7 +137,7 @@ const BolehNote: React.FC = () => {
   return (
     <>
       <div style={{position: 'absolute', left: 120, top: 150, transform: `rotate(-6deg) scale(${pop(frame, st, 8)})`}}>
-        <div style={{font: `600 150px ${HAND}`, color: TUR, textShadow: '0 3px 10px rgba(0,0,0,0.25)'}}>boleh!</div>
+        <div style={{font: `800 108px ${HAND}`, color: TUR, textShadow: '0 3px 10px rgba(0,0,0,0.25)'}}>boleh!</div>
         <div style={{marginTop: -30}}>
           <Scribble w={300} progress={ramp(frame, st + 4, st + 12)} />
         </div>
@@ -154,7 +154,7 @@ const Bubble: React.FC = () => {
   return (
     <div style={{position: 'absolute', left: 520, top: 230, transform: `scale(${p}) rotate(3deg)`, transformOrigin: '10% 100%'}}>
       <div style={{background: '#fff', borderRadius: 40, padding: '26px 34px', boxShadow: '0 12px 30px rgba(42,33,24,0.25)'}}>
-        <div style={{font: `italic 400 66px ${SERIF_I}`, color: INK, lineHeight: 1}}>
+        <div style={{font: `400 66px ${SERIF_I}`, color: INK, lineHeight: 1}}>
           dia tak ada <span style={{color: TUR_D}}>jadual.</span>
         </div>
         <div style={{font: `500 30px ${SANS}`, color: '#8A7A66', marginTop: 8, letterSpacing: '0.04em', opacity: ramp(frame, f(3.95), f(4.05))}}>no rules, no schedule.</div>
@@ -179,7 +179,7 @@ const StarBurst: React.FC<{at: number; x: number; y: number; text: string}> = ({
           return `${i ? 'L' : 'M'}${210 + Math.cos(a) * r * 1.55} ${130 + Math.sin(a) * r * 0.95}`;
         }).join(' ') + 'Z'} fill={TUR} />
       </svg>
-      <div style={{position: 'relative', width: 340, textAlign: 'center', font: `600 64px ${HAND}`, color: INK, lineHeight: 1}}>{text}</div>
+      <div style={{position: 'relative', width: 340, textAlign: 'center', font: `800 46px ${HAND}`, color: INK, lineHeight: 1}}>{text}</div>
     </div>
   );
 };
@@ -231,7 +231,7 @@ const Triptych: React.FC = () => {
             </div>
             {t >= l.at && (
               <div style={{position: 'absolute', left: 0, right: 0, top: 220, textAlign: 'center', transform: `scale(${pop(frame, f(l.at), 8)})`}}>
-                <div style={{display: 'inline-block', padding: '6px 22px 12px', background: active ? IVORY : 'rgba(251,246,236,0.7)', borderRadius: 999, font: `italic 400 64px ${SERIF_I}`, color: INK, whiteSpace: 'nowrap'}}>{l.t}</div>
+                <div style={{display: 'inline-block', padding: '6px 22px 12px', background: active ? IVORY : 'rgba(251,246,236,0.7)', borderRadius: 999, font: `400 64px ${SERIF_I}`, color: INK, whiteSpace: 'nowrap'}}>{l.t}</div>
                 <div style={{marginTop: 8, display: 'flex', justifyContent: 'center'}}>{l.icon}</div>
               </div>
             )}
@@ -240,7 +240,7 @@ const Triptych: React.FC = () => {
       })}
       {all && (
         <div style={{position: 'absolute', left: 120, top: 1150, transform: `rotate(-6deg) scale(${pop(frame, f(7.74), 9)})`, padding: '10px 40px 18px', background: TUR, borderRadius: 18, boxShadow: '0 10px 24px rgba(42,33,24,0.3)'}}>
-          <span style={{font: `600 92px ${HAND}`, color: INK}}>semua boleh ✓</span>
+          <span style={{font: `800 66px ${HAND}`, color: INK}}>semua boleh ✓</span>
         </div>
       )}
     </AbsoluteFill>
@@ -261,7 +261,7 @@ const Collage: React.FC = () => {
     <AbsoluteFill>
       <Paper />
       <div style={{position: 'absolute', left: 84, top: 180, font: `500 28px ${SANS}`, letterSpacing: '0.26em', color: TUR_D, opacity: p}}>CONTOH 01</div>
-      <div style={{position: 'absolute', left: 80, top: 214, font: `italic 400 92px ${SERIF_I}`, lineHeight: 0.95, color: INK, opacity: p, transform: `translateY(${(1 - p) * 30}px)`}}>
+      <div style={{position: 'absolute', left: 80, top: 214, font: `400 92px ${SERIF_I}`, lineHeight: 0.95, color: INK, opacity: p, transform: `translateY(${(1 - p) * 30}px)`}}>
         for the night-shift
         <br />
         girlies
@@ -277,7 +277,7 @@ const Collage: React.FC = () => {
         return (
           <div key={i} style={{position: 'absolute', left: 600, top: 520 + i * 230, display: 'flex', alignItems: 'center', gap: 12, transform: `scale(${q}) rotate(${i % 2 ? 3 : -3}deg)`, transformOrigin: '0 50%'}}>
             <div style={{width: 110, display: 'flex', justifyContent: 'center'}}>{s.icon}</div>
-            <div style={{font: `600 58px ${HAND}`, color: INK, whiteSpace: 'nowrap'}}>{s.t}</div>
+            <div style={{font: `800 42px ${HAND}`, color: INK, whiteSpace: 'nowrap'}}>{s.t}</div>
             {i < 2 && frame >= f(steps[i + 1].at) - 6 && (
               <div style={{position: 'absolute', left: 40, top: 110}}>
                 <HandArrow w={60} h={110} d="M20 4 C34 34 34 64 22 96 M8 80 L22 98 L38 82" progress={ramp(frame, f(steps[i + 1].at) - 6, f(steps[i + 1].at))} />
@@ -317,7 +317,7 @@ const Spread: React.FC = () => {
     <AbsoluteFill>
       <Paper />
       <div style={{position: 'absolute', left: 84, top: 176, font: `500 28px ${SANS}`, letterSpacing: '0.26em', color: TUR_D, opacity: p}}>CONTOH 02</div>
-      <div style={{position: 'absolute', left: 80, top: 212, font: `italic 400 84px ${SERIF_I}`, lineHeight: 0.95, color: INK, opacity: p, transform: `translateY(${(1 - p) * 30}px)`, whiteSpace: 'nowrap'}}>for the 9-to-5 girlies</div>
+      <div style={{position: 'absolute', left: 80, top: 212, font: `400 84px ${SERIF_I}`, lineHeight: 0.95, color: INK, opacity: p, transform: `translateY(${(1 - p) * 30}px)`, whiteSpace: 'nowrap'}}>for the 9-to-5 girlies</div>
       <div style={{position: 'absolute', left: fx, top: fy, width: fw, height: fh, background: '#fff', padding: 14, boxShadow: '0 18px 40px rgba(42,33,24,0.22)', transform: `rotate(${-2 * p}deg) translateY(${(1 - p) * 80}px)`, opacity: p}}>
         <div style={{position: 'relative', width: fw - 28, height: fh - 28, overflow: 'hidden'}}>
           <div style={{position: 'absolute', left: ox, top: oy, width: 1080, height: 1920, transform: `scale(${s})`, transformOrigin: '0 0'}}>
@@ -329,7 +329,7 @@ const Spread: React.FC = () => {
       <div style={{position: 'absolute', left: 660, top: 430, width: 250, transform: `translateX(${(1 - jar) * 450}px)`}}>
         <div style={{position: 'absolute', left: 15, top: 0, width: 220, height: 380, borderRadius: 110, background: TUR}} />
         <Img src={staticFile('otms/otms_jar.png')} style={{position: 'absolute', left: -20, top: 110, width: 290, filter: 'drop-shadow(0 16px 18px rgba(42,33,24,0.35))'}} />
-        <div style={{position: 'absolute', left: 0, top: 400, width: 250, textAlign: 'center', font: `italic 400 36px ${SERIF_I}`, color: INK, lineHeight: 1.02}}>
+        <div style={{position: 'absolute', left: 0, top: 400, width: 250, textAlign: 'center', font: `400 36px ${SERIF_I}`, color: INK, lineHeight: 1.02}}>
           Yello Oatmeal Turmeric Mask &amp; Scrub
         </div>
         <div style={{position: 'absolute', left: 0, top: 532, width: 250, textAlign: 'center', font: `500 22px ${SANS}`, letterSpacing: '0.2em', color: TUR_D}}>(OTMS)</div>
@@ -338,7 +338,7 @@ const Spread: React.FC = () => {
       <div style={{position: 'absolute', left: 92, top: 1100}}>
         {list.map((l, i) =>
           frame >= f(l.at) ? (
-            <div key={i} style={{position: 'absolute', left: 0, top: i * 84, font: `600 ${i === 2 ? 64 : 58}px ${HAND}`, color: i === 2 ? TUR_D : INK, whiteSpace: 'nowrap', clipPath: `inset(-20% ${(1 - ramp(frame, f(l.at), f(l.at) + 10)) * 100}% -20% -5%)`}}>
+            <div key={i} style={{position: 'absolute', left: 0, top: i * 84, font: `800 ${i === 2 ? 46 : 42}px ${HAND}`, color: i === 2 ? TUR_D : INK, whiteSpace: 'nowrap', clipPath: `inset(-20% ${(1 - ramp(frame, f(l.at), f(l.at) + 10)) * 100}% -20% -5%)`}}>
               {i + 1}. {l.t}
             </div>
           ) : null,
@@ -359,6 +359,26 @@ const Spread: React.FC = () => {
   );
 };
 
+/* ---------- H. close-up page: supplied face shot (17.6 – 20.08) ---------- */
+const CloseUp: React.FC = () => {
+  const frame = useCurrentFrame();
+  const st = f(17.6);
+  const p = ease(ramp(frame, st, st + 8));
+  return (
+    <AbsoluteFill>
+      <Paper />
+      <div style={{position: 'absolute', left: 60, top: 160, right: 60, bottom: 200, background: '#fff', padding: 14, boxShadow: '0 18px 40px rgba(42,33,24,0.22)', transform: `rotate(${1.5 * p}deg) scale(${0.94 + 0.06 * p})`, opacity: p}}>
+        <div style={{position: 'relative', width: '100%', height: '100%', overflow: 'hidden'}}>
+          <div style={{position: 'absolute', left: -88, top: -150}}>
+            <BRoll clip="face" from={17.6} start={0} />
+          </div>
+        </div>
+      </div>
+      <div style={{position: 'absolute', left: 84, top: 1740, font: `500 26px ${SANS}`, letterSpacing: '0.26em', color: TUR_D, opacity: p}}>CLOSE-UP · OTMS ON SKIN</div>
+    </AbsoluteFill>
+  );
+};
+
 /* ---------- J. back-cover close (22.14 – end) ---------- */
 const BackCover: React.FC = () => {
   const frame = useCurrentFrame();
@@ -370,7 +390,7 @@ const BackCover: React.FC = () => {
       <div style={{position: 'absolute', left: 0, width: 1080, top: 300, textAlign: 'center', font: `400 200px ${SERIF}`, letterSpacing: '-0.045em', lineHeight: 0.82, color: INK, opacity: p, transform: `translateY(${(1 - p) * 40}px)`}}>
         boleh je
         <br />
-        <span style={{font: `italic 400 210px ${SERIF_I}`, color: TUR}}>bila-bila.</span>
+        <span style={{font: `400 210px ${SERIF_I}`, color: TUR}}>bila-bila.</span>
       </div>
       <AbsoluteFill style={{transform: `translate(-40px, 0) scale(${0.84 - 0.02 * p})`, transformOrigin: '540px 1920px'}}>
         <SpeakerCut style={{filter: `drop-shadow(-24px 0 0 ${TUR}) drop-shadow(0 18px 30px rgba(42,33,24,0.25))`}} />
@@ -391,7 +411,7 @@ const BackCover: React.FC = () => {
   );
 };
 
-/* ---------- captions: ivory pill, keywords in serif italic turmeric ---------- */
+/* ---------- captions: ivory pill, keywords in turmeric serif ---------- */
 const KEY = new Set(['boleh', 'otms', 'pagi', 'malam', 'tengah', 'hari', 'petang', 'matahari', 'sensitif', 'jadual', 'bila-bila', 'shift']);
 const Captions: React.FC = () => {
   const frame = useCurrentFrame();
@@ -407,7 +427,7 @@ const Captions: React.FC = () => {
           const k = KEY.has(w.t.toLowerCase().replace(/[^a-z-]/g, ''));
           const said = t >= w.s - 0.03;
           return (
-            <span key={i} style={{font: k ? `italic 400 50px ${SERIF_I}` : `500 40px ${SANS}`, color: k ? TUR_D : INK, opacity: said ? 1 : 0.38, marginRight: 10}}>
+            <span key={i} style={{font: k ? `400 50px ${SERIF_I}` : `500 40px ${SANS}`, color: k ? TUR_D : INK, opacity: said ? 1 : 0.38, marginRight: 10}}>
               {w.t}
             </span>
           );
@@ -463,11 +483,13 @@ export const V4Freestyle: React.FC = () => {
   else if (t >= 8.64 && t < 12.74) body = <Collage />;
   else if (t >= 12.74 && t < 16.9) body = <Spread />;
   else if (t >= 22.14) body = <BackCover />;
+  else if (t >= 17.6 && t < 20.08) body = <CloseUp />;
   else
     body = (
       <Framed
-        scale={punchZoom(frame)}
+        scale={t >= 3.06 && t < 4.48 ? 1.02 : punchZoom(frame)}
         origin="540px 820px"
+        media={t >= 3.06 && t < 4.48 ? <BRoll clip="bowl" from={3.06} start={0.2} /> : undefined}
         over={
           <>
         {t >= 2.28 && t < 3.06 && <BolehNote />}

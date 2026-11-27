@@ -1,6 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, Img, interpolate, interpolateColors, staticFile, useCurrentFrame} from 'remotion';
-import {AudioMix, clamp, ease, f, PHRASES, pop, ramp, Sfx, SpeakerCut, tokens} from './common';
+import {AudioMix, BRoll, clamp, ease, f, PHRASES, pop, ramp, Sfx, SpeakerCut, tokens} from './common';
 import {Check, Clock, Cross, MarkerCircle, Moon, Sun, SunsetIcon} from './stickers';
 import track from './track.json';
 
@@ -231,6 +231,15 @@ const SceneHook: React.FC = () => {
       <div style={{position: 'absolute', left: 820, top: 330 - bounce, transform: `scale(${pop(frame, f(1.32))}) rotate(12deg)`}}>
         <Clock size={110} hour={7} />
       </div>
+      {/* macro lens: the actual mask texture (supplied bowl shot) */}
+      {frame >= f(0.86) && (
+        <div style={{position: 'absolute', left: 84, top: 1000, width: 300, height: 300, borderRadius: 150, overflow: 'hidden', border: `8px solid ${NAVY}`, boxShadow: `8px 8px 0 ${TUR}`, transform: `scale(${pop(frame, f(0.9), 10)})`}}>
+          <div style={{position: 'absolute', left: 150 - 540, top: 150 - 960, transform: 'scale(0.5)', transformOrigin: '540px 960px'}}>
+            <BRoll clip="bowl" from={0.86} start={0.3} />
+          </div>
+        </div>
+      )}
+      {frame >= f(1.0) && <Chip t="tekstur OTMS" at={1.0} x={110} y={1290} bg={TUR} color={NAVY} size={30} />}
       {/* "yang ni" = the product */}
       <div style={{position: 'absolute', left: 650, top: 1030, transform: `translateX(${(1 - pop(frame, f(0.86), 10)) * 500}px) rotate(-6deg)`}}>
         <Img src={staticFile('otms/otms_jar.png')} style={{width: 260, filter: 'drop-shadow(0 14px 18px rgba(20,33,61,0.3))'}} />
@@ -518,10 +527,24 @@ const SceneEnd: React.FC = () => {
   );
 };
 
+/* ---------------- supplied close-up as an annotated full-screen cut-away ---------------- */
+const FaceCutaway: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill>
+      <BRoll clip="face" from={17.6} start={2.6} />
+      <AbsoluteFill style={{boxShadow: `inset 0 0 0 18px ${TUR}`}} />
+      <Title top={180} size={84} lines={[{t: 'MUKA YOU', hl: true, at: 17.7}]} />
+      <Chip t="pakai OTMS" at={18.4} x={560} y={430} bg={NAVY} color="#fff" size={34} />
+      <Chip t="kena matahari? ☀" at={19.06} x={120} y={1120} bg="#fff" color={NAVY} size={34} />
+    </AbsoluteFill>
+  );
+};
+
 /* ---------------- transitions between environments ---------------- */
 const Wipe: React.FC = () => {
   const frame = useCurrentFrame();
-  const c = CUTS.slice(1).map(f).find((x) => frame >= x - 6 && frame < x + 6);
+  const c = [...CUTS.slice(1), 20.08].map(f).find((x) => frame >= x - 6 && frame < x + 6);
   if (c === undefined) return null;
   const p = (frame - (c - 6)) / 12; // 0..1
   const x = interpolate(p, [0, 1], [-1400, 1400]);
@@ -618,6 +641,7 @@ export const V3Infographic: React.FC = () => {
         <SpeakerCut style={{filter: 'drop-shadow(0 0 0 #fff) drop-shadow(0 12px 28px rgba(20,33,61,0.35))'}} />
       </AbsoluteFill>
       <Sc />
+      {frame >= f(17.6) && frame < f(20.08) && <FaceCutaway />}
       <Banner at={8.02} until={8.64} />
       <Banner at={16.9} until={17.6} />
       <Captions />

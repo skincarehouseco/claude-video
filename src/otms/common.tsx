@@ -68,6 +68,14 @@ export const SpeakerCut: React.FC<{style?: React.CSSProperties}> = ({style}) => 
   <OffthreadVideo src={staticFile('otms/subject.webm')} transparent muted style={{width: 1080, height: 1920, ...style}} />
 );
 
+/** Extra shots supplied by Skincarehouse (muted cut-aways; her voice keeps running underneath).
+ * face: 5.8 s close-up of the freshly applied mask; bowl: 1.7 s macro of the mask in the bowl. */
+export const BRoll: React.FC<{clip: 'face' | 'bowl'; from: number; start?: number; style?: React.CSSProperties}> = ({clip, from, start = 0, style}) => (
+  <Sequence from={f(from)} layout="none">
+    <OffthreadVideo src={staticFile(`otms/broll_${clip}.mp4`)} startFrom={f(start)} muted style={{width: 1080, height: 1920, objectFit: 'cover', ...style}} />
+  </Sequence>
+);
+
 /** smooth ease helpers */
 export const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 export const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;

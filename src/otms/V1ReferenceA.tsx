@@ -1,6 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame} from 'remotion';
-import {AudioMix, clamp, DUR, f, Footage, PHRASES, pop, ramp, Sfx, SpeakerCut} from './common';
+import {AudioMix, BRoll, clamp, DUR, f, Footage, PHRASES, pop, ramp, Sfx, SpeakerCut} from './common';
 import {Bow, Check, Flower, Heart, MarkerArrow, MarkerCircle, Moon, Sparkle, Sun, SunsetIcon} from './stickers';
 import {ArcText} from './text';
 
@@ -10,7 +10,7 @@ import {ArcText} from './text';
  - hard cut to a clean removed background (soft lilac-blush gradient); speaker cut out, bottom-left
  - two-tier section headers (script label + chunky rounded title + pink sub-line)
  - content "screenshot" cards with hand-drawn red circles / arrows
- - thin lowercase italic captions, twinkling sparkles, soft music-box bed
+ - clean lowercase captions, twinkling sparkles, soft music-box bed
  - closes back in the real room with an arched sign-off
 */
 
@@ -71,7 +71,7 @@ const IntroTitle: React.FC = () => {
   return (
     <AbsoluteFill>
       <div style={{position: 'absolute', left: 520 - 120, top: 250}}>
-        <ArcText text="pakai" font="italic 400 96px InstrSerifI" radius={900} style={{color: PINK, textShadow: `2px 3px 0 #7A5A8A, ${glow}`}} letterStyle={(i) => launch(frame, 0, i, 0.8)} />
+        <ArcText text="pakai" font="400 96px InstrSerif" radius={900} style={{color: PINK, textShadow: `2px 3px 0 #7A5A8A, ${glow}`}} letterStyle={(i) => launch(frame, 0, i, 0.8)} />
       </div>
       <div style={{position: 'absolute', left: 520 + 115, top: 246}}>
         <ArcText text="OTMS" font="400 96px InstrSerif" radius={900} tracking={4} style={{color: CREAM, textShadow: `2px 3px 0 #7A5A8A, ${glow}`}} letterStyle={(i) => launch(frame, 3, i, 0.8)} />
@@ -95,7 +95,7 @@ const IntroTitle: React.FC = () => {
       <StickerAt x={850} y={600} start={22} rot={10}><Flower size={110} /></StickerAt>
       {/* lower-left stack (mirrors the reference's "for whimsical social media content" block) */}
       <div style={{position: 'absolute', left: 84, top: 1150, opacity: ramp(frame, 30, 36)}}>
-        <div style={{font: '400 76px Sacramento', color: CREAM, textShadow: '2px 3px 0 #6B5A7A', transform: `translateY(${(1 - pop(frame, 30)) * 30}px)`}}>skincare</div>
+        <div style={{font: '600 62px Fredoka', color: CREAM, textShadow: '2px 3px 0 #6B5A7A', transform: `translateY(${(1 - pop(frame, 30)) * 30}px)`}}>skincare</div>
         <div style={{font: '700 98px Fredoka', color: '#FFF0F6', WebkitTextStroke: '3px #F2A9C8', textShadow: `5px 5px 0 ${LILAC}`, marginTop: -30, transform: `scale(${pop(frame, 36)})`, transformOrigin: 'left center'}}>Q&amp;A</div>
       </div>
       <Twinkles n={14} seed={3} area={[60, 160, 1000, 1300]} />
@@ -107,12 +107,12 @@ const IntroTitle: React.FC = () => {
 const OutroTitle: React.FC = () => {
   const frame = useCurrentFrame() - OUTRO;
   const q = (x: number, y: number, s: number, d: number, size = 70) => (
-    <div style={{position: 'absolute', left: x, top: y + Math.sin((frame + d) * 0.15) * 8, font: `400 ${size}px Sacramento`, color: CREAM, textShadow: '2px 2px 0 #6B5A7A', opacity: ramp(frame, s, s + 4), transform: `scale(${pop(frame, s)}) rotate(${Math.sin(frame * 0.1 + d) * 8}deg)`}}>?</div>
+    <div style={{position: 'absolute', left: x, top: y + Math.sin((frame + d) * 0.15) * 8, font: `700 ${Math.round(size * 0.8)}px Fredoka`, color: CREAM, textShadow: '2px 2px 0 #6B5A7A', opacity: ramp(frame, s, s + 4), transform: `scale(${pop(frame, s)}) rotate(${Math.sin(frame * 0.1 + d) * 8}deg)`}}>?</div>
   );
   return (
     <AbsoluteFill>
       <div style={{position: 'absolute', left: 500, top: 262}}>
-        <ArcText text="pagi? petang? malam?" font="400 76px Sacramento" radius={700} style={{color: CREAM, textShadow: '2px 3px 0 #7A5A8A'}} letterStyle={(i) => launch(frame, 0, i, 0.5)} />
+        <ArcText text="pagi? petang? malam?" font="600 58px Fredoka" radius={700} style={{color: CREAM, textShadow: '2px 3px 0 #7A5A8A'}} letterStyle={(i) => launch(frame, 0, i, 0.5)} />
       </div>
       <div style={{position: 'absolute', left: 500, top: 410}}>
         <ArcText text="boleh je pakai" font="700 120px Fredoka" radius={620} style={{color: '#FFF0F6', WebkitTextStroke: '3px #F2A9C8', textShadow: `5px 6px 0 ${LILAC}`}} letterStyle={(i) => launch(frame, 6, i, 0.9)} />
@@ -187,8 +187,8 @@ const HeaderBlock: React.FC<{h: Header}> = ({h}) => {
   const boldSize = h.bold.length > 16 ? 76 : h.bold.length > 11 ? 92 : 110;
   return (
     <div style={{position: 'absolute', left: 80, width: 830, top: 186, textAlign: 'center', opacity: out}}>
-      {letters(h.script, st, '400 86px Sacramento', {color: '#FFFFFF', WebkitTextStroke: '1.5px #7C5C9E', textShadow: '2px 3px 0 #7C5C9E, 0 0 6px rgba(70,50,95,0.7)'}, 0.6)}
-      <div style={{marginTop: -18}}>
+      {letters(h.script, st, '600 54px Fredoka', {color: '#FFFFFF', WebkitTextStroke: '1.5px #7C5C9E', textShadow: '2px 3px 0 #7C5C9E, 0 0 6px rgba(70,50,95,0.7)'}, 0.6)}
+      <div style={{marginTop: -4}}>
         {letters(h.bold, st + 4, `700 ${boldSize}px Fredoka`, {color: '#FFFFFF', WebkitTextStroke: '2px #EFB2CC', textShadow: `4px 5px 0 ${LILAC}, 0 0 16px rgba(255,200,225,0.6)`}, 0.8)}
       </div>
       {h.pink && frame >= f(h.pinkAt ?? h.from) && (
@@ -238,13 +238,16 @@ const Cards: React.FC = () => {
   const show = (a: number, b: number) => frame >= f(a) && frame < f(b);
   return (
     <AbsoluteFill>
-      {/* A — product card */}
+      {/* A — clip card: the mask in the bowl (supplied shot) + official jar cut-out */}
       {show(2.28, 3.06) && (
-        <div style={{position: 'absolute', left: CARD.x, top: CARD.y + 20, width: CARD.w, height: 330, borderRadius: 26, background: 'linear-gradient(160deg,#FFF9EE,#FCE9C8)', border: '6px solid #fff', boxShadow: '0 18px 40px rgba(70,40,80,0.3)', ...cardIn(frame, f(2.3), f(3.06), 'slide')}}>
-          <Img src={staticFile('otms/otms_jar.png')} style={{position: 'absolute', left: 30, top: 70, width: 290}} />
-          <div style={{position: 'absolute', left: 0, right: 0, top: 18, textAlign: 'center', font: '600 30px Fredoka', color: '#8A6A3A'}}>Yello OTMS</div>
-          <div style={{position: 'absolute', left: 4, top: 46}}>
-            <MarkerCircle w={350} h={240} progress={ramp(frame, f(2.4), f(2.75))} color={red} />
+        <div style={{position: 'absolute', left: CARD.x, top: CARD.y - 40, width: CARD.w, height: 500, borderRadius: 26, border: '6px solid #fff', boxShadow: '0 18px 40px rgba(70,40,80,0.3)', overflow: 'hidden', background: '#000', ...cardIn(frame, f(2.3), f(3.06), 'slide')}}>
+          <div style={{position: 'absolute', left: -366, top: -716, transform: 'scale(0.62)', transformOrigin: '540px 960px'}}>
+            <BRoll clip="bowl" from={2.28} start={0.6} />
+          </div>
+          <Img src={staticFile('otms/otms_jar.png')} style={{position: 'absolute', right: 8, bottom: 10, width: 150, filter: 'drop-shadow(0 6px 10px rgba(0,0,0,0.35))'}} />
+          <div style={{position: 'absolute', left: 14, top: 14, padding: '4px 14px', borderRadius: 12, background: 'rgba(255,255,255,0.92)', font: '600 28px Fredoka', color: '#8A6A3A'}}>Yello OTMS</div>
+          <div style={{position: 'absolute', left: 20, top: 120}}>
+            <MarkerCircle w={300} h={260} progress={ramp(frame, f(2.4), f(2.75))} color={red} />
           </div>
         </div>
       )}
@@ -312,9 +315,18 @@ const Cards: React.FC = () => {
           <div style={{position: 'absolute', right: 0, top: 360, font: '700 40px Fredoka', color: red, transform: `rotate(-6deg) scale(${pop(frame, f(16.5))})`}}>boleh ✓</div>
         </DarkCard>
       )}
+      {/* F0 — clip card: close-up of the mask on her face (supplied shot) on "muka you" */}
+      {show(17.6, 20.08) && (
+        <div style={{position: 'absolute', left: CARD.x, top: CARD.y - 60, width: CARD.w, height: 600, borderRadius: 26, border: '6px solid #fff', boxShadow: '0 18px 40px rgba(70,40,80,0.3)', overflow: 'hidden', background: '#000', ...cardIn(frame, f(17.62), f(20.08), 'click')}}>
+          <div style={{position: 'absolute', left: -366, top: -666, transform: 'scale(0.36)', transformOrigin: '540px 960px'}}>
+            <BRoll clip="face" from={17.6} start={0} />
+          </div>
+          <div style={{position: 'absolute', left: 14, bottom: 14, padding: '4px 14px', borderRadius: 12, background: 'rgba(255,255,255,0.92)', font: '600 30px Fredoka', color: '#7C5C9E'}}>muka you ✓</div>
+        </div>
+      )}
       {/* F — sun sensitivity */}
-      {show(17.6, 22.14) && (
-        <div style={{position: 'absolute', left: CARD.x, top: CARD.y, width: CARD.w, height: 400, borderRadius: 26, background: 'linear-gradient(180deg,#BFE3FF,#FFF4D8)', border: '6px solid #fff', boxShadow: '0 18px 40px rgba(70,40,80,0.3)', overflow: 'visible', ...cardIn(frame, f(17.62), f(22.14), 'click')}}>
+      {show(20.08, 22.14) && (
+        <div style={{position: 'absolute', left: CARD.x, top: CARD.y, width: CARD.w, height: 400, borderRadius: 26, background: 'linear-gradient(180deg,#BFE3FF,#FFF4D8)', border: '6px solid #fff', boxShadow: '0 18px 40px rgba(70,40,80,0.3)', overflow: 'visible', ...cardIn(frame, f(20.1), f(22.14), 'click')}}>
           <div style={{position: 'absolute', left: 110, top: 40, transform: `rotate(${frame * 0.6}deg)`}}>
             <Sun size={140} />
           </div>
@@ -333,7 +345,7 @@ const Cards: React.FC = () => {
   );
 };
 
-/* ---------- captions: thin lowercase italic, two short lines ---------- */
+/* ---------- captions: clean lowercase sans, two short lines ---------- */
 const Captions: React.FC = () => {
   const frame = useCurrentFrame();
   const t = frame / 30;
@@ -341,7 +353,7 @@ const Captions: React.FC = () => {
   if (!p) return null;
   const o = ramp(frame, f(p.s - 0.04), f(p.s - 0.04) + 3);
   return (
-    <div style={{position: 'absolute', left: 245, width: 500, top: 1392, textAlign: 'center', font: 'italic 500 40px PoppinsMI', lineHeight: 1.12, color: '#FFF8E3', textShadow: '0 0 2px rgba(60,45,35,0.95), 0 0 4px rgba(60,45,35,0.8), 0 2px 8px rgba(60,45,35,0.6)', opacity: o}}>
+    <div style={{position: 'absolute', left: 245, width: 500, top: 1392, textAlign: 'center', font: '500 40px DMSansM', lineHeight: 1.12, color: '#FFF8E3', textShadow: '0 0 2px rgba(60,45,35,0.95), 0 0 4px rgba(60,45,35,0.8), 0 2px 8px rgba(60,45,35,0.6)', opacity: o}}>
       {p.text.toLowerCase().replace(/[.]/g, '')}
     </div>
   );
